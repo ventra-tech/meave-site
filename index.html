@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meave — Parenting coaching, talks & consultancy</title>
+  <meta name="description" content="Calm, practical parenting support from Meave — a UK-based Triple P practitioner with 15+ years of frontline experience. Coaching for parents, talks for schools, and consultancy for organisations." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER (shared)
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="index.html" class="site-logo" aria-label="Meave — home">Meave</a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="about.html">About</a></li>
+          <li><a class="site-nav__link" href="for-parents.html">For Parents</a></li>
+          <li><a class="site-nav__link" href="for-schools.html">For Schools</a></li>
+          <li><a class="site-nav__link" href="for-organisations.html">For Organisations</a></li>
+          <li><a class="site-nav__link" href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a href="contact.html" class="btn btn-accent site-header__cta">Book a call</a>
+
+      <button type="button" class="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav">
+        <svg class="nav-toggle__open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </svg>
+        <svg class="nav-toggle__close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="18" y1="6" x2="6" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav">
+      <ul class="mobile-nav__list">
+        <li><a class="mobile-nav__link" href="about.html">About</a></li>
+        <li><a class="mobile-nav__link" href="for-parents.html">For Parents</a></li>
+        <li><a class="mobile-nav__link" href="for-schools.html">For Schools &amp; Events</a></li>
+        <li><a class="mobile-nav__link" href="for-organisations.html">For Organisations</a></li>
+        <li><a class="mobile-nav__link" href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-accent mobile-nav__cta">Book a free call</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         HERO — cinematic full-viewport
+         ============================================================ -->
+    <section class="hero-cinematic" aria-label="Introduction">
+      <!-- Background image -->
+      <img class="hero-cinematic__bg" src="images/hero-home.jpg"
+           alt="" aria-hidden="true" loading="eager" />
+      <!-- Dark overlay -->
+      <div class="hero-cinematic__overlay" aria-hidden="true"></div>
+
+      <!-- Content -->
+      <div class="hero-cinematic__content container">
+        <span class="eyebrow hero-cinematic__eyebrow">Parenting coaching &middot; Talks &middot; Consultancy</span>
+        <h1 class="hero-cinematic__h1" aria-label="Raising confident children starts with confident parents.">
+          Raising confident children starts with confident parents.
+        </h1>
+        <p class="hero-cinematic__lede">
+          I'm Meave — a certified Triple P practitioner with 15+ years of frontline experience.
+          Practical, evidence-based support for parents, schools, and organisations across the UK.
+        </p>
+        <div class="hero-cinematic__ctas">
+          <a href="contact.html" class="btn btn-accent">Book a free discovery call</a>
+          <a href="about.html" class="hero-cinematic__ghost">Meet Meave</a>
+        </div>
+        <div class="hero-cinematic__trust">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Certified Triple P Practitioner
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            15+ years experience
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            UK-wide
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         AUDIENCE SELECTOR — "I am a..." first-person cards
+         ============================================================ -->
+    <section class="audience-selector-section audience-selector-section--dark" aria-label="Choose your path">
+      <div class="container">
+        <div class="audience-selector">
+
+          <a href="for-parents.html" class="audience-card">
+            <span class="audience-card__tag">I am a</span>
+            <p class="audience-card__title">Parent</p>
+            <p class="audience-card__body">1-to-1 coaching to restore calm at home — with evidence-based strategies, not more willpower.</p>
+            <span class="audience-card__arrow">
+              Book a discovery call
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="for-schools.html" class="audience-card">
+            <span class="audience-card__tag">I am a</span>
+            <p class="audience-card__title">School Leader</p>
+            <p class="audience-card__body">Ofsted-aligned talks, parent workshops and staff CPD that strengthen parental engagement and student wellbeing.</p>
+            <span class="audience-card__arrow">
+              Enquire about training
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+          <a href="for-organisations.html" class="audience-card">
+            <span class="audience-card__tag">I am an</span>
+            <p class="audience-card__title">Employer</p>
+            <p class="audience-card__body">Credible parenting-support strategy for the 40% of your workforce who are also raising children.</p>
+            <span class="audience-card__arrow">
+              Download prospectus
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         THREE PILLARS — the three-buyer split
+         ============================================================ -->
+    <section class="section section--alt" aria-labelledby="pillars-heading">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">How I can help</span>
+          <h2 id="pillars-heading">Support that meets you where you are</h2>
+          <p class="lede">Whether you're a parent navigating a tough patch, a school leader planning a community event, or an organisation shaping family-focused policy — there's a clear route in.</p>
+        </div>
+
+        <div class="card-grid pillar-grid">
+
+          <article class="card pillar-card">
+            <div class="card__label">For parents</div>
+            <h3 class="card__title">1-to-1 parenting coaching</h3>
+            <p class="card__body">Evidence-based, non-judgemental sessions using Triple P — helping you handle tantrums, transitions, sleep, screens and siblings with more calm and less guilt.</p>
+            <a href="for-parents.html" class="text-link card__link">Explore parent coaching
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="card pillar-card">
+            <div class="card__label">For schools &amp; events</div>
+            <h3 class="card__title">Talks, workshops &amp; keynotes</h3>
+            <p class="card__body">Warm, practical sessions for parent audiences and staff teams — from single-evening workshops to termly programmes. Topics cover behaviour, resilience, and the early years.</p>
+            <a href="for-schools.html" class="text-link card__link">See talks &amp; workshops
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="card pillar-card">
+            <div class="card__label">For organisations</div>
+            <h3 class="card__title">Consultancy &amp; programme design</h3>
+            <p class="card__body">Strategic support for nurseries, charities, local authorities and employers — designing, delivering and evaluating parenting and family-support programmes.</p>
+            <a href="for-organisations.html" class="text-link card__link">Explore consultancy
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LOGO STRIP + TRUST BAR (Triple P seal)
+         ============================================================ -->
+    <section class="section">
+      <div class="container">
+        <div class="trust-bar">
+          <div class="trust-seal" aria-label="Certified Triple P Practitioner">
+            <span class="trust-seal__ring" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span class="trust-seal__label">
+              <span class="trust-seal__eyebrow">Certified</span>
+              <span class="trust-seal__title">Triple P Practitioner</span>
+            </span>
+          </div>
+          <div class="trust-bar__meta">
+            <p class="trust-bar__headline">Evidence-based practice, rigorously accredited.</p>
+            <p class="trust-bar__body">Triple P (Positive Parenting Program) is one of the most extensively researched parenting frameworks in the world, used by the NHS, local authorities and schools across the UK.</p>
+          </div>
+        </div>
+
+        <div class="logo-strip" style="margin-top: 56px;">
+          <div class="logo-strip__label">As featured in &amp; partnered with</div>
+          <div class="logo-strip__row">
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/nelft.png" alt="NELFT NHS Foundation Trust" />
+            </span>
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/lb-hillingdon.svg" alt="London Borough of Hillingdon" />
+            </span>
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/king-solomon.png" alt="King Solomon Academy" />
+            </span>
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/hampstead-school.png" alt="Hampstead School" />
+            </span>
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/hm-prison.png" alt="HM Prison &amp; Probation Service" />
+            </span>
+            <span class="logo-strip__item logo-strip__item--logo">
+              <img src="logos/islington.png" alt="Islington Council" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         STATS
+         ============================================================ -->
+    <section class="section section--alt" aria-label="Track record">
+      <div class="container">
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat__num" data-count="15" data-suffix="+">15+</span>
+            <span class="stat__label">Years working with families</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="2000" data-suffix="+">2,000+</span>
+            <span class="stat__label">Parents supported</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="60" data-suffix="+">60+</span>
+            <span class="stat__label">Schools &amp; organisations</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-count="100" data-suffix="%">100%</span>
+            <span class="stat__label">Triple P-certified practice</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT SNIPPET
+         ============================================================ -->
+    <section class="section section--alt" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="about-split">
+          <div class="about-split__image">
+            <img src="images/about-group.jpg" alt="Meave with parents at a Triple P group graduation, King Solomon" loading="lazy" />
+          </div>
+          <div>
+            <span class="eyebrow">About Meave</span>
+            <h2 id="about-heading">Fifteen years on the frontline of family support — now independent.</h2>
+            <p>After more than a decade leading parenting and early-years work inside a UK children's charity, I've stepped out to continue that mission as an independent consultant. The approach is the same one that's changed thousands of family routines: warm, evidence-based, and relentlessly practical.</p>
+            <p>Trained in Triple P (Positive Parenting Program) — one of the most widely researched parenting frameworks in the world — I bring the same methodology into every session, whether it's with a parent at the kitchen table, a school hall of 200, or a commissioning team at a local authority.</p>
+            <p><a href="about.html" class="text-link">Read Meave's story
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIALS
+         ============================================================ -->
+    <section class="section" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">In their words</span>
+          <h2 id="testimonials-heading">The families and teams I've worked with</h2>
+        </div>
+
+        <div class="card-grid">
+
+          <figure class="testimonial">
+            <svg class="testimonial__mark" width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V11.5C0 5.6 3.7 1.2 10.5 0l1.1 3.5C7.2 4.9 5.3 7.6 5.3 11.1h5.5V22H0zm16 0V11.5C16 5.6 19.7 1.2 26.5 0l1.1 3.5c-4.4 1.4-6.3 4.1-6.3 7.6H27V22H16z"/></svg>
+            <blockquote class="testimonial__quote">I gave her my most vulnerable parents and it is nice to see the positive difference this has made to the parents and their children. Their confidence has grown and I can see the difference in their ability to believe in themselves.</blockquote>
+            <figcaption class="testimonial__attrib">
+              <span class="testimonial__name">Linda Smith</span>
+              Family Support Worker, Frays Academy Trust
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial">
+            <svg class="testimonial__mark" width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V11.5C0 5.6 3.7 1.2 10.5 0l1.1 3.5C7.2 4.9 5.3 7.6 5.3 11.1h5.5V22H0zm16 0V11.5C16 5.6 19.7 1.2 26.5 0l1.1 3.5c-4.4 1.4-6.3 4.1-6.3 7.6H27V22H16z"/></svg>
+            <blockquote class="testimonial__quote">By investing in Brilliant Parents, we are being proactive, strategic and unapologetic. We have come to realise that parenting support is vital — informative, developmental and empowering. It has become an intrinsic part of what we do.</blockquote>
+            <figcaption class="testimonial__attrib">
+              <span class="testimonial__name">Heather Daulphin</span>
+              Deputy Headteacher, Hampstead School
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial">
+            <svg class="testimonial__mark" width="28" height="22" viewBox="0 0 28 22" fill="currentColor" aria-hidden="true"><path d="M0 22V11.5C0 5.6 3.7 1.2 10.5 0l1.1 3.5C7.2 4.9 5.3 7.6 5.3 11.1h5.5V22H0zm16 0V11.5C16 5.6 19.7 1.2 26.5 0l1.1 3.5c-4.4 1.4-6.3 4.1-6.3 7.6H27V22H16z"/></svg>
+            <blockquote class="testimonial__quote">Meave and the whole team are relentless in their pursuit of delivering contextually and culturally informed parenting support. Innovative and creative in their delivery, reaching parents across a variety of platforms.</blockquote>
+            <figcaption class="testimonial__attrib">
+              <span class="testimonial__name">Kat Wyatt</span>
+              Assistant Director, Prevention &amp; Youth Justice, London Borough of Hillingdon
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURED QUOTE BAND
+         ============================================================ -->
+    <section class="section featured-quote-band" aria-label="Featured testimonial">
+      <div class="container">
+        <svg class="featured-quote-band__mark" viewBox="0 0 100 80" fill="currentColor" aria-hidden="true">
+          <path d="M0 80V42C0 20 14 4 40 0l4 13C27 18 20 28 20 41h20V80H0zm56 0V42C56 20 70 4 96 0l4 13C83 18 76 28 76 41h20V80H56z"/>
+        </svg>
+        <blockquote class="featured-quote-band__text">
+          "Meave is deeply passionate about positive parenting. She brings a thoughtful, empathetic approach, ensuring that parents receive the guidance and support they need. Her professionalism, expertise, and unwavering commitment make her an invaluable asset to any organisation."
+        </blockquote>
+        <p class="featured-quote-band__attrib">— Assoc. Prof. Matt Buttery, CEO, Triple P UK &amp; Ireland</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOW IT WORKS
+         ============================================================ -->
+    <section class="section section--alt" aria-labelledby="how-heading">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">How it works</span>
+          <h2 id="how-heading">A straightforward way to start</h2>
+          <p class="lede">No mystery, no hard sell. Three simple steps to figure out whether we're a good fit.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step__num">1</div>
+            <h3>Get in touch</h3>
+            <p>Send a short message about what's going on. Parents, schools and organisations all use the same enquiry form — I'll route it from there.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">2</div>
+            <h3>Free 20-minute call</h3>
+            <p>We talk through what you're hoping to change, what you've already tried, and whether my approach is the right fit. No obligation.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">3</div>
+            <h3>A plan that fits</h3>
+            <p>I'll send a written proposal — sessions, workshop, or programme — tailored to your situation, timeline and budget.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <div class="container">
+        <div class="section__head">
+          <span class="eyebrow">FAQ</span>
+          <h2 id="faq-heading">Questions I hear often</h2>
+        </div>
+
+        <div class="faq">
+          <details class="faq__item">
+            <summary>
+              What does a session actually cost?
+              <svg class="faq__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </summary>
+            <div class="faq__body">
+              <p>Fees depend on whether it's 1-to-1 coaching, a one-off workshop, or a multi-session programme — and on whether you're booking as a family, a school, or an organisation. [placeholder: fee range]. Every enquiry gets a clear written proposal before anything is booked.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              What is Triple P and why do you use it?
+              <svg class="faq__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </summary>
+            <div class="faq__body">
+              <p>Triple P (the Positive Parenting Program) is one of the most extensively researched parenting approaches in the world, with more than 40 years of evidence behind it. It's used by the NHS, local authorities and schools across the UK. It gives parents practical tools rather than slogans, which is why I've stayed with it for so long.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              Do you work online or only in person?
+              <svg class="faq__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </summary>
+            <div class="faq__body">
+              <p>Both. Parent coaching is available UK-wide over video call. School talks, workshops and organisational consultancy are usually in person — but I'll travel across the UK, and virtual delivery is available on request.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              Is this therapy? Do I need a referral?
+              <svg class="faq__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </summary>
+            <div class="faq__body">
+              <p>No — this is coaching and consultancy, not therapy, and no referral is needed. If something comes up in our work that would be better supported by a clinical service (for example CAMHS or a GP), I'll say so clearly and help you find the right route.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              How do you handle safeguarding?
+              <svg class="faq__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </summary>
+            <div class="faq__body">
+              <p>I work to a full safeguarding policy shared with every client at the start of our work, hold an up-to-date enhanced DBS, and carry professional insurance. Full documentation is available for schools and organisations on request.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FINAL CTA BAND
+         ============================================================ -->
+    <section class="section section--dark cta-band">
+      <div class="container">
+        <span class="eyebrow" style="color: var(--accent);">Ready when you are</span>
+        <h2>Let's talk about what would actually help.</h2>
+        <p>Whether it's a single tough bedtime, a whole-school parent evening, or a commissioned programme — start with a free call.</p>
+        <div class="cta-band__actions">
+          <a href="contact.html" class="btn btn-accent">Book a free call</a>
+          <a href="about.html" class="btn btn-ghost">Meet Meave</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER (shared)
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+
+        <div>
+          <a href="index.html" class="site-footer__brand">Meave</a>
+          <p class="site-footer__about">Practical parenting coaching, talks and consultancy — UK-wide. Led by Meave Darroux, certified Triple P practitioner.</p>
+          <div class="site-footer__socials">
+            <a class="social-link" href="#" aria-label="LinkedIn [placeholder link]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 24h5V8H0v16zM7.98 8H12v2.18h.06c.56-1.06 1.93-2.18 3.97-2.18 4.25 0 5 2.8 5 6.44V24h-5v-7.1c0-1.7-.03-3.88-2.36-3.88-2.36 0-2.72 1.85-2.72 3.76V24h-5V8z"/></svg>
+            </a>
+            <a class="social-link" href="#" aria-label="Instagram [placeholder link]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="site-footer__title">Services</h4>
+          <ul class="site-footer__list">
+            <li><a href="for-parents.html">For Parents</a></li>
+            <li><a href="for-schools.html">For Schools &amp; Events</a></li>
+            <li><a href="for-organisations.html">For Organisations</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="site-footer__title">Meave</h4>
+          <ul class="site-footer__list">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact.html">Book a call</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="site-footer__title">Credentials</h4>
+          <div class="site-footer__credentials">
+            <span class="credential-badge">Certified Triple P practitioner</span>
+            <span class="credential-badge">Enhanced DBS &middot; Insured</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="site-footer__bottom">
+        <span>&copy; <span data-year>2026</span> Meave. All rights reserved.</span>
+        <span>Site built with care — [placeholder: credit / privacy / terms]</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky CTA (mobile) -->
+  <div class="sticky-cta" aria-hidden="false">
+    <a href="contact.html" class="btn btn-accent">Book a free call</a>
+  </div>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>

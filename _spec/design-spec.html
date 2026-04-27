@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<title>Meave — Design Specification</title>
+<style>
+  :root {
+    --bg: #FAF6F0;
+    --bg-alt: #F2ECE2;
+    --primary: #2D4A3E;
+    --primary-dark: #1F3329;
+    --accent: #C67B5C;
+    --accent-dark: #A9674B;
+    --text: #2A2A2A;
+    --text-muted: #6B6B6B;
+    --border: #E6DFD3;
+    --olive: #8A9A5B;
+  }
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--primary);
+    line-height: 1.2;
+    margin: 0 0 0.4em;
+    page-break-after: avoid;
+  }
+  h1 { font-size: 28pt; font-weight: 600; letter-spacing: -0.01em; }
+  h2 { font-size: 18pt; font-weight: 600; border-bottom: 2px solid var(--accent); padding-bottom: 8px; margin-top: 28px; }
+  h3 { font-size: 13pt; font-weight: 600; color: var(--primary); margin-top: 20px; }
+  h4 { font-size: 11pt; font-weight: 700; color: var(--primary-dark); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 14px; }
+  h5 { font-size: 10pt; font-weight: 700; color: var(--text); margin-top: 12px; }
+  p { margin: 0 0 0.7em; }
+  ul, ol { margin: 0 0 0.7em; padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  code, .mono { font-family: "SF Mono", Monaco, Menlo, Consolas, monospace; font-size: 9pt; background: var(--bg-alt); padding: 1px 5px; border-radius: 3px; color: var(--primary-dark); }
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .page-break { page-break-before: always; }
+  .avoid-break { page-break-inside: avoid; }
+
+  /* Cover */
+  .cover {
+    height: calc(100vh - 36mm);
+    min-height: 240mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    background: var(--bg);
+    margin: -18mm -16mm 0;
+    padding: 60mm 24mm 24mm;
+  }
+  .cover__eyebrow { font-size: 10pt; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+  .cover__title { font-size: 42pt; margin: 0 0 12px; line-height: 1.05; }
+  .cover__sub { font-size: 14pt; color: var(--text-muted); max-width: 60ch; line-height: 1.4; }
+  .cover__meta { display: flex; gap: 40px; font-size: 9.5pt; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 14px; }
+  .cover__meta strong { color: var(--primary); display: block; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+
+  /* TOC */
+  .toc { columns: 2; column-gap: 36px; }
+  .toc ol { list-style: none; padding: 0; margin: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dotted var(--border); display: flex; justify-content: space-between; gap: 8px; }
+  .toc strong { color: var(--primary); font-weight: 600; }
+
+  /* Color swatch */
+  .swatch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+  .swatch { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .swatch__color { height: 60px; }
+  .swatch__meta { padding: 8px 10px; font-size: 9pt; }
+  .swatch__name { font-weight: 600; color: var(--primary); display: block; }
+  .swatch__hex { font-family: monospace; color: var(--text-muted); font-size: 8.5pt; }
+  .swatch__use { color: var(--text-muted); font-size: 8.5pt; margin-top: 3px; display: block; }
+
+  /* Type specimens */
+  .type-row { display: grid; grid-template-columns: 110px 1fr 200px; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .type-row__label { font-size: 9pt; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .type-row__sample { font-family: Georgia, serif; color: var(--primary); }
+  .type-row__sample--body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text); }
+  .type-row__meta { font-size: 8.5pt; color: var(--text-muted); font-family: monospace; }
+
+  /* Buttons demo */
+  .btn-demo { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border-radius: 6px; border: 1.5px solid transparent; font-weight: 500; font-size: 9.5pt; margin: 4px 4px 4px 0; }
+  .btn-demo--primary { background: var(--primary); color: #FAF6F0; border-color: var(--primary); }
+  .btn-demo--accent { background: var(--accent); color: #FFF; border-color: var(--accent); }
+  .btn-demo--ghost { background: transparent; color: var(--primary); border-color: var(--primary); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px; font-size: 9.5pt; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-alt); color: var(--primary); font-weight: 600; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.06em; }
+  td.col-narrow { width: 110px; }
+
+  /* Section meta box */
+  .meta-box { background: var(--bg-alt); border-left: 3px solid var(--accent); padding: 12px 16px; margin: 12px 0 18px; font-size: 9.5pt; border-radius: 0 4px 4px 0; }
+  .meta-box strong { color: var(--primary); }
+
+  /* Section card listing */
+  .section-card { border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; page-break-inside: avoid; }
+  .section-card__header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .section-card__num { font-family: Georgia, serif; color: var(--accent); font-size: 14pt; font-weight: 600; }
+  .section-card__title { font-family: Georgia, serif; color: var(--primary); font-weight: 600; font-size: 12pt; flex-grow: 1; }
+  .section-card__type { font-size: 8.5pt; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+  .section-card__copy { background: #FFF; border: 1px dashed var(--border); padding: 8px 12px; border-radius: 4px; margin-top: 8px; font-size: 9.5pt; }
+  .section-card__copy h5 { margin-top: 0; }
+  .section-card__layout { font-size: 9pt; color: var(--text-muted); margin-top: 6px; }
+
+  blockquote { margin: 8px 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--bg-alt); font-family: Georgia, serif; font-size: 10pt; line-height: 1.45; color: var(--primary-dark); border-radius: 0 4px 4px 0; }
+  blockquote .attrib { display: block; margin-top: 6px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 8.5pt; color: var(--text-muted); font-style: normal; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .badge--placeholder { background: #FFE4D6; color: #A9674B; }
+  .badge--done { background: #DCEFE2; color: #2D4A3E; }
+  .badge--info { background: #E2EAF4; color: #2C4A6E; }
+
+  .copy-block { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; margin: 6px 0; font-size: 9.5pt; }
+  .copy-block .label { display: block; font-size: 8pt; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 4px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .footer-note { font-size: 8.5pt; color: var(--text-muted); margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<!-- =============================================================== -->
+<!-- COVER                                                            -->
+<!-- =============================================================== -->
+<div class="cover">
+  <div>
+    <div class="cover__eyebrow">Design Specification &middot; v1.0</div>
+    <h1 class="cover__title">Meave</h1>
+    <p class="cover__sub">A complete blueprint to rebuild the Meave Darroux parenting consultancy website on any platform &mdash; design system, page-by-page copy, component library and content inventory.</p>
+  </div>
+  <div class="cover__meta">
+    <div><strong>Project</strong>Meave Darroux &mdash; Independent parenting consultant</div>
+    <div><strong>Generated</strong>April 2026</div>
+    <div><strong>Stack (current)</strong>Static HTML / CSS / vanilla JS</div>
+  </div>
+</div>
+
+<!-- =============================================================== -->
+<!-- TABLE OF CONTENTS                                                -->
+<!-- =============================================================== -->
+<h2>Contents</h2>
+<div class="toc">
+  <ol>
+    <li><strong>1. Brand &amp; Tone</strong> <span>3</span></li>
+    <li><strong>2. Design System</strong> <span>4</span></li>
+    <li>&nbsp;&nbsp;&nbsp;2.1 Colour palette <span>4</span></li>
+    <li>&nbsp;&nbsp;&nbsp;2.2 Typography <span>5</span></li>
+    <li>&nbsp;&nbsp;&nbsp;2.3 Spacing &amp; layout tokens <span>6</span></li>
+    <li>&nbsp;&nbsp;&nbsp;2.4 Radius, shadows, motion <span>6</span></li>
+    <li>&nbsp;&nbsp;&nbsp;2.5 Buttons <span>7</span></li>
+    <li><strong>3. Components Library</strong> <span>8</span></li>
+    <li>&nbsp;&nbsp;&nbsp;3.1 Header &amp; navigation</li>
+    <li>&nbsp;&nbsp;&nbsp;3.2 Footer</li>
+    <li>&nbsp;&nbsp;&nbsp;3.3 Cards, testimonials, stats</li>
+    <li>&nbsp;&nbsp;&nbsp;3.4 FAQ accordion</li>
+    <li>&nbsp;&nbsp;&nbsp;3.5 Contact form</li>
+    <li>&nbsp;&nbsp;&nbsp;3.6 Logo strip, quote band</li>
+    <li>&nbsp;&nbsp;&nbsp;3.7 Animation &amp; motion</li>
+    <li><strong>4. Page Breakdowns</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;4.1 Home (index.html)</li>
+    <li>&nbsp;&nbsp;&nbsp;4.2 About</li>
+    <li>&nbsp;&nbsp;&nbsp;4.3 For Parents</li>
+    <li>&nbsp;&nbsp;&nbsp;4.4 For Schools</li>
+    <li>&nbsp;&nbsp;&nbsp;4.5 For Organisations</li>
+    <li>&nbsp;&nbsp;&nbsp;4.6 Contact</li>
+    <li><strong>5. Content Inventory</strong></li>
+    <li>&nbsp;&nbsp;&nbsp;5.1 All testimonials</li>
+    <li>&nbsp;&nbsp;&nbsp;5.2 Pricing</li>
+    <li>&nbsp;&nbsp;&nbsp;5.3 All FAQs</li>
+    <li>&nbsp;&nbsp;&nbsp;5.4 Client / logo institutions</li>
+    <li><strong>6. Placeholder Index</strong></li>
+  </ol>
+</div>
+
+<!-- =============================================================== -->
+<!-- 1. BRAND & TONE                                                  -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>1. Brand &amp; Tone</h2>
+
+<h3>Who Meave is</h3>
+<p>Meave Darroux is a UK-based parenting consultant and certified Triple P (Positive Parenting Program) practitioner with 15+ years of frontline experience. After a decade leading a regional parenting charity, she has gone independent and serves three audiences:</p>
+<ol>
+  <li><strong>Parents</strong> &mdash; 1-to-1 coaching for tantrums, transitions, sleep, screens and siblings.</li>
+  <li><strong>Schools &amp; events</strong> &mdash; Ofsted-aligned talks, workshops, keynotes, staff CPD.</li>
+  <li><strong>Organisations</strong> &mdash; consultancy and commissioned delivery for nurseries, charities, local authorities, NHS trusts, prisons and employers.</li>
+</ol>
+
+<h3>Voice &amp; tone</h3>
+<ul>
+  <li><strong>Warm, not soft.</strong> The reader feels listened to, never lectured.</li>
+  <li><strong>Practical over theoretical.</strong> Strategies you can use on the school run, not in a clinic.</li>
+  <li><strong>Evidence over opinion.</strong> Triple P framing earns the right to be confident.</li>
+  <li><strong>Plainspoken.</strong> Short sentences. No jargon. No guru energy.</li>
+  <li><strong>UK English.</strong> "organisation", "behaviour", "programme".</li>
+</ul>
+
+<h3>Visual feel</h3>
+<ul>
+  <li>Editorial &mdash; like a thoughtful Sunday-magazine feature, not a SaaS landing page.</li>
+  <li>Warm cream surfaces (#FAF6F0) with deep forest green primary and terracotta accent.</li>
+  <li>Generous whitespace, large display serif (Fraunces) for headlines, clean sans (Inter) for body.</li>
+  <li>Homepage = cinematic and full-bleed; inner pages = grounded and informational.</li>
+</ul>
+
+<!-- =============================================================== -->
+<!-- 2. DESIGN SYSTEM                                                 -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>2. Design System</h2>
+
+<h3>2.1 Colour palette</h3>
+<p>All site colours are declared as CSS custom properties on <code>:root</code>. Use the variable name in any rebuild, not the hex inline.</p>
+
+<h4>Surfaces &amp; ink</h4>
+<div class="swatch-grid">
+  <div class="swatch">
+    <div class="swatch__color" style="background:#FAF6F0;border-bottom:1px solid var(--border);"></div>
+    <div class="swatch__meta"><span class="swatch__name">Cream &mdash; <code>--bg</code></span><span class="swatch__hex">#FAF6F0</span><span class="swatch__use">Page background. Body default.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#F2ECE2;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Cream alt &mdash; <code>--bg-alt</code></span><span class="swatch__hex">#F2ECE2</span><span class="swatch__use">Alternating section bands, form fields.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#2A2A2A;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Ink &mdash; <code>--text</code></span><span class="swatch__hex">#2A2A2A</span><span class="swatch__use">Body copy default.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#6B6B6B;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Ink muted &mdash; <code>--text-muted</code></span><span class="swatch__hex">#6B6B6B</span><span class="swatch__use">Lede copy, labels, secondary text.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#E6DFD3;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Border &mdash; <code>--border</code></span><span class="swatch__hex">#E6DFD3</span><span class="swatch__use">Card borders, dividers, FAQ rules.</span></div>
+  </div>
+</div>
+
+<h4>Brand colours</h4>
+<div class="swatch-grid">
+  <div class="swatch">
+    <div class="swatch__color" style="background:#2D4A3E;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Primary &mdash; Forest green &mdash; <code>--primary</code></span><span class="swatch__hex">#2D4A3E</span><span class="swatch__use">Headings, primary buttons, dark sections, audience-selector dark band.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#1F3329;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Primary dark &mdash; <code>--primary-dark</code></span><span class="swatch__hex">#1F3329</span><span class="swatch__use">Hero overlay, footer, dark hover state, video placeholder.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#C67B5C;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Accent &mdash; Terracotta &mdash; <code>--accent</code></span><span class="swatch__hex">#C67B5C</span><span class="swatch__use">Accent buttons, eyebrow text, featured-quote band, focus rings, stat border.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#A9674B;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Accent dark &mdash; <code>--accent-dark</code></span><span class="swatch__hex">#A9674B</span><span class="swatch__use">Accent button hover state.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#8A9A5B;"></div>
+    <div class="swatch__meta"><span class="swatch__name">Olive &mdash; supporting</span><span class="swatch__hex">#8A9A5B</span><span class="swatch__use">Third pillar-card top stripe; third contact-route stripe.</span></div>
+  </div>
+  <div class="swatch">
+    <div class="swatch__color" style="background:#FFFFFF;border:1px solid var(--border);"></div>
+    <div class="swatch__meta"><span class="swatch__name">White &mdash; surface</span><span class="swatch__hex">#FFFFFF</span><span class="swatch__use">Cards, testimonials, form fields, accent button text.</span></div>
+  </div>
+</div>
+
+<div class="meta-box">
+  <strong>Note:</strong> Light text on dark sections uses <code>#FAF6F0</code> (cream) at varying opacities (0.6&ndash;0.9) rather than pure white &mdash; this preserves the warmth.
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="page-break"></div>
+<h3>2.2 Typography</h3>
+
+<h4>Type families</h4>
+<table>
+  <tr><th>Token</th><th>Family</th><th>Source</th><th>Weights used</th></tr>
+  <tr><td><code>--font-display</code></td><td>Fraunces</td><td>Google Fonts (variable)</td><td>400, 500, 600</td></tr>
+  <tr><td><code>--font-body</code></td><td>Inter</td><td>Google Fonts</td><td>400, 500, 600</td></tr>
+</table>
+
+<p>Stack fallbacks: display falls back to <code>Georgia, "Times New Roman", serif</code>. Body falls back to <code>-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif</code>.</p>
+
+<h4>Type scale</h4>
+<div class="type-row"><span class="type-row__label">H1 (inner)</span><span class="type-row__sample" style="font-size:24pt;font-weight:500;">15 years. Thousands of families.</span><span class="type-row__meta">Fraunces 500<br>clamp(2rem, 1.3rem + 3.2vw, 3.5rem)<br>line-height 1.15</span></div>
+<div class="type-row"><span class="type-row__label">H1 (cinematic)</span><span class="type-row__sample" style="font-size:30pt;font-weight:500;color:var(--primary);">Raising confident children</span><span class="type-row__meta">Fraunces 500<br>clamp(2.8rem, 2rem + 4vw, 5rem)<br>line-height 1.08, letter-spacing -0.02em<br>Light cream colour (#FAF6F0) on dark hero</span></div>
+<div class="type-row"><span class="type-row__label">H2</span><span class="type-row__sample" style="font-size:18pt;font-weight:600;">Support that meets you where you are</span><span class="type-row__meta">Fraunces 600<br>clamp(1.6rem, 1.15rem + 2vw, 2.5rem)</span></div>
+<div class="type-row"><span class="type-row__label">H3</span><span class="type-row__sample" style="font-size:13pt;font-weight:600;">1-to-1 parenting coaching</span><span class="type-row__meta">Fraunces 600<br>clamp(1.15rem, 1rem + 0.6vw, 1.4rem)</span></div>
+<div class="type-row"><span class="type-row__label">Eyebrow</span><span class="type-row__sample type-row__sample--body" style="font-size:9pt;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);font-weight:500;">PARENTING COACHING &middot; TALKS &middot; CONSULTANCY</span><span class="type-row__meta">Inter 500, 0.8rem<br>uppercase, tracking 0.12em<br>colour: --accent</span></div>
+<div class="type-row"><span class="type-row__label">Lede</span><span class="type-row__sample type-row__sample--body" style="font-size:11pt;color:var(--text-muted);">Practical, evidence-based support for parents...</span><span class="type-row__meta">Inter 400<br>clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem)<br>colour: --text-muted, max-width 60ch</span></div>
+<div class="type-row"><span class="type-row__label">Body</span><span class="type-row__sample type-row__sample--body" style="font-size:10.5pt;">Together we'll look at what's happening now and build a workable plan.</span><span class="type-row__meta">Inter 400, 16px / 1rem<br>line-height 1.6<br>colour: --text</span></div>
+<div class="type-row"><span class="type-row__label">Stat number</span><span class="type-row__sample" style="font-size:20pt;font-weight:500;">2,000+</span><span class="type-row__meta">Fraunces 500<br>clamp(1.5rem, 1.2rem + 1vw, 2rem)<br>letter-spacing -0.01em</span></div>
+<div class="type-row"><span class="type-row__label">Featured quote</span><span class="type-row__sample" style="font-size:16pt;color:#FFF;background:var(--accent);padding:6px 10px;display:inline-block;font-weight:400;">"Deeply passionate about positive parenting..."</span><span class="type-row__meta">Fraunces 400<br>clamp(1.4rem, 1rem + 2vw, 2.2rem)<br>colour: white on terracotta</span></div>
+<div class="type-row"><span class="type-row__label">Pull-quote</span><span class="type-row__sample" style="font-size:14pt;color:var(--primary);font-weight:400;">"A different relationship with my child"</span><span class="type-row__meta">Fraunces 400<br>clamp(1.2rem, 1rem + 1vw, 1.6rem)<br>colour: --primary</span></div>
+
+<h4>Headings rules</h4>
+<ul>
+  <li>All <code>h1&ndash;h4</code> use <code>--font-display</code> (Fraunces).</li>
+  <li>All <code>h1&ndash;h4</code> default to <code>--primary</code> colour, except inside <code>.section--dark</code> where they invert to <code>#FAF6F0</code>.</li>
+  <li>Letter-spacing -0.01em on display headings; -0.02em on the cinematic H1.</li>
+  <li>Margin-bottom 0.5em default. Section headings sit inside a centred <code>.section__head</code> with max-width 720px and 48px bottom margin.</li>
+</ul>
+
+<!-- SPACING -->
+<div class="page-break"></div>
+<h3>2.3 Spacing &amp; layout tokens</h3>
+<table>
+  <tr><th>Token</th><th>Default</th><th>≥ 768px</th><th>≥ 1024px</th><th>Used for</th></tr>
+  <tr><td><code>--container</code></td><td>1200px</td><td>1200px</td><td>1200px</td><td>Page max-width</td></tr>
+  <tr><td><code>--section-y</code></td><td>56px</td><td>80px</td><td>96px</td><td>Top &amp; bottom padding on every <code>.section</code></td></tr>
+  <tr><td><code>--header-h</code></td><td>68px</td><td>76px</td><td>76px</td><td>Sticky header height</td></tr>
+  <tr><td>Container padding</td><td>0 20px</td><td>0 32px</td><td>0 32px</td><td>Inside-edge gutter</td></tr>
+</table>
+
+<h4>Breakpoints</h4>
+<ul>
+  <li><strong>≥ 640px</strong> &mdash; card grid switches to 2 cols; form rows go side by side.</li>
+  <li><strong>≥ 768px</strong> &mdash; tablet; section padding grows; stat row goes 4-up; check-list goes 2-up.</li>
+  <li><strong>≥ 1024px</strong> &mdash; desktop; nav appears; card grid 3-up; hero grid 2-col; mobile-nav and sticky CTA hidden.</li>
+</ul>
+
+<h4>Grid systems</h4>
+<table>
+  <tr><th>Component</th><th>Default</th><th>≥ 640px</th><th>≥ 768px</th><th>≥ 1024px</th></tr>
+  <tr><td>card-grid</td><td>1 col, 20px gap</td><td>2 col</td><td>2 col</td><td>3 col, 28px gap</td></tr>
+  <tr><td>stat-row</td><td>2 col</td><td>2 col</td><td>4 col, 32px</td><td>4 col</td></tr>
+  <tr><td>steps</td><td>1 col</td><td>1 col</td><td>3 col, 32px</td><td>3 col</td></tr>
+  <tr><td>package-grid</td><td>1 col</td><td>1 col</td><td>3 col, 24px</td><td>3 col</td></tr>
+  <tr><td>programme-grid</td><td>1 col</td><td>1 col</td><td>2 col, 24px</td><td>2 col</td></tr>
+  <tr><td>about-split</td><td>1 col</td><td>1 col</td><td>0.9fr 1.1fr, 56px gap</td><td>same</td></tr>
+  <tr><td>prose-split</td><td>1 col</td><td>1 col</td><td>1 col</td><td>0.8fr 1.2fr, 80px gap</td></tr>
+  <tr><td>page-hero__grid</td><td>1 col</td><td>1 col</td><td>1 col</td><td>1.2fr 1fr, 64px gap</td></tr>
+  <tr><td>contact-grid</td><td>1 col</td><td>1 col</td><td>3 col, 24px</td><td>3 col</td></tr>
+  <tr><td>contact-layout</td><td>1 col, 40px</td><td>1 col</td><td>1 col</td><td>1.3fr 1fr, 64px</td></tr>
+  <tr><td>site-footer__grid</td><td>1 col</td><td>2 col</td><td>2 col</td><td>1.4fr 1fr 1fr 1fr, 48px</td></tr>
+</table>
+
+<h3>2.4 Radius, shadows &amp; motion</h3>
+<table>
+  <tr><th>Token</th><th>Value</th><th>Used for</th></tr>
+  <tr><td><code>--radius</code></td><td>10px</td><td>Cards, hero image, video placeholder, contact form, package card, audience card</td></tr>
+  <tr><td><code>--radius-sm</code></td><td>6px</td><td>Buttons, badges, form inputs, eyebrow tags, focus rings</td></tr>
+  <tr><td>Pill</td><td>999px</td><td>Trust seal, credential badges</td></tr>
+  <tr><td><code>--shadow-sm</code></td><td>0 1px 2px rgba(30,30,30,0.04)</td><td>Subtle lift</td></tr>
+  <tr><td><code>--shadow-md</code></td><td>0 8px 24px rgba(30,30,30,0.06)</td><td>Card hover, hero image, page-hero image, package-card--feature</td></tr>
+  <tr><td>Sticky CTA shadow</td><td>0 10px 28px rgba(198,123,92,0.35)</td><td>Mobile sticky button</td></tr>
+</table>
+
+<h4>Transitions</h4>
+<ul>
+  <li><strong>Hover (default):</strong> 0.15s ease on background, color, border-color.</li>
+  <li><strong>Card hover:</strong> 0.18s ease on transform, box-shadow, border-color.</li>
+  <li><strong>Hero word reveal:</strong> 0.55s cubic-bezier(0.22, 1, 0.36, 1).</li>
+  <li><strong>Scroll reveal:</strong> 0.55s ease on opacity + translateY (24px &rarr; 0).</li>
+  <li><strong>Mobile nav panel:</strong> 0.2s ease on transform + opacity.</li>
+  <li>All animations honour <code>@media (prefers-reduced-motion: reduce)</code>.</li>
+</ul>
+
+<!-- BUTTONS -->
+<h3>2.5 Buttons</h3>
+<p>All buttons share base <code>.btn</code> &mdash; flex centred, gap 8px, padding 12px 22px, font-weight 500, border-radius <code>--radius-sm</code>, 1.5px solid border. On hover: <code>translateY(-1px)</code>.</p>
+
+<table>
+  <tr><th>Class</th><th>Sample</th><th>Background</th><th>Text</th><th>Hover</th><th>Used for</th></tr>
+  <tr>
+    <td><code>.btn-primary</code></td>
+    <td><span class="btn-demo btn-demo--primary">Primary action</span></td>
+    <td>--primary</td>
+    <td>#FAF6F0</td>
+    <td>Background &rarr; --primary-dark</td>
+    <td>Rare; reserved for non-accent CTAs</td>
+  </tr>
+  <tr>
+    <td><code>.btn-accent</code></td>
+    <td><span class="btn-demo btn-demo--accent">Book a free call</span></td>
+    <td>--accent</td>
+    <td>#FFFFFF</td>
+    <td>Background &rarr; --accent-dark</td>
+    <td>Default for ALL primary CTAs (header, hero, every page CTA, sticky)</td>
+  </tr>
+  <tr>
+    <td><code>.btn-ghost</code></td>
+    <td><span class="btn-demo btn-demo--ghost">Meet Meave</span></td>
+    <td>transparent</td>
+    <td>--primary</td>
+    <td>Fill --primary, text cream</td>
+    <td>Secondary CTAs, "See packages" / "Read story" buttons</td>
+  </tr>
+  <tr>
+    <td><code>.btn-ghost</code> on dark</td>
+    <td><span class="btn-demo" style="background:transparent;color:#FFF;border:1.5px solid rgba(255,255,255,0.5);padding:10px 18px;font-weight:500;border-radius:6px;font-size:9.5pt;display:inline-flex;">Meet Meave</span></td>
+    <td>transparent</td>
+    <td>#FAF6F0</td>
+    <td>Fill cream, text --primary</td>
+    <td>Inside any <code>.section--dark</code> band</td>
+  </tr>
+  <tr>
+    <td><code>.hero-cinematic__ghost</code></td>
+    <td><span class="btn-demo" style="background:transparent;color:#1F3329;border:1.5px solid rgba(31,51,41,0.45);padding:10px 18px;font-weight:500;border-radius:6px;font-size:9.5pt;display:inline-flex;">Meet Meave</span></td>
+    <td>transparent</td>
+    <td>#FAF6F0 (sample shown inverted for print)</td>
+    <td>Bg fades to rgba(250,246,240,0.1)</td>
+    <td>Cinematic hero only</td>
+  </tr>
+  <tr>
+    <td><code>.text-link</code></td>
+    <td><span style="color:var(--primary);border-bottom:1px solid var(--primary);font-weight:500;">Read Meave's story &rarr;</span></td>
+    <td>&mdash;</td>
+    <td>--primary</td>
+    <td>Text &rarr; --accent, arrow translates 3px</td>
+    <td>Inline links inside copy &amp; cards</td>
+  </tr>
+</table>
+
+<div class="meta-box">
+  <strong>Focus state:</strong> All interactive elements show a 2px <code>--accent</code> outline with 3px offset on <code>:focus-visible</code>.
+</div>
+
+<!-- =============================================================== -->
+<!-- 3. COMPONENTS LIBRARY                                            -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>3. Components Library</h2>
+
+<h3>3.1 Header &amp; navigation</h3>
+
+<h4>Desktop (≥ 1024px)</h4>
+<ul>
+  <li>Sticky to top, <code>z-index: 50</code>.</li>
+  <li>Background <code>rgba(250,246,240,0.92)</code> + <code>backdrop-filter: saturate(1.2) blur(8px)</code>.</li>
+  <li>Bottom border 1px <code>--border</code>.</li>
+  <li>Height 76px, container layout: logo left &mdash; nav links centre/right &mdash; "Book a call" accent CTA right.</li>
+  <li>Nav links: 0.95rem Inter 400, 28px gap. On hover or <code>aria-current="page"</code>: text colour <code>--primary</code> + 2px terracotta underline.</li>
+  <li>Logo: Fraunces 600, 1.5rem, <code>--primary</code>, "Meave" wordmark.</li>
+</ul>
+
+<h4>Mobile (&lt; 1024px)</h4>
+<ul>
+  <li>Header height 68px, nav links hidden, hamburger toggle visible (44&times;44px).</li>
+  <li>Tap toggle &rarr; body gets <code>data-nav-open</code> attribute &rarr; full-screen panel slides in (transform translateY -12px&rarr;0, opacity 0&rarr;1, 0.2s ease).</li>
+  <li>Body locks scroll while open.</li>
+  <li>Mobile-nav links: Fraunces 1.35rem, <code>--primary</code>, 14px vertical padding, 1px border-bottom <code>--border</code>.</li>
+  <li>Bottom of panel: full-width "Book a free call" accent CTA.</li>
+  <li>Closes on: link click, Escape key, toggle re-tap.</li>
+</ul>
+
+<h4>Header CTA per page</h4>
+<table>
+  <tr><th>Page</th><th>CTA label</th><th>Destination</th></tr>
+  <tr><td>Home</td><td>Book a call</td><td>contact.html</td></tr>
+  <tr><td>About</td><td>Book a call</td><td>contact.html</td></tr>
+  <tr><td>For Parents</td><td>Book a discovery call</td><td>contact.html</td></tr>
+  <tr><td>For Schools</td><td>Enquire about training</td><td>contact.html</td></tr>
+  <tr><td>For Organisations</td><td>Download prospectus</td><td>contact.html</td></tr>
+  <tr><td>Contact</td><td>Get in touch</td><td>#contact-form</td></tr>
+</table>
+
+<h3>3.2 Footer</h3>
+<ul>
+  <li>Background <code>--primary-dark</code> (#1F3329).</li>
+  <li>Padding 56px top, 24px bottom.</li>
+  <li>Text colour <code>rgba(250,246,240,0.8)</code>; brand wordmark and titles in pure cream <code>#FAF6F0</code>.</li>
+  <li>Desktop grid: 4 columns (1.4fr 1fr 1fr 1fr) with 48px gap.</li>
+  <li>Tablet: 2 cols. Mobile: 1 col.</li>
+</ul>
+<h4>Columns</h4>
+<ol>
+  <li><strong>Brand block</strong> &mdash; "Meave" wordmark, about copy (40ch max), social icons.</li>
+  <li><strong>Services</strong> &mdash; For Parents, For Schools &amp; Events, For Organisations.</li>
+  <li><strong>Meave</strong> &mdash; About, Contact, Book a call.</li>
+  <li><strong>Credentials</strong> &mdash; "Certified Triple P practitioner" + "Enhanced DBS &middot; Insured" badges (pill-shaped, 1px border at 20% opacity).</li>
+</ol>
+<h4>Footer about copy</h4>
+<div class="copy-block"><span class="label">Verbatim</span>Practical parenting coaching, talks and consultancy &mdash; UK-wide. Led by Meave Darroux, certified Triple P practitioner.</div>
+<h4>Footer bottom row</h4>
+<ul>
+  <li>1px top border at 15% opacity.</li>
+  <li>Left: "&copy; 2026 Meave. All rights reserved." (year auto-updated by JS).</li>
+  <li>Right: "Site built with care &mdash; [placeholder: credit / privacy / terms]".</li>
+</ul>
+<h4>Social icons</h4>
+<ul>
+  <li>36&times;36px circle, 1px border at 25% opacity.</li>
+  <li>LinkedIn + Instagram (URLs are placeholders).</li>
+  <li>Hover: filled with <code>--accent</code>, white icon.</li>
+</ul>
+
+<!-- COMPONENTS CONT'D -->
+<div class="page-break"></div>
+<h3>3.3 Cards, testimonials &amp; stats</h3>
+
+<h4>Generic <code>.card</code></h4>
+<ul>
+  <li>White background, 1px <code>--border</code>, radius 10px, padding 32px 28px.</li>
+  <li>Hover: lift 3px, <code>--shadow-md</code>, border &rarr; #D6CDBE.</li>
+  <li>Optional <code>.card__icon</code>: 48px circle, <code>--bg-alt</code> background, <code>--primary</code> stroke icon.</li>
+  <li><code>.card__title</code> = h3 styling. <code>.card__body</code> = muted text. <code>.card__link</code> = bottom-aligned text link.</li>
+  <li><code>.card__meta</code> (used on For Orgs): top border, italic muted text.</li>
+</ul>
+
+<h4><code>.pillar-card</code> &mdash; the three-buyer split on home</h4>
+<ul>
+  <li>Inherits <code>.card</code>.</li>
+  <li><code>border-top: 4px solid</code> with rotating colour: child 1 = accent, child 2 = primary, child 3 = olive (#8A9A5B).</li>
+  <li>Adds <code>.card__label</code> uppercase eyebrow at top.</li>
+</ul>
+
+<h4><code>.audience-card</code> &mdash; "I am a..." selector</h4>
+<ul>
+  <li>White card with terracotta tag, large display title, body text, "Arrow CTA" link at bottom.</li>
+  <li>Hover: lift 3px, <code>--shadow-md</code>, border &rarr; <code>--accent</code>, arrow icon translates 4px right.</li>
+  <li><strong>Dark variant</strong> (<code>.audience-selector-section--dark</code> on home): <code>--primary-dark</code> card on <code>--primary</code> band, cream titles, muted cream body.</li>
+</ul>
+
+<h4><code>.testimonial</code></h4>
+<ul>
+  <li>White card, decorative quote-mark SVG (<code>.testimonial__mark</code>) in <code>--accent</code>.</li>
+  <li>Quote: Fraunces 1.05rem, line-height 1.5, text colour <code>--text</code>, italic-feeling but not actually italic.</li>
+  <li>Attribution: 0.9rem muted, with <code>.testimonial__name</code> displayed as 500-weight <code>--primary</code> on its own line above the role.</li>
+  <li>Used in 3-up <code>.card-grid</code> (home, for-schools secondary, for-orgs secondary).</li>
+</ul>
+
+<h4><code>.pull-quote</code> &mdash; testimonial highlight</h4>
+<ul>
+  <li>Centred, max-width 860px, no card chrome.</li>
+  <li>Decorative quote SVG (36&times;36px) above, 80% opacity terracotta.</li>
+  <li>Quote text: Fraunces, clamp(1.2rem, 1rem + 1vw, 1.6rem), <code>--primary</code>, 24px bottom margin.</li>
+  <li><code>cite</code> with <code>strong</code> name (--primary) and role line below in muted.</li>
+</ul>
+
+<h4><code>.featured-quote-band</code> &mdash; terracotta band (home only)</h4>
+<ul>
+  <li>Full-width section, background <code>--accent</code>, white text.</li>
+  <li>Decorative oversized quote-mark SVG (140&times;112px) absolutely positioned top centre at 10% opacity.</li>
+  <li>Quote: Fraunces clamp(1.4rem, 1rem + 2vw, 2.2rem), max-width 800px, centred.</li>
+  <li>Attribution: 0.95rem at 80% white opacity, "&mdash;" prefix.</li>
+</ul>
+
+<h4><code>.stat-row</code> &amp; <code>.stat</code></h4>
+<ul>
+  <li>2-up grid mobile, 4-up tablet+.</li>
+  <li>Each stat: 2px <code>--accent</code> left border, 16px left padding.</li>
+  <li>Number: Fraunces 500, clamp(1.5rem, 1.2rem + 1vw, 2rem), <code>--primary</code>.</li>
+  <li>Label: 0.9rem muted, line-height 1.45.</li>
+  <li>Compact variant <code>.stat-row--compact</code>: smaller number for For Orgs ROI strip.</li>
+  <li><strong>Animation:</strong> homepage stats use <code>data-count="N"</code> + <code>data-suffix="+"|"%"</code>; JS counts up over 1400ms with ease-out quad.</li>
+</ul>
+
+<h4><code>.credential-list</code> &mdash; About page</h4>
+<ul>
+  <li>Two-column grid (≥ 768px), white cards with 1px border, 20px padding.</li>
+  <li>Each item: terracotta tick SVG + display-font <strong>strong</strong> heading + muted span.</li>
+</ul>
+
+<!-- HOW IT WORKS / STEPS / PACKAGE / PROGRAMME -->
+<h4><code>.steps</code> &mdash; "How it works"</h4>
+<ul>
+  <li>3-up grid (≥ 768px).</li>
+  <li>Each step: 44&times;44px <code>--primary</code> circle with cream Fraunces number, then h3, then muted paragraph.</li>
+</ul>
+
+<h4><code>.package-card</code> (For Parents pricing &amp; For Schools fees)</h4>
+<ul>
+  <li>White card, 1px border, radius 10px, padding 32px 28px.</li>
+  <li><code>.package-card__price</code>: Fraunces 1.3rem, <code>--accent</code>, with smaller muted span unit.</li>
+  <li>Inline check-list with terracotta dots (<code>.inline-check-list li::before</code>: 10px circle, --accent, 85% opacity).</li>
+  <li>Bottom CTA full-width.</li>
+  <li><strong>Feature variant</strong> <code>.package-card--feature</code>: <code>--primary</code> border, <code>--shadow-md</code>, "Most chosen" / "Most booked" tag absolutely positioned at top-left, primary background.</li>
+</ul>
+
+<h4><code>.programme-card</code> (For Schools)</h4>
+<ul>
+  <li>White card with tinted terracotta tag (rgba(198,123,92,0.1) bg, --accent text, uppercase 0.72rem).</li>
+  <li>h3 + body + check-list + bottom <code>.programme-card__meta</code> (italic muted, top border, "Best for: ...").</li>
+  <li>2-up grid (≥ 768px).</li>
+</ul>
+
+<h3>3.4 FAQ accordion</h3>
+<ul>
+  <li>Native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> elements wrapped in <code>.faq__item</code>.</li>
+  <li>Max-width 780px, centred.</li>
+  <li>Each item: 1px <code>--border</code> bottom (top on first); summary in Fraunces 500 1.1rem <code>--primary</code>, 22px vertical padding; rotating + icon 18px on right.</li>
+  <li>Open state: + icon rotates 45deg.</li>
+  <li>Body: max-width 68ch, muted, 24px bottom padding.</li>
+  <li><strong>Behaviour:</strong> JS auto-closes other open items when one opens (single-open accordion).</li>
+</ul>
+
+<h3>3.5 Contact form</h3>
+<ul>
+  <li>White card, 1px <code>--border</code>, radius 10px, padding 32px (24px mobile).</li>
+  <li>Fields: 2-up row for name + email (≥ 640px), then full-width audience select, full-width message textarea, consent checkbox row, submit button.</li>
+  <li>Inputs: <code>--bg</code> background, 1px <code>--border</code>, radius <code>--radius-sm</code>, 11px 14px padding. Focus: border &rarr; <code>--accent</code>, background &rarr; white.</li>
+  <li>Textarea: min-height 120px, vertical resize only, Inter font.</li>
+  <li>Submit: <code>.btn-accent</code>, but <code>disabled</code> in prototype with 0.55 opacity and not-allowed cursor.</li>
+  <li>Bottom note: "Form submission disabled in prototype &mdash; please email hello@[placeholder-domain].co.uk instead." (dashed border).</li>
+</ul>
+<h4>Audience options (select)</h4>
+<ol>
+  <li>Parent looking for 1-to-1 coaching</li>
+  <li>School, MAT or conference organiser</li>
+  <li>Employer, HR or People lead</li>
+  <li>Nursery, charity or local authority</li>
+  <li>Something else</li>
+</ol>
+
+<h3>3.6 Logo strip &amp; trust bar</h3>
+<h4><code>.logo-strip</code></h4>
+<ul>
+  <li>Centred. Label above (0.8rem uppercase, tracked 0.14em, muted).</li>
+  <li>Row: flex, wrap, centre-aligned, gap 16px row / 40px column.</li>
+  <li><strong>Text item</strong> <code>.logo-strip__item</code>: 120px min-width, 44px height, 1px dashed <code>--border</code>, italic Fraunces 0.95rem muted.</li>
+  <li><strong>Logo image item</strong> <code>.logo-strip__item--logo</code>: no chrome, 44px tall img, max-width 160px, <code>filter: grayscale(1) opacity(0.55)</code>. Hover lifts to grayscale(0) opacity(0.85).</li>
+</ul>
+
+<h4><code>.trust-bar</code> &mdash; Triple P seal block</h4>
+<ul>
+  <li>White rounded card, 1px border, padding 28px 36px.</li>
+  <li>2-column at ≥ 768px: seal pill on left, headline + body on right.</li>
+  <li><strong>Seal:</strong> 2px <code>--primary</code> border, 999px radius, 14px gap, contains a 44px <code>--primary</code> circle with cream tick + a 2-line label (eyebrow uppercase + Fraunces title).</li>
+</ul>
+
+<!-- ANIMATION -->
+<div class="page-break"></div>
+<h3>3.7 Animation &amp; motion</h3>
+
+<div class="meta-box"><strong>Scope:</strong> All scroll/word-by-word animations are scoped to the homepage only (presence of <code>.hero-cinematic</code>) and are skipped entirely when <code>prefers-reduced-motion: reduce</code> is set. Mobile-nav and FAQ animations run on every page.</div>
+
+<h4>1. Word-by-word hero reveal</h4>
+<ul>
+  <li>JS splits <code>.hero-cinematic__h1</code> textContent into <code>&lt;span class="hw"&gt;</code> per word.</li>
+  <li>Each word gets <code>animation-delay: index * 85ms</code>.</li>
+  <li>Animation: <code>@keyframes wordFadeUp</code> &mdash; opacity 0&rarr;1, translateY 20px&rarr;0, 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards.</li>
+  <li>aria-label on h1 retains the full plain-text string for screen readers.</li>
+</ul>
+
+<h4>2. Scroll reveal (homepage only)</h4>
+<ul>
+  <li>JS adds <code>.reveal</code> class to: <code>.card</code>, <code>.audience-card</code>, <code>.stat</code>, <code>.pillar-card</code>, <code>.testimonial</code>, <code>.step</code>.</li>
+  <li>Section headings (<code>.section__head h2</code>) get <code>.reveal.reveal--left</code>.</li>
+  <li>IntersectionObserver: threshold 0.15, rootMargin <code>0px 0px -60px 0px</code>.</li>
+  <li>On intersect: index in parent calculated, <code>transitionDelay = idx * 100ms</code>, <code>.revealed</code> class added &rarr; opacity 1, translate(0,0).</li>
+  <li>Transition: 0.55s ease.</li>
+</ul>
+
+<h4>3. Stat count-up</h4>
+<ul>
+  <li>Each stat number has <code>data-count</code> + optional <code>data-suffix</code>.</li>
+  <li>Second IntersectionObserver (threshold 0.4) triggers RAF loop.</li>
+  <li>Duration 1400ms, ease-out quad: <code>1 - (1 - p)^2</code>.</li>
+  <li>Numbers ≥ 1000 formatted with <code>toLocaleString('en-GB')</code>; suffix appended.</li>
+</ul>
+
+<h4>4. Sticky CTA fade (mobile, every page)</h4>
+<ul>
+  <li>Hidden on desktop (≥ 1024px).</li>
+  <li>IntersectionObserver watches <code>.hero</code> with rootMargin <code>-40px 0px 0px 0px</code>.</li>
+  <li>When hero leaves viewport &rarr; <code>.visible</code> class added &rarr; opacity 1, translateY 0.</li>
+  <li><strong>Note:</strong> the cinematic homepage uses <code>.hero-cinematic</code>, not <code>.hero</code>, so on home this falls back to "always visible" (acceptable, but worth noting if reskinning).</li>
+</ul>
+
+<h4>5. Video play-button pulse</h4>
+<ul>
+  <li>About page video placeholder &mdash; 72px terracotta circle.</li>
+  <li><code>@keyframes playPulse</code> 2s ease-in-out infinite: scale 1&rarr;1.08 + outward shadow ring fade.</li>
+</ul>
+
+<h4>6. Hover micro-interactions</h4>
+<ul>
+  <li>Buttons: translateY -1px on hover.</li>
+  <li>Cards: translateY -3px + shadow-md.</li>
+  <li>Text-link arrow: translateX 3px.</li>
+  <li>FAQ icon: rotate 45deg.</li>
+  <li>Audience-card arrow: translateX 4px.</li>
+</ul>
+
+<!-- =============================================================== -->
+<!-- 4. PAGE BREAKDOWNS                                               -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>4. Page-by-Page Breakdown</h2>
+
+<!-- HOME -->
+<h3>4.1 Home &mdash; <code>index.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Establish credibility instantly, route the visitor to the right pillar (parent / school / organisation), and make booking a discovery call frictionless. <strong>Audience:</strong> All three at once &mdash; the page must serve any of them within the first scroll. <strong>Visual register:</strong> Cinematic, full-bleed hero. Distinct from inner pages.
+</div>
+
+<h4>Section order (top to bottom)</h4>
+<ol>
+  <li>Header (sticky, shared)</li>
+  <li>Cinematic hero</li>
+  <li>Audience selector (dark band)</li>
+  <li>Three pillars</li>
+  <li>Trust bar + logo strip</li>
+  <li>Stats (count-up)</li>
+  <li>About snippet</li>
+  <li>Testimonials</li>
+  <li>Featured quote band (terracotta)</li>
+  <li>How it works</li>
+  <li>FAQ</li>
+  <li>Final CTA band (dark)</li>
+  <li>Footer (shared)</li>
+  <li>Sticky CTA (mobile)</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">1</span>
+    <span class="section-card__title">Cinematic hero</span>
+    <span class="section-card__type">Full-bleed, 100vh</span>
+  </div>
+  <div class="section-card__layout">Background image (<code>images/hero-home.jpg</code>) absolutely positioned, primary-dark overlay at 0.58 opacity, content max-width 720px left-aligned, 80px top &amp; bottom padding inside <code>.hero-cinematic__content</code>. <code>min-height: calc(100vh - var(--header-h))</code>.</div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Parenting coaching &middot; Talks &middot; Consultancy
+    <h5>H1 (animates word by word)</h5>Raising confident children starts with confident parents.
+    <h5>Lede</h5>I'm Meave &mdash; a certified Triple P practitioner with 15+ years of frontline experience. Practical, evidence-based support for parents, schools, and organisations across the UK.
+    <h5>CTAs</h5>"Book a free discovery call" (accent, &rarr; contact.html) &nbsp; / &nbsp; "Meet Meave" (ghost on dark, &rarr; about.html)
+    <h5>Trust row (3 ticks)</h5>Certified Triple P Practitioner &nbsp;&middot;&nbsp; 15+ years experience &nbsp;&middot;&nbsp; UK-wide
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">2</span>
+    <span class="section-card__title">Audience selector (dark band)</span>
+    <span class="section-card__type">--primary background, 64px padding</span>
+  </div>
+  <div class="section-card__layout">3-up grid of clickable cards, dark variant. Each card &rarr; relevant pillar page.</div>
+  <div class="section-card__copy">
+    <h5>Card 1 &mdash; Parent</h5>Tag: "I am a" &middot; Title: <strong>Parent</strong> &middot; Body: "1-to-1 coaching to restore calm at home &mdash; with evidence-based strategies, not more willpower." &middot; CTA: "Book a discovery call &rarr;" (for-parents.html)
+    <h5>Card 2 &mdash; School Leader</h5>Tag: "I am a" &middot; Title: <strong>School Leader</strong> &middot; Body: "Ofsted-aligned talks, parent workshops and staff CPD that strengthen parental engagement and student wellbeing." &middot; CTA: "Enquire about training &rarr;" (for-schools.html)
+    <h5>Card 3 &mdash; Employer</h5>Tag: "I am an" &middot; Title: <strong>Employer</strong> &middot; Body: "Credible parenting-support strategy for the 40% of your workforce who are also raising children." &middot; CTA: "Download prospectus &rarr;" (for-organisations.html)
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">3</span>
+    <span class="section-card__title">Three pillars</span>
+    <span class="section-card__type">--bg-alt section, card-grid 3-up</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>How I can help
+    <h5>H2</h5>Support that meets you where you are
+    <h5>Lede</h5>Whether you're a parent navigating a tough patch, a school leader planning a community event, or an organisation shaping family-focused policy &mdash; there's a clear route in.
+    <h5>Card 1 &mdash; For parents</h5>Title: <strong>1-to-1 parenting coaching</strong> &middot; Body: "Evidence-based, non-judgemental sessions using Triple P &mdash; helping you handle tantrums, transitions, sleep, screens and siblings with more calm and less guilt." &middot; Link: "Explore parent coaching &rarr;"
+    <h5>Card 2 &mdash; For schools &amp; events</h5>Title: <strong>Talks, workshops &amp; keynotes</strong> &middot; Body: "Warm, practical sessions for parent audiences and staff teams &mdash; from single-evening workshops to termly programmes. Topics cover behaviour, resilience, and the early years." &middot; Link: "See talks &amp; workshops &rarr;"
+    <h5>Card 3 &mdash; For organisations</h5>Title: <strong>Consultancy &amp; programme design</strong> &middot; Body: "Strategic support for nurseries, charities, local authorities and employers &mdash; designing, delivering and evaluating parenting and family-support programmes." &middot; Link: "Explore consultancy &rarr;"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">4</span>
+    <span class="section-card__title">Trust bar + logo strip</span>
+    <span class="section-card__type">Default --bg, two stacked components</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Trust seal label</h5>Eyebrow: "Certified" &middot; Title: "Triple P Practitioner"
+    <h5>Trust headline</h5>Evidence-based practice, rigorously accredited.
+    <h5>Trust body</h5>Triple P (Positive Parenting Program) is one of the most extensively researched parenting frameworks in the world, used by the NHS, local authorities and schools across the UK.
+    <h5>Logo strip label</h5>As featured in &amp; partnered with
+    <h5>Logos shown (greyscale, 44px tall)</h5>NELFT NHS &middot; LB Hillingdon &middot; King Solomon Academy &middot; Hampstead School &middot; HM Prison &amp; Probation Service &middot; Islington Council
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">5</span>
+    <span class="section-card__title">Stats &mdash; with count-up animation</span>
+    <span class="section-card__type">--bg-alt band</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Four stats (Fraunces, terracotta left border)</h5>
+    <ul>
+      <li>15+ &mdash; Years working with families</li>
+      <li>2,000+ &mdash; Parents supported</li>
+      <li>60+ &mdash; Schools &amp; organisations</li>
+      <li>100% &mdash; Triple P-certified practice</li>
+    </ul>
+    <em>Numbers count up over 1.4s when scrolled into view (homepage only).</em>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">6</span>
+    <span class="section-card__title">About snippet</span>
+    <span class="section-card__type">--bg-alt section, about-split (image L, text R)</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Image</h5><code>images/about-group.jpg</code> &mdash; alt: "Meave with parents at a Triple P group graduation, King Solomon"
+    <h5>Eyebrow</h5>About Meave
+    <h5>H2</h5>Fifteen years on the frontline of family support &mdash; now independent.
+    <h5>Para 1</h5>After more than a decade leading parenting and early-years work inside a UK children's charity, I've stepped out to continue that mission as an independent consultant. The approach is the same one that's changed thousands of family routines: warm, evidence-based, and relentlessly practical.
+    <h5>Para 2</h5>Trained in Triple P (Positive Parenting Program) &mdash; one of the most widely researched parenting frameworks in the world &mdash; I bring the same methodology into every session, whether it's with a parent at the kitchen table, a school hall of 200, or a commissioning team at a local authority.
+    <h5>Link</h5>Read Meave's story &rarr; (about.html)
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">7</span>
+    <span class="section-card__title">Testimonials</span>
+    <span class="section-card__type">--bg, 3-up card-grid</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>In their words
+    <h5>H2</h5>The families and teams I've worked with
+    <h5>Quote 1 &mdash; Linda Smith</h5>"I gave her my most vulnerable parents and it is nice to see the positive difference this has made to the parents and their children. Their confidence has grown and I can see the difference in their ability to believe in themselves." &mdash; Family Support Worker, Frays Academy Trust
+    <h5>Quote 2 &mdash; Heather Daulphin</h5>"By investing in Brilliant Parents, we are being proactive, strategic and unapologetic. We have come to realise that parenting support is vital &mdash; informative, developmental and empowering. It has become an intrinsic part of what we do." &mdash; Deputy Headteacher, Hampstead School
+    <h5>Quote 3 &mdash; Kat Wyatt</h5>"Meave and the whole team are relentless in their pursuit of delivering contextually and culturally informed parenting support. Innovative and creative in their delivery, reaching parents across a variety of platforms." &mdash; Assistant Director, Prevention &amp; Youth Justice, London Borough of Hillingdon
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">8</span>
+    <span class="section-card__title">Featured quote band</span>
+    <span class="section-card__type">--accent (terracotta) full-width band, white text</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Quote</h5>"Meave is deeply passionate about positive parenting. She brings a thoughtful, empathetic approach, ensuring that parents receive the guidance and support they need. Her professionalism, expertise, and unwavering commitment make her an invaluable asset to any organisation."
+    <h5>Attribution</h5>&mdash; Assoc. Prof. Matt Buttery, CEO, Triple P UK &amp; Ireland
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">9</span>
+    <span class="section-card__title">How it works</span>
+    <span class="section-card__type">--bg-alt section, 3-step grid</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>How it works
+    <h5>H2</h5>A straightforward way to start
+    <h5>Lede</h5>No mystery, no hard sell. Three simple steps to figure out whether we're a good fit.
+    <h5>Step 1</h5><strong>Get in touch</strong> &mdash; Send a short message about what's going on. Parents, schools and organisations all use the same enquiry form &mdash; I'll route it from there.
+    <h5>Step 2</h5><strong>Free 20-minute call</strong> &mdash; We talk through what you're hoping to change, what you've already tried, and whether my approach is the right fit. No obligation.
+    <h5>Step 3</h5><strong>A plan that fits</strong> &mdash; I'll send a written proposal &mdash; sessions, workshop, or programme &mdash; tailored to your situation, timeline and budget.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">10</span>
+    <span class="section-card__title">FAQ</span>
+    <span class="section-card__type">--bg, 5 single-open accordion items, max-width 780px</span>
+  </div>
+  <div class="section-card__layout">See section 5.3 for verbatim FAQ copy across all pages.</div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header">
+    <span class="section-card__num">11</span>
+    <span class="section-card__title">Final CTA band</span>
+    <span class="section-card__type">.section--dark, centred</span>
+  </div>
+  <div class="section-card__copy">
+    <h5>Eyebrow (terracotta)</h5>Ready when you are
+    <h5>H2</h5>Let's talk about what would actually help.
+    <h5>Body</h5>Whether it's a single tough bedtime, a whole-school parent evening, or a commissioned programme &mdash; start with a free call.
+    <h5>CTAs</h5>"Book a free call" (accent &rarr; contact.html) &nbsp; / &nbsp; "Meet Meave" (ghost &rarr; about.html)
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="page-break"></div>
+<h3>4.2 About &mdash; <code>about.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Earn trust by showing the human and the track record together. Counter the "she's new" assumption (she's gone independent after a decade leading a charity). <strong>Audience:</strong> Anyone who clicked "Meet Meave". <strong>Visual register:</strong> Inner-page hero (compact, image-right), tighter sections.
+</div>
+
+<h4>Section order</h4>
+<ol>
+  <li>Header (shared)</li>
+  <li>Page hero (compact, image right)</li>
+  <li>Stats row</li>
+  <li>Video introduction placeholder (dark green)</li>
+  <li>Story / prose-split</li>
+  <li>How I work (3-card principles)</li>
+  <li>Credentials list</li>
+  <li>Final CTA band (dark)</li>
+  <li>Footer (shared)</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">1</span><span class="section-card__title">Page hero</span><span class="section-card__type">--bg, 2-col grid (1.2fr text / 1fr image)</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>About Meave
+    <h5>H1</h5>15 years. Thousands of families. One practitioner.
+    <h5>Lede</h5>I started this work because I saw too many families being handed leaflets when what they needed was a plan. Today I help parents, schools and organisations turn evidence into everyday practice &mdash; without jargon, judgement, or one-size-fits-all scripts.
+    <h5>CTAs</h5>"Book a discovery call" (accent &rarr; contact.html) &nbsp; / &nbsp; "See my track record" (ghost &rarr; #track-record)
+    <h5>Image</h5><code>images/about-hero.jpg</code> &mdash; alt: "Meave teaching in a classroom, pointing to the group"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">2</span><span class="section-card__title">Stats row</span><span class="section-card__type">--bg-alt band</span></div>
+  <div class="section-card__copy">
+    <ul>
+      <li>15+ &mdash; Years working with families</li>
+      <li>2,000+ &mdash; Parents supported 1-to-1 and in groups</li>
+      <li>60+ &mdash; Schools, nurseries &amp; organisations advised</li>
+      <li>100% &mdash; Triple P-certified, evidence-based practice</li>
+    </ul>
+    <em>Static on this page (no count-up animation).</em>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">3</span><span class="section-card__title">Video introduction</span><span class="section-card__type">--primary band, max-width 900px centred</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow (terracotta)</h5>In Meave's words
+    <h5>H2 (cream)</h5>The work I do, and why I do it.
+    <h5>Placeholder</h5>16:9 dark video well with pulsing 72px terracotta play button (disabled). Bottom label: "Video introduction coming soon".
+    <h5>Quote (italic display, cream 75%)</h5>"I started this work because I saw too many families being handed leaflets when what they needed was a plan."
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">4</span><span class="section-card__title">Story prose-split</span><span class="section-card__type">--bg, anchor #track-record</span></div>
+  <div class="section-card__copy">
+    <h5>Aside (left, 0.8fr)</h5>Eyebrow: "My story" &middot; H2: "From frontline practitioner to independent consultant." &middot; Lede: "The charity I led for a decade closed in [placeholder: year]. Rather than step away from the work, I took the chance to rebuild it &mdash; leaner, more focused, and with the same families at the centre."
+    <h5>Prose (right, 1.2fr)</h5>4 paragraphs (verbatim, contains placeholders &mdash; see section 6).
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">5</span><span class="section-card__title">How I work &mdash; principles</span><span class="section-card__type">--bg-alt, 3-up card-grid</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>How I work
+    <h5>H2</h5>Evidence-based, non-judgemental, practical.
+    <h5>Lede</h5>Three principles shape everything I do &mdash; with parents in my coaching room, with staff in a school hall, and with boards in an organisation.
+    <h5>Card 1</h5><strong>Evidence, not opinion</strong> &mdash; I use Triple P and other peer-reviewed frameworks &mdash; because what works at scale also works around your kitchen table. No fads, no guru energy.
+    <h5>Card 2</h5><strong>Warmth without judgement</strong> &mdash; Parenting is already hard enough. My job isn't to critique how you're doing it &mdash; it's to add tools to what's already working and quietly take pressure off what isn't.
+    <h5>Card 3</h5><strong>Measurable outcomes</strong> &mdash; Every engagement &mdash; whether a family or an employer &mdash; starts with a clear definition of what "better" looks like and how we'll know when we're there.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">6</span><span class="section-card__title">Credentials list</span><span class="section-card__type">--bg, 2-col tick-list of cards</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Credentials
+    <h5>H2</h5>Qualifications, memberships &amp; safeguards.
+    <h5>Item 1</h5><strong>Certified Triple P Practitioner</strong> &mdash; Delivering level 2&ndash;4 interventions for families of children aged 0&ndash;12 and 12&ndash;16.
+    <h5>Item 2 [placeholder]</h5><strong>[placeholder: Professional registration &mdash; e.g. Social Work England / BACP / Member of PAC-UK]</strong> &mdash; Ongoing CPD and clinical supervision.
+    <h5>Item 3</h5><strong>Enhanced DBS &amp; full professional insurance</strong> &mdash; Required safeguards for 1-to-1 work with children and families.
+    <h5>Item 4</h5><strong>Sole approved parenting provider &mdash; London Borough of Hillingdon (7 years running)</strong> &mdash; Delivering commissioned parenting programmes and family support across the borough since 2018.
+    <h5>Item 5</h5><strong>Commissioned by the NHS, prisons, local authorities and multi-academy trusts</strong> &mdash; Previous partners include NELFT CAMHS, HMP Holloway, HMP Downview, Barnet, Brent, Harrow, Haringey, Chelsea &amp; Westminster, Islington, and Greenshaw Learning Trust.
+    <h5>Item 6 [placeholder]</h5><strong>[placeholder: Further qualifications &mdash; e.g. MSc in Child &amp; Adolescent Mental Health]</strong> &mdash; Specialist training in [placeholder: neurodiversity / trauma-informed practice / attachment].
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">7</span><span class="section-card__title">Final CTA</span><span class="section-card__type">.section--dark, centred</span></div>
+  <div class="section-card__copy">
+    <h5>H2</h5>Ready to work together?
+    <h5>Body</h5>Whether you're a parent, a school leader or an organisation &mdash; the first conversation is always free and always honest about whether I'm the right fit.
+    <h5>CTAs</h5>"Book a free call" (accent) &nbsp; / &nbsp; "See what I offer" (ghost &rarr; for-parents.html)
+  </div>
+</div>
+
+<!-- FOR PARENTS -->
+<div class="page-break"></div>
+<h3>4.3 For Parents &mdash; <code>for-parents.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Convert parents who are searching for help &mdash; reduce friction to "book a discovery call". <strong>Audience:</strong> Stretched UK parents of children 0&ndash;16. <strong>Conversion CTA:</strong> "Book a discovery call" (accent), present in header, hero, packages, FAQ section, sticky.
+</div>
+
+<h4>Section order</h4>
+<ol>
+  <li>Header</li>
+  <li>Page hero (image right)</li>
+  <li>"Is this you?" pain points (2-col check-list)</li>
+  <li>What coaching looks like (about-split, image right)</li>
+  <li>Coaching packages (3-up package-grid)</li>
+  <li>How it works (3-step)</li>
+  <li>Testimonials (3-up)</li>
+  <li>FAQ (6 items)</li>
+  <li>Final CTA (dark)</li>
+  <li>Footer</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">1</span><span class="section-card__title">Page hero</span><span class="section-card__type">--bg</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>For Parents &middot; 1-to-1 coaching
+    <h5>H1</h5>Restore calm at home with evidence-based strategies &mdash; not more willpower.
+    <h5>Lede</h5>If bedtimes, tantrums, mornings or sibling rows are running your family, you don't need another parenting book. You need a plan that fits your actual life &mdash; and someone to think it through with you. That's what I do.
+    <h5>CTAs</h5>"Book a discovery call" (accent) &nbsp; / &nbsp; "See coaching packages" (ghost &rarr; #packages)
+    <h5>Fineprint</h5>Free 20-minute discovery call. No obligation. Online or in person.
+    <h5>Image</h5><code>images/parents-hero.jpg</code> &mdash; alt: "Dad and children walking hand in hand along a country lane"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">2</span><span class="section-card__title">"Is this you?" pain points</span><span class="section-card__type">--bg-alt, 2-col check-list</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Is this you?
+    <h5>H2</h5>You're a good parent. You're also exhausted.
+    <h5>Lede</h5>Most of the families I work with are doing everything "right" &mdash; and still feel like the wheels are coming off. Sound familiar?
+    <h5>Six tick items</h5>
+    <ol>
+      <li>Bedtimes or mornings have become a daily battle you dread.</li>
+      <li>You're shouting more than you want to &mdash; and feeling terrible about it afterwards.</li>
+      <li>Siblings are fighting constantly and no strategy seems to hold for more than a week.</li>
+      <li>You and your partner are on different pages about boundaries and it's causing friction.</li>
+      <li>Your child is anxious, withdrawn, or struggling at school &mdash; and you don't know what would actually help.</li>
+      <li>You've read the books and followed the Instagram accounts and it hasn't translated into real change.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">3</span><span class="section-card__title">What coaching looks like</span><span class="section-card__type">--bg, about-split</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>What coaching actually looks like
+    <h5>H2</h5>A practical, private plan built around your family.
+    <h5>Body</h5>Together we'll look at what's happening now &mdash; not a generic version of it &mdash; and build a short, workable plan you can actually use this week. I draw on the Triple P (Positive Parenting Program) framework, adapted to your child's age, temperament and the realities of your household.
+    <h5>Inline check-list</h5>
+    <ul>
+      <li>Confidential, non-judgemental sessions &mdash; online or in person</li>
+      <li>Clear strategies for the behaviour you're stuck on</li>
+      <li>Homework that takes minutes, not evenings</li>
+      <li>Follow-up between sessions when you need it</li>
+      <li>Support for both parents, or co-parents working apart</li>
+    </ul>
+    <h5>CTA</h5>"Book a discovery call" (accent)
+    <h5>Image</h5><code>images/parents-family.jpg</code> &mdash; alt: "Family together in warm evening light"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">4</span><span class="section-card__title">Coaching packages</span><span class="section-card__type">--bg-alt, 3-up package-grid, anchor #packages</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Coaching packages
+    <h5>H2</h5>Choose what fits your situation.
+    <h5>Lede</h5>Every engagement starts with a free discovery call so we can work out together what the right package is &mdash; or whether you need anything at all.
+    <h5>Card 1 &mdash; Reset Session</h5>Price: <strong>&pound;[placeholder]</strong> / single 75-minute session. Sub: "A focused one-off for a specific, contained issue &mdash; a sleep regression, a new-school transition, a sibling flashpoint." Includes: Pre-session intake form &middot; 75-minute coaching conversation &middot; Written follow-up plan within 48 hours &middot; One week of email support.
+    <h5>Card 2 &mdash; Six-Week Coaching Programme [feature]</h5>Tag: <strong>Most chosen</strong>. Price: <strong>&pound;[placeholder]</strong> / six weekly sessions. Sub: "The core Triple P-informed programme. Best for families wanting meaningful, lasting change across the most common behavioural and emotional challenges." Includes: Six weekly 60-minute sessions (online or in person) &middot; Personalised plan built with you in week one &middot; Tailored resources after every session &middot; Between-session messaging support &middot; Optional joint session for co-parents.
+    <h5>Card 3 &mdash; Extended Support</h5>Price: <strong>&pound;[placeholder]</strong> / bespoke engagement. Sub: "For more complex situations &mdash; neurodivergence, separation, bereavement, or layered behavioural challenges that need sustained work." Includes: Initial 90-minute deep-dive session &middot; Fortnightly sessions over three months &middot; Coordination with schools or clinicians when useful &middot; Written progress review at weeks 6 and 12.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">5</span><span class="section-card__title">How it works (parents variant)</span><span class="section-card__type">--bg, 3-step</span></div>
+  <div class="section-card__copy">
+    <h5>Step 1</h5><strong>Discovery call</strong> &mdash; A free, no-pressure 20-minute conversation. You tell me what's going on; I tell you honestly whether coaching is the right fit.
+    <h5>Step 2</h5><strong>Shared plan</strong> &mdash; In our first full session we agree what "better" looks like for your family and the specific strategies we'll work on.
+    <h5>Step 3</h5><strong>Steady practice</strong> &mdash; We meet weekly or fortnightly, adjust as we go, and finish when you feel confident carrying on without me.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">6</span><span class="section-card__title">Testimonials [placeholder]</span><span class="section-card__type">--bg-alt, 3-up</span></div>
+  <div class="section-card__layout">All three testimonials are placeholder copy &mdash; awaiting real parent recordings from Meave. See section 6 for placeholder index.</div>
+</div>
+
+<!-- FOR SCHOOLS -->
+<div class="page-break"></div>
+<h3>4.4 For Schools &amp; Events &mdash; <code>for-schools.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Win commissions from heads, MAT central teams and event organisers. Demonstrate Ofsted alignment + measurable outcomes. <strong>Audience:</strong> Headteachers, deputies, pastoral leads, MAT directors, conference organisers, LA early-years teams. <strong>Conversion CTA:</strong> "Enquire about training".
+</div>
+
+<h4>Section order</h4>
+<ol>
+  <li>Header</li>
+  <li>Page hero</li>
+  <li>Client logo strip</li>
+  <li>Who benefits (3-up cards)</li>
+  <li>Programmes &amp; talks (4 programme cards, anchor #programmes)</li>
+  <li>Fees (3-up package-grid, anchor #fees)</li>
+  <li>Alignment / outcomes (6-item check-list)</li>
+  <li>Pull-quote (Heather Daulphin)</li>
+  <li>More testimonials (3-up)</li>
+  <li>How we'd work together (3-step)</li>
+  <li>Final CTA (dark)</li>
+  <li>Footer</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">1</span><span class="section-card__title">Page hero</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>For Schools &amp; Events
+    <h5>H1</h5>Strengthen parental engagement and student wellbeing &mdash; in a single term.
+    <h5>Lede</h5>Ofsted-aligned talks, parent workshops and keynote sessions that give your staff and families practical, evidence-based tools. Delivered by a certified Triple P practitioner with 15+ years of frontline experience.
+    <h5>CTAs</h5>"Enquire about training" (accent) &nbsp; / &nbsp; "See programmes" (ghost &rarr; #programmes)
+    <h5>Fineprint</h5>Available UK-wide. Online, in person, twilight or INSET day slots.
+    <h5>Image</h5><code>images/schools-hero.jpg</code> &mdash; alt: "Meave presenting a Triple P session to parents in a school classroom"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">2</span><span class="section-card__title">Client logo strip</span></div>
+  <div class="section-card__copy">
+    <h5>Label</h5>Previously delivered for
+    <h5>Logos</h5>King Solomon Academy (img) &middot; Hampstead School (img) &middot; Frays Academy Trust (text) &middot; Guru Nanak Academy (text) &middot; Forest Prep (text) &middot; Northwood Secondary (text) &middot; Greenshaw Learning Trust (text)
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">3</span><span class="section-card__title">Who benefits</span><span class="section-card__type">--bg-alt, 3-up cards with icons</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Who this is for
+    <h5>H2</h5>Practical support for the whole school community.
+    <h5>Lede</h5>Whether you're a head looking to move the dial on parental engagement, a pastoral lead addressing rising anxiety, or a MAT planning a cross-setting rollout &mdash; there's a format that fits.
+    <h5>Card 1 &mdash; Primary &amp; Secondary Schools</h5>Parent workshop series, staff CPD, and sessions for pupils. Directly supports Ofsted's "personal development" and "behaviour &amp; attitudes" judgements.
+    <h5>Card 2 &mdash; Multi-Academy Trusts</h5>Consistent, trust-wide parental engagement strategy across settings &mdash; with one trusted delivery partner and scalable session plans.
+    <h5>Card 3 &mdash; Conferences &amp; Events</h5>Keynotes and breakout sessions for education conferences, early-years summits, and LA-led events. Tailored to your delegate mix.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">4</span><span class="section-card__title">Programmes &amp; talks</span><span class="section-card__type">--bg, 2-up programme-grid (4 cards)</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Programmes &amp; talks
+    <h5>H2</h5>A clear menu of formats &mdash; adapted to your setting.
+    <h5>Lede</h5>Each programme below is a starting point. Content, depth and delivery are shaped around your specific phase, catchment and priorities.
+    <h5>Card 1 &mdash; Parent engagement</h5><strong>"The Calm Home" &mdash; parent workshop series</strong> (3 &times; 90-minute sessions). Best for: primary settings wanting to strengthen home-school behaviour consistency.
+    <h5>Card 2 &mdash; Staff CPD</h5><strong>Trauma-aware conversations with parents</strong> (full INSET or 2 twilights). Best for: schools where parent complaints or escalations are climbing.
+    <h5>Card 3 &mdash; Student wellbeing</h5><strong>Year group assembly series</strong>. Best for: schools responding to rising anxiety or peer-conflict referrals.
+    <h5>Card 4 &mdash; Keynote</h5><strong>Keynote: "Parents aren't the problem."</strong> (45 mins + 15 Q&amp;A). Best for: headline slots at MAT conferences, LA events, and sector summits.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">5</span><span class="section-card__title">Fees</span><span class="section-card__type">--bg-alt, 3-up package-grid, anchor #fees</span></div>
+  <div class="section-card__copy">
+    <h5>Lede</h5>All sessions include preparation, delivery, follow-up materials and a short written debrief. MATs and LAs booking multiple sessions benefit from tiered discounts.
+    <h5>Card 1 &mdash; Seminars</h5>From <strong>&pound;400</strong> / 90-minute session. Up to 200 parents per session. Face-to-face: &pound;600 single &middot; &pound;500 each (6&ndash;15) &middot; &pound;400 each (15+). Online: &pound;500 / &pound;400 / &pound;300. Tip sheets &amp; slide pack included.
+    <h5>Card 2 &mdash; Discussion Groups [feature, "Most booked"]</h5>From <strong>&pound;450</strong> / 2-hour online group. Online: &pound;650 / &pound;550 / &pound;450. Max 12 parents. Workbooks for every attendee.
+    <h5>Card 3 &mdash; Triple P Courses</h5>From <strong>&pound;2,700</strong> / full course. Triple P Group (6-week) from &pound;2,700; Triple P Teens (6-week) from &pound;2,700; Triple P Stepping Stones (8-week, SEND) from &pound;3,600.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">6</span><span class="section-card__title">Why it matters &mdash; alignment strip</span><span class="section-card__type">--bg-alt, 6-item 2-col check-list</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Why it matters
+    <h5>H2</h5>Aligned with Ofsted, anchored in evidence.
+    <h5>Lede</h5>Every session is designed to support &mdash; and be legible to &mdash; the frameworks your leadership team already answers to.
+    <ol>
+      <li>Directly supports Ofsted's <strong>Personal Development</strong> and <strong>Behaviour &amp; Attitudes</strong> judgements.</li>
+      <li>Grounded in the <strong>Triple P (Positive Parenting Program)</strong>.</li>
+      <li>Complements your existing <strong>mental health lead</strong> and <strong>SEMH</strong> strategy.</li>
+      <li>Provides <strong>measurable engagement outcomes</strong>.</li>
+      <li>Delivered by a single, <strong>DBS-checked, fully insured practitioner</strong>.</li>
+      <li><strong>MAT and LA</strong> bulk-discount pricing.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">7</span><span class="section-card__title">Pull-quote</span></div>
+  <div class="section-card__copy">
+    <blockquote>"By investing in Brilliant Parents, we are being proactive, strategic and unapologetic. We have come to realise that parenting support is vital &mdash; informative, developmental and empowering. It has become an intrinsic part of what we do."<span class="attrib"><strong>Heather Daulphin</strong> &middot; Deputy Headteacher, Hampstead School</span></blockquote>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">8</span><span class="section-card__title">More testimonials</span><span class="section-card__type">3-up card-grid</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>More from school &amp; event partners
+    <h5>H2</h5>Trusted in classrooms, halls and keynotes.
+    <h5>Quote 1 &mdash; Shelby Holt</h5>"Parents easily warmed to her kind, authoritative delivery style. She related to parents well, bridging cultural divides that some may find challenging. I would recommend using Meave as a partner to improve family life at any school." &mdash; Deputy Headteacher, King Solomon Academy
+    <h5>Quote 2 &mdash; Sarah Carter</h5>"The 120 professionals in attendance found Meave to be a powerful and inspiring speaker, and expressed how much the presentation helped them gain insight that they can use to inform their work." &mdash; Vulnerabilities Manager, London Borough of Hillingdon &middot; <em>White Ribbon Day 2024 keynote</em>
+    <h5>Quote 3 &mdash; Linda Smith</h5>"I gave her my most vulnerable parents and it is nice to see the positive difference this has made..." &mdash; Family Support Worker, Frays Academy Trust
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">9</span><span class="section-card__title">How we'd work together</span></div>
+  <div class="section-card__copy">
+    <h5>Step 1</h5><strong>Scoping call</strong> &mdash; A 30-minute conversation with your lead (head, DSL, MAT central team) to understand the priority and the audience.
+    <h5>Step 2</h5><strong>Tailored proposal</strong> &mdash; A one-page proposal with format, timing, deliverables, and transparent fees &mdash; usually within three working days.
+    <h5>Step 3</h5><strong>Delivery &amp; follow-up</strong> &mdash; Session delivery on agreed dates, plus a short written debrief with engagement data and suggested next steps.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">10</span><span class="section-card__title">Final CTA (dark)</span></div>
+  <div class="section-card__copy">
+    <h5>H2</h5>Let's build something your parents will actually turn up to.
+    <h5>Body</h5>Share a few details about your setting and priorities. I'll come back within two working days with honest thoughts and &mdash; if it's a fit &mdash; a tailored proposal.
+    <h5>CTAs</h5>"Enquire about training" (accent) &nbsp; / &nbsp; "Request a prospectus" (ghost)
+  </div>
+</div>
+
+<!-- FOR ORGS -->
+<div class="page-break"></div>
+<h3>4.5 For Organisations &mdash; <code>for-organisations.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Position Meave as a serious B2B consultant. Speak to commissioners (LAs, NHS, charities) and people teams (HR, CPO). <strong>Audience:</strong> Heads of People, HR, commissioning managers, CEO/CPO at SMEs and corporates, charity ops leads. <strong>Conversion CTA:</strong> "Download prospectus".
+</div>
+
+<h4>Section order</h4>
+<ol>
+  <li>Header</li>
+  <li>Page hero</li>
+  <li>Clients logo strip (highlights Hillingdon credential)</li>
+  <li>Audience split (4-up cards)</li>
+  <li>Employer spotlight (about-split)</li>
+  <li>ROI metrics (4-up compact stat-row)</li>
+  <li>Engagement models (3-up cards)</li>
+  <li>Pull-quote (Kat Wyatt)</li>
+  <li>More testimonials (3-up)</li>
+  <li>Final CTA (dark)</li>
+  <li>Footer</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">1</span><span class="section-card__title">Page hero</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>For Organisations
+    <h5>H1</h5>Empowering employees who parent &mdash; and the organisations that rely on them.
+    <h5>Lede</h5>Strategic consultancy and delivery partnerships for employers, nurseries, charities and local authorities. I help organisations design credible parenting-support programmes &mdash; and measure the impact on retention, engagement and wellbeing.
+    <h5>CTAs</h5>"Download prospectus" (accent) &nbsp; / &nbsp; "Enquire about consultancy" (ghost)
+    <h5>Fineprint</h5>UK-wide. Day-rate, retained and project-based engagements.
+    <h5>Image</h5><code>images/orgs-hero.jpg</code> &mdash; alt: "Meave presenting to a group in a training room"
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">2</span><span class="section-card__title">Clients logo strip</span></div>
+  <div class="section-card__copy">
+    <h5>Label (with credential headline)</h5><strong>Sole approved parenting provider for London Borough of Hillingdon &mdash; 7 years running.</strong><br>Previously commissioned by:
+    <h5>Logos (real images)</h5>LB Hillingdon &middot; NELFT NHS &middot; HM Prison &amp; Probation Service &middot; LB Barnet &middot; LB Brent &middot; LB Harrow &middot; LB Haringey &middot; Islington Council
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">3</span><span class="section-card__title">Audience split</span><span class="section-card__type">--bg, 4 client-type cards</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Who I partner with
+    <h5>H2</h5>Four client types, one consistent approach.
+    <h5>Lede</h5>Every engagement starts from the same place: what measurable outcome does this work need to produce, and how will we know we got there?
+    <h5>Card 1 &mdash; Employers &amp; HR teams</h5>Parenting-support programmes that move the needle on talent retention, return-to-work transitions and working-parent engagement. <em>Typical work: lunch-and-learns, manager coaching, policy review.</em>
+    <h5>Card 2 &mdash; Nurseries &amp; early years</h5>Evidence-based parental engagement frameworks, staff CPD, and accreditation-ready programme design. <em>Typical work: group programmes, staff training, Ofsted-ready documentation.</em>
+    <h5>Card 3 &mdash; Charities &amp; VCSEs</h5>Theory of change, programme design, and delivery partnerships. <em>Typical work: service design, funder reporting, delivery oversight.</em>
+    <h5>Card 4 &mdash; Local authorities</h5>Commissioned delivery of Triple P group programmes, plus strategic advice on borough-wide parenting support pathways. <em>Typical work: commissioned programmes, pathway design, outcomes reporting.</em>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">4</span><span class="section-card__title">Employer spotlight</span><span class="section-card__type">--bg-alt, about-split</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>For Employers
+    <h5>H2</h5>Working parents are 40% of your workforce. Support them properly.
+    <h5>Body</h5>Parental status is the single strongest predictor of whether a mid-career employee stays or leaves. Most employers respond with enhanced leave and a Slack channel. I help you go further &mdash; and do it credibly.
+    <h5>Inline check-list</h5>
+    <ul>
+      <li>Manager training on parental transitions</li>
+      <li>Lunch-and-learn series on common parenting challenges</li>
+      <li>1-to-1 coaching slots as a benefit to working-parent employees</li>
+      <li>Policy and language review</li>
+      <li>Quarterly reporting with engagement, retention and NPS data</li>
+    </ul>
+    <h5>CTA</h5>"Download the employer prospectus" (accent)
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">5</span><span class="section-card__title">ROI metrics &mdash; outcomes you can put in a board pack</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Measurable ROI
+    <h5>H2</h5>Outcomes you can put in a board pack.
+    <h5>Lede</h5>Every engagement includes a clear set of baseline and outcome metrics, agreed up front and reported against.
+    <h5>Compact stat-row (4-up)</h5>
+    <ul>
+      <li>&darr; Attrition &mdash; Reduction in parental-leave-adjacent attrition after 12 months</li>
+      <li>&uarr; eNPS &mdash; Employee Net Promoter Score uplift among working parents</li>
+      <li>&uarr; Uptake &mdash; Internal uptake of family-facing benefits and EAPs</li>
+      <li>&darr; Escalations &mdash; Fewer HR escalations tied to parenting and caring strain</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">6</span><span class="section-card__title">Engagement models</span><span class="section-card__type">--bg-alt, 3-up card-grid</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Engagement models
+    <h5>H2</h5>Three ways to work with me.
+    <h5>Card 1 &mdash; Advisory day</h5>A focused day on-site or online. Diagnostic review of your current parenting-support offer, with a written summary and prioritised recommendations within one week. <em>Ideal for: leaders exploring whether to invest here at all.</em>
+    <h5>Card 2 &mdash; Retained partnership</h5>A rolling quarterly engagement &mdash; typically 2&ndash;3 days per month. <em>Ideal for: HR, People or Wellbeing leads with a live remit.</em>
+    <h5>Card 3 &mdash; Project engagement</h5>Scoped, time-limited work with a clear deliverable. <em>Ideal for: charities, LAs and nurseries with a specific mandate.</em>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">7</span><span class="section-card__title">Pull-quote</span></div>
+  <div class="section-card__copy">
+    <blockquote>"Meave and the whole team are relentless in their pursuit of delivering contextually and culturally informed parenting support. Innovative and creative in their delivery, reaching parents across a variety of platforms."<span class="attrib"><strong>Kat Wyatt</strong> &middot; Assistant Director, Prevention &amp; Youth Justice, London Borough of Hillingdon</span></blockquote>
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">8</span><span class="section-card__title">More testimonials</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Voices from NHS, prisons &amp; community
+    <h5>H2</h5>Commissioned across sectors others don't reach.
+    <h5>Quote 1 &mdash; Stephen Mylchreest</h5>"Her interventions and liaison within schools helped establish links and an understanding more rapidly than newly trained staff could have achieved. I can wholeheartedly recommend Meave Darroux to any services interested in parental support and Triple P interventions." &mdash; Team Leader, INTERACT Adolescent Outreach Team, NELFT NHS
+    <h5>Quote 2 &mdash; Dee Burn</h5>"I was extremely impressed with the way Ms Darroux was not only familiar with the content but was immediately able to put the women at ease &mdash; mostly by speaking to them and not at them. The seminars were so enjoyable the women asked if there were any follow-on courses." &mdash; Operations Manager, HMP Holloway
+    <h5>Quote 3 &mdash; Mr Ijaz Khan</h5>"The first workshop we had with Brilliant Parents had over 30 attendees, all of whom gave positive feedback and requested the second and third workshops. Fathers as well as mothers are now coming forward." &mdash; Centre Manager, Hayes Muslim Centre
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">9</span><span class="section-card__title">Final CTA</span></div>
+  <div class="section-card__copy">
+    <h5>H2</h5>Make your parenting-support offer credible &mdash; and measurable.
+    <h5>Body</h5>Download the full prospectus for fees, engagement models and recent case studies &mdash; or start a conversation about what your organisation needs.
+    <h5>CTAs</h5>"Download prospectus" (accent) &nbsp; / &nbsp; "Enquire directly" (ghost)
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page-break"></div>
+<h3>4.6 Contact &mdash; <code>contact.html</code></h3>
+
+<div class="meta-box">
+  <strong>Purpose:</strong> Single funnel from any audience into a personal email reply. Form is currently disabled (prototype) &mdash; visitors are directed to email Meave directly.
+</div>
+
+<h4>Section order</h4>
+<ol>
+  <li>Header</li>
+  <li>Page hero (compact, centred)</li>
+  <li>Three contact routes (parent / school / org)</li>
+  <li>Form + aside (alt band)</li>
+  <li>Footer</li>
+</ol>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">1</span><span class="section-card__title">Page hero (centred, tight)</span></div>
+  <div class="section-card__copy">
+    <h5>Eyebrow</h5>Contact
+    <h5>H1</h5>Let's have an honest first conversation.
+    <h5>Lede</h5>Whichever pillar you're here about &mdash; parenting, schools or organisations &mdash; you'll hear back from me personally, usually within two working days.
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">2</span><span class="section-card__title">Three contact routes</span><span class="section-card__type">3-up cards with rotating top-stripe</span></div>
+  <div class="section-card__copy">
+    <h5>Card 1 &mdash; For Parents (terracotta stripe)</h5><strong>Book a discovery call</strong> &mdash; A free 20-minute call to talk through what's going on and whether coaching is the right fit. No pressure, no sales pitch. &raquo; Start your enquiry &rarr; #contact-form
+    <h5>Card 2 &mdash; For Schools (forest stripe)</h5><strong>Enquire about training</strong> &mdash; Share a few details about your setting and priority. &raquo; Start a school enquiry
+    <h5>Card 3 &mdash; For Organisations (olive stripe)</h5><strong>Download the prospectus</strong> &mdash; Full fee structure, engagement models, case studies. &raquo; Request the prospectus
+  </div>
+</div>
+
+<div class="section-card avoid-break">
+  <div class="section-card__header"><span class="section-card__num">3</span><span class="section-card__title">Form + aside</span><span class="section-card__type">--bg-alt section, 1.3fr / 1fr two-column</span></div>
+  <div class="section-card__copy">
+    <h5>Form heading</h5>"Tell me a little about what you need."
+    <h5>Form lede</h5>Anything you share stays between us. I'll reply personally, usually within two working days.
+    <h5>Form fields</h5>Name (text), Email (email), "I'm getting in touch as a..." (5-option select), "Roughly how can I help?" (textarea), consent checkbox, submit (disabled).
+    <h5>Disabled note</h5>Form submission disabled in prototype &mdash; please email <code>hello@[placeholder-domain].co.uk</code> instead.
+    <h5>Aside cards</h5>
+    <ul>
+      <li><strong>Direct contact</strong>: email + phone (both placeholder) + "Based in [placeholder: region] &middot; working UK-wide".</li>
+      <li><strong>Response times</strong>: "I reply to every enquiry personally. Most messages get a response within two working days. If it's urgent, put 'URGENT' in the subject line."</li>
+      <li><strong>Safeguarding note</strong>: "If you or a child are in immediate danger, please call 999. For urgent mental health support, contact the Samaritans on 116 123 or your GP. I'm not an emergency service."</li>
+      <li><strong>Credentials</strong>: 3 light credential badges including [placeholder: Professional membership].</li>
+    </ul>
+  </div>
+</div>
+
+<!-- =============================================================== -->
+<!-- 5. CONTENT INVENTORY                                             -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>5. Content Inventory</h2>
+
+<h3>5.1 All testimonials (real, in use)</h3>
+
+<table>
+  <tr><th class="col-narrow">Name</th><th>Role &amp; org</th><th>Quote</th><th>Date</th><th>Used on</th></tr>
+  <tr>
+    <td><strong>Assoc. Prof. Matt Buttery</strong></td>
+    <td>CEO, Triple P UK &amp; Ireland</td>
+    <td>"Meave is deeply passionate about positive parenting. She brings a thoughtful, empathetic approach, ensuring that parents receive the guidance and support they need. Her professionalism, expertise, and unwavering commitment make her an invaluable asset to any organisation."</td>
+    <td>July 2025</td>
+    <td>Home &mdash; Featured quote band</td>
+  </tr>
+  <tr>
+    <td><strong>Linda Smith</strong></td>
+    <td>Family Support Worker, Frays Academy Trust</td>
+    <td>"I gave her my most vulnerable parents and it is nice to see the positive difference this has made to the parents and their children. Their confidence has grown and I can see the difference in their ability to believe in themselves."</td>
+    <td>June 2019</td>
+    <td>Home (testimonial 1) &middot; For Schools (testimonial 3)</td>
+  </tr>
+  <tr>
+    <td><strong>Heather Daulphin</strong></td>
+    <td>Deputy Headteacher, Hampstead School</td>
+    <td>"By investing in Brilliant Parents, we are being proactive, strategic and unapologetic. We have come to realise that parenting support is vital &mdash; informative, developmental and empowering. It has become an intrinsic part of what we do."</td>
+    <td>Nov 2018</td>
+    <td>Home (testimonial 2) &middot; For Schools (pull-quote)</td>
+  </tr>
+  <tr>
+    <td><strong>Kat Wyatt</strong></td>
+    <td>Assistant Director, Prevention &amp; Youth Justice, London Borough of Hillingdon</td>
+    <td>"Meave and the whole team are relentless in their pursuit of delivering contextually and culturally informed parenting support. Brilliant Parents are innovative and creative in their delivery, reaching parents across a variety of platforms."</td>
+    <td>August 2024</td>
+    <td>Home (testimonial 3) &middot; For Orgs (pull-quote)</td>
+  </tr>
+  <tr>
+    <td><strong>Sarah Carter</strong></td>
+    <td>Vulnerabilities Manager, London Borough of Hillingdon</td>
+    <td>"The 120 professionals in attendance found Meave to be a powerful and inspiring speaker, and expressed how much the presentation helped them gain insight that they can use to inform their work."</td>
+    <td>Nov 2024 (White Ribbon Day 2024 keynote)</td>
+    <td>For Schools (testimonial 2)</td>
+  </tr>
+  <tr>
+    <td><strong>Shelby Holt</strong></td>
+    <td>Deputy Headteacher, King Solomon Academy</td>
+    <td>"Parents easily warmed to her kind, authoritative delivery style. She related to parents well, bridging cultural divides that some may find challenging. I would recommend using Meave as a partner to improve family life at any school."</td>
+    <td>May 2016</td>
+    <td>For Schools (testimonial 1)</td>
+  </tr>
+  <tr>
+    <td><strong>Stephen Mylchreest</strong></td>
+    <td>Team Leader, INTERACT Adolescent Outreach Team, NELFT NHS</td>
+    <td>"Her interventions and liaison within schools helped establish links and an understanding more rapidly than newly trained staff could have achieved. I can wholeheartedly recommend Meave Darroux to any services interested in parental support and Triple P interventions."</td>
+    <td>March 2017</td>
+    <td>For Orgs (testimonial 1)</td>
+  </tr>
+  <tr>
+    <td><strong>Dee Burn</strong></td>
+    <td>Operations Manager, HMP Holloway</td>
+    <td>"I was extremely impressed with the way Ms Darroux was not only familiar with the content but was immediately able to put the women at ease &mdash; mostly by speaking to them and not at them. The seminars were so enjoyable the women asked if there were any follow-on courses."</td>
+    <td>May 2019</td>
+    <td>For Orgs (testimonial 2)</td>
+  </tr>
+  <tr>
+    <td><strong>Mr Ijaz Khan</strong></td>
+    <td>Centre Manager, Hayes Muslim Centre</td>
+    <td>"The first workshop we had with Brilliant Parents had over 30 attendees, all of whom gave positive feedback and requested the second and third workshops. Fathers as well as mothers are now coming forward."</td>
+    <td>Nov 2021</td>
+    <td>For Orgs (testimonial 3)</td>
+  </tr>
+</table>
+
+<div class="meta-box"><strong>Note on parent voices:</strong> The For Parents page testimonials section currently uses placeholder copy. Meave is providing parent-recorded quotes separately. Linda Smith's quote (Family Support Worker) is the closest "parent-outcomes" voice currently in use, on the homepage.</div>
+
+<h3>5.2 Pricing</h3>
+
+<h4>For Parents (1-to-1) &mdash; <span class="badge badge--placeholder">Placeholder</span></h4>
+<table>
+  <tr><th>Package</th><th>Price</th><th>Format</th></tr>
+  <tr><td>Reset Session</td><td>&pound;[placeholder]</td><td>Single 75-minute session + written follow-up + 1 week email support</td></tr>
+  <tr><td>Six-Week Coaching Programme <span class="badge badge--info">Most chosen</span></td><td>&pound;[placeholder]</td><td>6 weekly 60-min sessions, online or in person</td></tr>
+  <tr><td>Extended Support</td><td>&pound;[placeholder]</td><td>Bespoke fortnightly over 3 months, plus reviews</td></tr>
+</table>
+
+<h4>For Schools / Organisations (real prices) &mdash; <span class="badge badge--done">Confirmed</span></h4>
+<h5>Seminars (90 mins, max 200 parents, includes tip sheets)</h5>
+<table>
+  <tr><th>Format</th><th>Single</th><th>6&ndash;15 sessions</th><th>15+ sessions</th></tr>
+  <tr><td>Face-to-face</td><td>&pound;600</td><td>&pound;500 each</td><td>&pound;400 each</td></tr>
+  <tr><td>Online</td><td>&pound;500</td><td>&pound;400 each</td><td>&pound;300 each</td></tr>
+</table>
+
+<h5>Discussion Groups (2 hours, max 12 parents, online, includes workbooks)</h5>
+<table>
+  <tr><th>Single</th><th>6&ndash;15</th><th>15+</th></tr>
+  <tr><td>&pound;650</td><td>&pound;550 each</td><td>&pound;450 each</td></tr>
+</table>
+
+<h5>Triple P Courses (online, max 12 parents, includes workbooks)</h5>
+<table>
+  <tr><th>Course</th><th>Single</th><th>6&ndash;15</th><th>15+</th></tr>
+  <tr><td>Triple P Group Course (6-week)</td><td>&pound;3,900</td><td>&pound;3,300</td><td>&pound;2,700</td></tr>
+  <tr><td>Triple P Teens Course (6-week)</td><td>&pound;3,900</td><td>&pound;3,300</td><td>&pound;2,700</td></tr>
+  <tr><td>Triple P Stepping Stones Course (8-week, SEND)</td><td>&pound;5,200</td><td>&pound;4,400</td><td>&pound;3,600</td></tr>
+</table>
+
+<!-- ALL FAQS -->
+<div class="page-break"></div>
+<h3>5.3 All FAQs (verbatim)</h3>
+
+<h4>Home page (5 items)</h4>
+<ol>
+  <li><strong>What does a session actually cost?</strong><br>Fees depend on whether it's 1-to-1 coaching, a one-off workshop, or a multi-session programme &mdash; and on whether you're booking as a family, a school, or an organisation. [placeholder: fee range]. Every enquiry gets a clear written proposal before anything is booked.</li>
+  <li><strong>What is Triple P and why do you use it?</strong><br>Triple P (the Positive Parenting Program) is one of the most extensively researched parenting approaches in the world, with more than 40 years of evidence behind it. It's used by the NHS, local authorities and schools across the UK. It gives parents practical tools rather than slogans, which is why I've stayed with it for so long.</li>
+  <li><strong>Do you work online or only in person?</strong><br>Both. Parent coaching is available UK-wide over video call. School talks, workshops and organisational consultancy are usually in person &mdash; but I'll travel across the UK, and virtual delivery is available on request.</li>
+  <li><strong>Is this therapy? Do I need a referral?</strong><br>No &mdash; this is coaching and consultancy, not therapy, and no referral is needed. If something comes up in our work that would be better supported by a clinical service (for example CAMHS or a GP), I'll say so clearly and help you find the right route.</li>
+  <li><strong>How do you handle safeguarding?</strong><br>I work to a full safeguarding policy shared with every client at the start of our work, hold an up-to-date enhanced DBS, and carry professional insurance. Full documentation is available for schools and organisations on request.</li>
+</ol>
+
+<h4>For Parents page (6 items)</h4>
+<ol>
+  <li><strong>Is this therapy?</strong><br>No. Coaching is practical, forward-looking, and focused on parenting strategy &mdash; not processing trauma or diagnosing mental health conditions. If you or your child need clinical support, I'll tell you honestly and can help you find the right route.</li>
+  <li><strong>What ages do you work with?</strong><br>I'm trained in Triple P for families with children from birth to 16. Most of my work is with parents of children aged 2&ndash;12, but I regularly support families navigating early teens too.</li>
+  <li><strong>Do both parents need to attend?</strong><br>It helps, but it's not required. I work with single parents, separated co-parents, and one partner on behalf of a household. We'll set up whatever genuinely works for your setup.</li>
+  <li><strong>Is my child neurodivergent &mdash; can you help?</strong><br>Yes. A significant portion of the families I work with include autistic and ADHD children. My approach adjusts accordingly &mdash; same evidence base, different tools.</li>
+  <li><strong>How soon will we see change?</strong><br>Most families notice concrete shifts within 2&ndash;3 weeks of applying the first set of strategies. Lasting change &mdash; the sort that holds under pressure &mdash; usually takes the full six-week arc.</li>
+  <li><strong>What if we can't afford the full programme?</strong><br>Tell me. I hold a small number of reduced-fee places each month for families who need them, and I can point you to low-cost Triple P group programmes run through the NHS and local authorities.</li>
+</ol>
+
+<h3>5.4 Client / logo institutions</h3>
+
+<h4>Schools &amp; Academies</h4>
+<ul>
+  <li>King Solomon Academy (Westminster) &mdash; <span class="badge badge--done">logo file: <code>logos/king-solomon.png</code></span></li>
+  <li>Hampstead School (Camden) &mdash; <span class="badge badge--done">logo file: <code>logos/hampstead-school.png</code></span></li>
+  <li>Forest Prep (Walthamstow) &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+  <li>Frays Academy Trust (Hillingdon) &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+  <li>Northwood Secondary School (Hillingdon) &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+  <li>Guru Nanak Academy (Hillingdon) &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+  <li>Greenshaw Learning Trust &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+</ul>
+
+<h4>NHS &amp; Health</h4>
+<ul>
+  <li>NELFT NHS Foundation Trust &mdash; covering Barking &amp; Dagenham, Redbridge and Havering &mdash; <span class="badge badge--done">logo: <code>logos/nelft.png</code></span></li>
+</ul>
+
+<h4>Prisons</h4>
+<ul>
+  <li>HMP Holloway (Camden) &mdash; <span class="badge badge--done">logo (HM Prison &amp; Probation): <code>logos/hm-prison.png</code></span></li>
+  <li>HMP Downview &mdash; <span class="badge badge--placeholder">no logo file (use HM Prison &amp; Probation)</span></li>
+</ul>
+
+<h4>Local Authorities</h4>
+<ul>
+  <li><strong>London Borough of Hillingdon</strong> &mdash; sole approved provider for 7 years &mdash; <span class="badge badge--done">logo: <code>logos/lb-hillingdon.svg</code></span></li>
+  <li>LB Barnet &mdash; <span class="badge badge--done">logo: <code>logos/lb-barnet.png</code></span></li>
+  <li>LB Brent &mdash; <span class="badge badge--done">logo: <code>logos/lb-brent.png</code></span></li>
+  <li>LB Harrow &mdash; <span class="badge badge--done">logo: <code>logos/lb-harrow.png</code></span></li>
+  <li>LB Haringey &mdash; <span class="badge badge--done">logo: <code>logos/lb-haringey.png</code></span></li>
+  <li>Chelsea &amp; Westminster &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+  <li>Islington Council &mdash; <span class="badge badge--done">logo: <code>logos/islington.png</code></span></li>
+</ul>
+
+<h4>Community Organisations</h4>
+<ul>
+  <li>Bell Farm Christian Centre (Hillingdon) &mdash; <span class="badge badge--placeholder">not currently in site</span></li>
+  <li>Hayes Muslim Centre &mdash; <span class="badge badge--placeholder">no logo file</span></li>
+</ul>
+
+<h4>Speaking Engagements</h4>
+<ul>
+  <li>White Ribbon Day 2024 (120 professionals)</li>
+  <li>Islington Council</li>
+  <li>Unique Radio</li>
+  <li>Black History Month (Hillingdon Council)</li>
+</ul>
+
+<h4>Other accreditation logo</h4>
+<ul>
+  <li>Triple P UK &mdash; <span class="badge badge--placeholder">no logo file (consider sourcing official Triple P seal asset)</span></li>
+  <li><code>logos/footer-logo.png</code> &mdash; unidentified asset present in folder; possibly Meave's own brand mark or Brilliant Parents legacy. Confirm before use.</li>
+</ul>
+
+<!-- =============================================================== -->
+<!-- 6. PLACEHOLDER INDEX                                             -->
+<!-- =============================================================== -->
+<div class="page-break"></div>
+<h2>6. Placeholder Index</h2>
+
+<p>Every <code>[placeholder]</code> currently in the site, where it appears, and what is needed to fill it.</p>
+
+<table>
+  <tr><th>Where</th><th>Placeholder text</th><th>Needed from Meave</th></tr>
+
+  <tr>
+    <td>For Parents &middot; Reset Session price</td>
+    <td>&pound;[placeholder] / single 75-minute session</td>
+    <td>1-to-1 fee</td>
+  </tr>
+  <tr>
+    <td>For Parents &middot; Six-Week Programme price</td>
+    <td>&pound;[placeholder] / six weekly sessions</td>
+    <td>1-to-1 fee</td>
+  </tr>
+  <tr>
+    <td>For Parents &middot; Extended Support price</td>
+    <td>&pound;[placeholder] / bespoke engagement</td>
+    <td>1-to-1 fee</td>
+  </tr>
+  <tr>
+    <td>For Parents &middot; Testimonial 1 (Parent of two, [city])</td>
+    <td>"Within two weeks our bedtimes were unrecognisable..."</td>
+    <td>Real parent testimonial (audio recording promised)</td>
+  </tr>
+  <tr>
+    <td>For Parents &middot; Testimonial 2 (Dad to a 7-year-old)</td>
+    <td>"I came in convinced our son was the problem..."</td>
+    <td>Real parent testimonial</td>
+  </tr>
+  <tr>
+    <td>For Parents &middot; Testimonial 3 (Co-parents, separated household)</td>
+    <td>"Calm, direct, and refreshingly non-judgemental..."</td>
+    <td>Real parent testimonial</td>
+  </tr>
+
+  <tr>
+    <td>About &middot; Story aside lede</td>
+    <td>"The charity I led for a decade closed in [placeholder: year]."</td>
+    <td>Year Brilliant Parents dissolved</td>
+  </tr>
+  <tr>
+    <td>About &middot; Prose para 1</td>
+    <td>"I trained as [placeholder: original discipline &mdash; social work / early years / health visiting]"</td>
+    <td>Confirm original discipline / training</td>
+  </tr>
+  <tr>
+    <td>About &middot; Prose para 4</td>
+    <td>"I'm based in [placeholder: region]"</td>
+    <td>Region (likely Hillingdon / North-West London)</td>
+  </tr>
+  <tr>
+    <td>About &middot; Credentials list item 2</td>
+    <td>[placeholder: Professional registration &mdash; e.g. Social Work England / BACP / Member of PAC-UK]</td>
+    <td>Confirm professional body registration</td>
+  </tr>
+  <tr>
+    <td>About &middot; Credentials list item 6</td>
+    <td>[placeholder: Further qualifications &mdash; e.g. MSc in Child &amp; Adolescent Mental Health]</td>
+    <td>Confirm further qualifications + specialism</td>
+  </tr>
+  <tr>
+    <td>About &middot; Video placeholder</td>
+    <td>"Video introduction coming soon"</td>
+    <td>Recorded intro video (Meave to record &amp; send)</td>
+  </tr>
+
+  <tr>
+    <td>Home &middot; FAQ "What does a session cost?"</td>
+    <td>"[placeholder: fee range]"</td>
+    <td>Headline fee range to publish</td>
+  </tr>
+
+  <tr>
+    <td>Contact &middot; Form note</td>
+    <td>"please email hello@[placeholder-domain].co.uk"</td>
+    <td>Real domain &amp; email address</td>
+  </tr>
+  <tr>
+    <td>Contact &middot; Direct contact email</td>
+    <td>hello@[placeholder-domain].co.uk</td>
+    <td>Real email</td>
+  </tr>
+  <tr>
+    <td>Contact &middot; Direct contact phone</td>
+    <td>+44 [placeholder phone]</td>
+    <td>Real phone</td>
+  </tr>
+  <tr>
+    <td>Contact &middot; Location</td>
+    <td>"Based in [placeholder: region]"</td>
+    <td>Region</td>
+  </tr>
+  <tr>
+    <td>Contact &middot; Form consent label</td>
+    <td>"...by email. [placeholder: link to privacy notice]"</td>
+    <td>Privacy notice URL</td>
+  </tr>
+  <tr>
+    <td>Contact aside &middot; Credentials</td>
+    <td>"[placeholder: Professional membership]"</td>
+    <td>Same body as About credentials</td>
+  </tr>
+
+  <tr>
+    <td>All footers &middot; bottom row</td>
+    <td>"Site built with care &mdash; [placeholder: credit / privacy / terms]"</td>
+    <td>Privacy / terms / credit links once domain is live</td>
+  </tr>
+  <tr>
+    <td>All footers &middot; LinkedIn</td>
+    <td><code>aria-label="LinkedIn [placeholder link]"</code></td>
+    <td>LinkedIn URL</td>
+  </tr>
+  <tr>
+    <td>All footers &middot; Instagram</td>
+    <td><code>aria-label="Instagram [placeholder link]"</code></td>
+    <td>Instagram URL</td>
+  </tr>
+
+  <tr>
+    <td>Home &middot; Stats section</td>
+    <td>15+ / 2,000+ / 60+ / 100% (working figures)</td>
+    <td>Confirmed real numbers (Meave to provide)</td>
+  </tr>
+  <tr>
+    <td>About &middot; Stats row</td>
+    <td>Same four numbers, slightly different labels</td>
+    <td>Same as above</td>
+  </tr>
+</table>
+
+<h3>Outstanding logo assets</h3>
+<ul>
+  <li>Triple P UK official seal/logo</li>
+  <li>Frays Academy Trust</li>
+  <li>Guru Nanak Academy</li>
+  <li>Forest Prep, Northwood Secondary, Greenshaw Learning Trust</li>
+  <li>Hayes Muslim Centre, Bell Farm Christian Centre</li>
+  <li>Chelsea &amp; Westminster (NHS or LA &mdash; clarify)</li>
+  <li>Confirm what <code>logos/footer-logo.png</code> is &mdash; remove if unused</li>
+</ul>
+
+<h3>Outstanding image assets</h3>
+<ul>
+  <li>Meave headshot (currently using <code>about-hero.jpg</code> classroom shot)</li>
+  <li>"In Meave's words" introduction video</li>
+  <li>Optional: replacement hero image for For Schools / For Orgs if more on-brand options surface</li>
+</ul>
+
+<p class="footer-note">End of design specification. Generated April 2026. Source: <code>/Users/abdul/Desktop/meave client - website/</code> &mdash; index.html, about.html, for-parents.html, for-schools.html, for-organisations.html, contact.html, css/style.css, js/script.js.</p>
+
+</body>
+</html>
