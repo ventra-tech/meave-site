@@ -70,8 +70,8 @@
               <a href="#track-record" class="btn btn-ghost">See my track record</a>
             </div>
           </div>
-          <div class="page-hero__image">
-            <img src="images/about-hero.jpg" alt="Meave teaching in a classroom, pointing to the group" loading="eager" />
+          <div class="page-hero__image page-hero__image--portrait">
+            <img src="logos/headshot.jpeg" alt="Portrait of Meave Darroux" loading="eager" />
           </div>
         </div>
       </div>
@@ -101,20 +101,19 @@
       </div>
     </section>
 
-    <!-- Video placeholder -->
+    <!-- VIDEO PLACEHOLDER: awaiting new 60-second recording from client -->
+    <!-- Currently showing the existing introvid.mp4 — replace src below when new recording lands -->
     <section class="section section--video-intro">
       <div class="container">
         <div class="video-intro">
           <span class="eyebrow">In Meave's words</span>
           <h2>The work I do, and why I do it.</h2>
 
-          <div class="video-placeholder" role="img" aria-label="Video introduction — coming soon">
-            <button class="play-btn" disabled aria-label="Video coming soon" type="button">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
-                <polygon points="5,3 19,12 5,21"/>
-              </svg>
-            </button>
-            <p class="video-placeholder__label">Video introduction coming soon</p>
+          <div class="video-embed">
+            <video controls preload="metadata" poster="logos/headshot.jpeg" playsinline>
+              <source src="logos/introvid.mp4" type="video/mp4" />
+              Your browser doesn't support embedded video. <a href="logos/introvid.mp4">Download the introduction video</a>.
+            </video>
           </div>
 
           <p class="video-intro__quote">
@@ -129,6 +128,9 @@
       <div class="container">
         <div class="prose-split">
           <aside class="prose-split__aside">
+            <div class="bio-portrait">
+              <img src="logos/headshot.jpeg" alt="Portrait of Meave Darroux" loading="lazy" />
+            </div>
             <span class="eyebrow">My story</span>
             <h2>From frontline practitioner to independent consultant.</h2>
             <p class="lede">The charity I led for a decade closed in [placeholder: year]. Rather than step away from the work, I took the chance to rebuild it — leaner, more focused, and with the same families at the centre.</p>
@@ -196,6 +198,14 @@
               <span>Delivering level 2–4 interventions for families of children aged 0–12 and 12–16.</span>
             </div>
           </li>
+          <!-- CERTIFICATION PLACEHOLDER: Add Parenting Apart logo/badge here when received -->
+          <li class="credential-pending">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <strong>Parenting Apart</strong>
+              <span>Specialist support for separated and co-parenting families.<span class="credential-pending__note">(link/badge to be added)</span></span>
+            </div>
+          </li>
           <li>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             <div>
@@ -208,13 +218,6 @@
             <div>
               <strong>Enhanced DBS &amp; full professional insurance</strong>
               <span>Required safeguards for 1-to-1 work with children and families.</span>
-            </div>
-          </li>
-          <li>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            <div>
-              <strong>Sole approved parenting provider — London Borough of Hillingdon (7 years running)</strong>
-              <span>Delivering commissioned parenting programmes and family support across the borough since 2018.</span>
             </div>
           </li>
           <li>
