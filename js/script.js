@@ -17,7 +17,6 @@
       }
     });
 
-    // Close mobile nav when any link inside it is followed
     document.querySelectorAll('.mobile-nav a').forEach(function (link) {
       link.addEventListener('click', function () {
         document.body.removeAttribute('data-nav-open');
@@ -25,7 +24,6 @@
       });
     });
 
-    // Close on Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && document.body.hasAttribute('data-nav-open')) {
         document.body.removeAttribute('data-nav-open');
@@ -36,7 +34,7 @@
   }
 
   // --------------------------------------------------------------------------
-  // FAQ — single-open accordion behaviour
+  // FAQ — single-open accordion
   // --------------------------------------------------------------------------
   var faqItems = document.querySelectorAll('.faq__item');
   faqItems.forEach(function (item) {
@@ -50,13 +48,15 @@
   });
 
   // --------------------------------------------------------------------------
-  // Sticky "Book a free call" — fade in after hero leaves viewport
+  // Sticky CTA — show after hero leaves viewport
+  // Handles both .hero-cinematic (home) and .page-hero (inner pages)
   // --------------------------------------------------------------------------
   var stickyCta = document.querySelector('.sticky-cta');
-  var hero = document.querySelector('.hero');
+  var heroEl    = document.querySelector('.hero-cinematic') ||
+                  document.querySelector('.page-hero');
 
-  if (stickyCta && hero && 'IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(
+  if (stickyCta && heroEl && 'IntersectionObserver' in window) {
+    var stickyObserver = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -68,9 +68,8 @@
       },
       { threshold: 0, rootMargin: '-40px 0px 0px 0px' }
     );
-    observer.observe(hero);
+    stickyObserver.observe(heroEl);
   } else if (stickyCta) {
-    // Fallback: always show
     stickyCta.classList.add('visible');
   }
 
@@ -79,90 +78,153 @@
   // --------------------------------------------------------------------------
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 })();
 
+
 // =============================================================================
-// HOMEPAGE ANIMATIONS (scroll reveal, word-by-word hero, count-up)
-// Scoped to pages with .hero-cinematic; respects prefers-reduced-motion
+// ANIMATION SYSTEM
+// Respects prefers-reduced-motion throughout
 // =============================================================================
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+(function () {
+  'use strict';
 
-  const isHomePage = !!document.querySelector('.hero-cinematic');
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (isHomePage) {
+  // --------------------------------------------------------------------------
+  // 1. PAGE TRANSITION — fade out on internal link click
+  //    (fade-in handled by @keyframes pageIn in CSS)
+  // --------------------------------------------------------------------------
+  if (!reducedMotion) {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (
+        !href ||
+        href.charAt(0) === '#' ||
+        href.indexOf('mailto:') === 0 ||
+        href.indexOf('tel:')    === 0 ||
+        link.target === '_blank'
+      ) return;
 
-    // ── 1. Word-by-word H1 animation ──────────────────────────────────────────
-    const heroH1 = document.querySelector('.hero-cinematic__h1');
-    if (heroH1) {
-      const raw = heroH1.textContent.trim();
-      heroH1.innerHTML = raw.split(' ').map((word, i) =>
-        `<span class="hw" style="animation-delay:${i * 85}ms" aria-hidden="true">${word}</span>`
-      ).join(' ');
-      // Keep accessible label on the h1 via aria-label (already set in HTML)
-    }
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var dest = href;
+        document.body.style.transition = 'opacity 0.28s ease';
+        document.body.style.opacity    = '0';
+        setTimeout(function () { window.location.href = dest; }, 290);
+      });
+    });
+  }
 
-    // ── 2. Add .reveal to scroll-animated elements ────────────────────────────
-    const revealTargets = document.querySelectorAll(
-      '.card, .audience-card, .stat, .pillar-card, .testimonial, .step'
-    );
-    revealTargets.forEach(el => el.classList.add('reveal'));
+  // --------------------------------------------------------------------------
+  // 2. SCROLL REVEAL — all pages
+  //    Elements fade + slide up on scroll into view, staggered within groups
+  // --------------------------------------------------------------------------
+  if (!reducedMotion && 'IntersectionObserver' in window) {
 
-    document.querySelectorAll('.section__head h2').forEach(el => {
+    var revealTargets = [
+      '.card',
+      '.testimonial',
+      '.stat',
+      '.step',
+      '.package-card',
+      '.audience-card',
+      '.pillar-card',
+      '.credential-list li',
+      '.pull-quote',
+      '.trust-seal',
+      '.trust-bar__meta',
+      '.about-split > div',
+      '.prose-split__aside'
+    ].join(',');
+
+    document.querySelectorAll(revealTargets).forEach(function (el) {
+      el.classList.add('reveal');
+    });
+
+    // Section headings — slide in from left
+    document.querySelectorAll('.section__head h2').forEach(function (el) {
       el.classList.add('reveal', 'reveal--left');
     });
 
-    // ── 3. IntersectionObserver — staggered reveal ────────────────────────────
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
-        // Stagger based on sibling index within the same parent
-        const siblings = Array.from(
-          el.parentElement.querySelectorAll('.reveal:not(.revealed)')
-        );
-        const idx = Array.from(el.parentElement.children).indexOf(el);
-        el.style.transitionDelay = Math.max(0, idx * 100) + 'ms';
+        var el = entry.target;
+
+        // Stagger by position among visible siblings
+        var siblings = Array.from(el.parentElement.children);
+        var idx = siblings.indexOf(el);
+        el.style.transitionDelay = Math.min(idx * 80, 320) + 'ms';
+
         el.classList.add('revealed');
         revealObserver.unobserve(el);
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -60px 0px'
+      threshold: 0.12,
+      rootMargin: '0px 0px -48px 0px'
     });
 
-    revealTargets.forEach(el => revealObserver.observe(el));
-    document.querySelectorAll('.reveal--left').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
 
-    // ── 4. Count-up for stats ──────────────────────────────────────────────────
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.dataset.count, 10);
-        const suffix = el.dataset.suffix || '';
-        const duration = 1400;
-        const startTime = performance.now();
+  // --------------------------------------------------------------------------
+  // 3. HOMEPAGE HERO ENTRANCE + WORD-SPLIT + COUNT-UP
+  // --------------------------------------------------------------------------
+  if (!reducedMotion && document.querySelector('.hero-cinematic')) {
 
-        const tick = (now) => {
-          const elapsed = now - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          // Ease-out quad
-          const eased = 1 - Math.pow(1 - progress, 2);
-          const current = Math.round(eased * target);
-          el.textContent = (current >= 1000
-            ? current.toLocaleString('en-GB')
-            : current) + suffix;
-          if (progress < 1) requestAnimationFrame(tick);
-        };
+    // --- 3a. Activate sub-element entrance animations via .hero-anim class ---
+    var heroSection = document.querySelector('.hero-cinematic');
+    heroSection.classList.add('hero-anim');
 
-        requestAnimationFrame(tick);
-        countObserver.unobserve(el);
+    // --- 3b. Word-by-word H1 split ---
+    var heroH1 = document.querySelector('.hero-cinematic__h1');
+    if (heroH1) {
+      var label = heroH1.getAttribute('aria-label') || heroH1.textContent.trim();
+      heroH1.innerHTML = label.split(' ').map(function (word, i) {
+        return '<span class="hw" style="animation-delay:' + (300 + i * 85) + 'ms" aria-hidden="true">' + word + '</span>';
+      }).join(' ');
+      // aria-label on h1 already carries the full accessible text
+    }
+
+    // --- 3c. Count-up for stats ---
+    if ('IntersectionObserver' in window) {
+      var countObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el      = entry.target;
+          var target  = parseInt(el.dataset.count, 10);
+          var suffix  = el.dataset.suffix || '';
+          var dur     = 1600; // ms
+          var t0      = performance.now();
+
+          (function tick(now) {
+            var progress = Math.min((now - t0) / dur, 1);
+            var eased    = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            var current  = Math.round(eased * target);
+
+            el.textContent = (current >= 1000
+              ? current.toLocaleString('en-GB')
+              : current) + suffix;
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              el.classList.add('stat__num--done'); // accent colour pop at finish
+            }
+          })(t0);
+
+          countObserver.unobserve(el);
+        });
+      }, { threshold: 0.4 });
+
+      document.querySelectorAll('[data-count]').forEach(function (el) {
+        countObserver.observe(el);
       });
-    }, { threshold: 0.4 });
+    }
+  }
 
-    document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
-
-  } // end isHomePage
-
-} // end prefers-reduced-motion
+})();
