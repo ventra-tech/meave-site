@@ -228,3 +228,35 @@
   }
 
 })();
+
+
+// =============================================================================
+// 4. LOGO BELT — infinite scrolling ticker on all logo strips
+//    Wraps .logo-strip__row in .logo-belt, duplicates logos for seamless loop
+// =============================================================================
+
+(function () {
+  'use strict';
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('.logo-strip__row').forEach(function (row) {
+    // Count logos to set a proportional speed (5s per item, min 25s)
+    var itemCount = row.querySelectorAll('.logo-strip__item').length;
+    var duration  = Math.max(25, itemCount * 5) + 's';
+
+    // Wrap row in the belt container
+    var belt = document.createElement('div');
+    belt.className = 'logo-belt';
+    row.parentNode.insertBefore(belt, row);
+    belt.appendChild(row);
+
+    if (reducedMotion) return; // leave as static flex if reduced motion
+
+    // Duplicate logos for seamless loop (translateX -50% = back to start)
+    row.innerHTML = row.innerHTML + row.innerHTML;
+    row.classList.add('logo-belt__track');
+    row.style.setProperty('--belt-duration', duration);
+  });
+
+})();

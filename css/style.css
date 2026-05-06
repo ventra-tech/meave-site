@@ -667,15 +667,64 @@ p {
   height: auto;
 }
 .logo-strip__item--logo img {
-  height: 66px;
+  height: 100px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
   filter: grayscale(1) opacity(0.55);
-  transition: filter 0.2s ease;
+  transition: filter 0.25s ease;
 }
 .logo-strip__item--logo img:hover {
-  filter: grayscale(0) opacity(0.85);
+  filter: grayscale(0) opacity(0.88);
+}
+
+/* ── Logo belt / conveyor ticker ─────────────────────────────────── */
+/* JS wraps .logo-strip__row in .logo-belt and duplicates the logos  */
+.logo-belt {
+  overflow: hidden;
+  /* Fade edges so logos don't hard-clip */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+}
+
+.logo-belt__track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  align-items: center;
+  gap: 60px;
+  width: max-content;
+  animation: logoBelt var(--belt-duration, 38s) linear infinite;
+}
+
+.logo-belt__track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes logoBelt {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-belt__track {
+    animation: none !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: auto !important;
+  }
 }
 
 /* ==========================================================================
