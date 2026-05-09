@@ -2654,3 +2654,70 @@ body {
 .text-link:hover svg {
   transform: translateX(5px);
 }
+
+/* =============================================================================
+   COPY UPDATE — new utility classes
+   ============================================================================= */
+
+/* Closing line after a checklist */
+.section__closing {
+  margin-top: 24px;
+  font-style: italic;
+  color: var(--primary);
+  font-size: 1.05rem;
+}
+
+/* Second lede in hero (organisations page) */
+.lede--sub {
+  margin-top: -8px;
+  opacity: 0.85;
+}
+
+/* Package card fine-print and note variants */
+.package-card__fineprint {
+  font-size: 0.82rem;
+  color: var(--text-muted, #6b7280);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.package-card__sub--note {
+  font-size: 0.88rem;
+  font-style: italic;
+  opacity: 0.75;
+  margin-top: -4px;
+}
+
+/* Programme card sub-heading (primary / secondary labels) */
+.programme-card__sub-head {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin: 16px 0 6px;
+}
+
+/* Card typical-projects list */
+.card__list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card__list li {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  padding-left: 14px;
+  position: relative;
+}
+
+.card__list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
