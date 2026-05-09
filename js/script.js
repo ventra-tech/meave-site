@@ -260,3 +260,122 @@
   });
 
 })();
+
+
+// =============================================================================
+// 5. STICKY IN-PAGE NAV — smooth scroll + scroll-spy
+//    Used on inner pages only (about, for-parents, for-schools, for-organisations)
+// =============================================================================
+
+(function () {
+  'use strict';
+
+  var stickyNav = document.querySelector('.page-nav-sticky');
+  if (!stickyNav) return;
+
+  var pills = Array.prototype.slice.call(
+    stickyNav.querySelectorAll('.page-nav-sticky__pill')
+  );
+  if (!pills.length) return;
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Resolve each pill -> its target section element
+  var sections = pills
+    .map(function (p) {
+      var href = p.getAttribute('href');
+      return href && href.charAt(0) === '#' ? document.querySelector(href) : null;
+    })
+    .filter(Boolean);
+
+  // ── Smooth-scroll on click (manual offset for header + sticky nav) ────────
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function (e) {
+      var href = pill.getAttribute('href');
+      if (!href || href.charAt(0) !== '#') return;
+      var target = document.querySelector(href);
+      if (!target) return;
+
+      e.preventDefault();
+      e.stopPropagation(); // prevent the page-transition fade handler from also firing
+
+      var header   = document.querySelector('.site-header');
+      var navH     = stickyNav.offsetHeight || 0;
+      var headerH  = header ? header.offsetHeight : 0;
+      var offset   = headerH + navH + 16;
+      var top      = target.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: top,
+        behavior: reducedMotion ? 'auto' : 'smooth'
+      });
+
+      // Update URL hash without jumping
+      if (history.replaceState) {
+        history.replaceState(null, '', href);
+      }
+    });
+  });
+
+  // ── Scroll-spy via IntersectionObserver ───────────────────────────────────
+  if ('IntersectionObserver' in window && sections.length) {
+    var setActive = function (id) {
+      pills.forEach(function (p) {
+        p.classList.toggle('is-active', p.getAttribute('href') === '#' + id);
+      });
+    };
+
+    var spy = new IntersectionObserver(function (entries) {
+      // Pick the entry with the largest intersection ratio that's actually intersecting
+      var best = null;
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+      });
+      if (best && best.target.id) setActive(best.target.id);
+    }, {
+      // Section is "active" when its top crosses the upper third of the viewport
+      rootMargin: '-30% 0px -55% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    sections.forEach(function (s) { spy.observe(s); });
+  }
+
+  // ── On page load, if URL has a hash, mark that pill active ──────────────
+  var initialHash = window.location.hash;
+  if (initialHash) {
+    pills.forEach(function (p) {
+      if (p.getAttribute('href') === initialHash) p.classList.add('is-active');
+    });
+  }
+
+})();
+
+
+// =============================================================================
+// 6. PROGRAMME TABS (Primary / Secondary on for-schools.html)
+//    CSS handles state via :checked. JS only ensures keyboard arrow nav.
+// =============================================================================
+
+(function () {
+  'use strict';
+
+  var tabs = document.querySelectorAll('.programme-tabs__head label[role="tab"]');
+  if (!tabs.length) return;
+
+  tabs.forEach(function (label, idx) {
+    label.setAttribute('tabindex', '0');
+    label.addEventListener('keydown', function (e) {
+      var nextIdx = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextIdx = (idx + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+      if (nextIdx !== null) {
+        e.preventDefault();
+        tabs[nextIdx].focus();
+        tabs[nextIdx].click();
+      }
+    });
+  });
+
+})();

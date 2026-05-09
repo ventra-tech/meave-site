@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="page-inner">
 
   <header class="site-header">
     <div class="container site-header__inner">
@@ -78,8 +78,21 @@
       </div>
     </section>
 
+    <!-- Sticky in-page section nav -->
+    <nav class="page-nav-sticky" aria-label="Section navigation">
+      <div class="container">
+        <ul class="page-nav-sticky__list">
+          <li><a class="page-nav-sticky__pill" href="#is-this-you">Is this you?</a></li>
+          <li><a class="page-nav-sticky__pill" href="#what-support">What support looks like</a></li>
+          <li><a class="page-nav-sticky__pill" href="#packages">Packages</a></li>
+          <li><a class="page-nav-sticky__pill" href="#testimonials">Parents say</a></li>
+          <li><a class="page-nav-sticky__pill" href="#faqs">FAQs</a></li>
+        </ul>
+      </div>
+    </nav>
+
     <!-- "Is this you?" pain points -->
-    <section class="section section--alt">
+    <section id="is-this-you" class="section section--alt">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">Is this you?</span>
@@ -118,7 +131,7 @@
     </section>
 
     <!-- What you'll get -->
-    <section class="section">
+    <section id="what-support" class="section">
       <div class="container">
         <div class="about-split">
           <div class="about-split__content">
@@ -126,11 +139,13 @@
             <h2>A practical, private plan built around your family.</h2>
             <p>Together we'll look at what's happening now — not a generic version of it — and build a short, workable plan you can actually use this week. I draw on the Triple P (Positive Parenting Program) framework, adapted to your child's age, temperament and the realities of your household.</p>
             <ul class="inline-check-list">
-              <li>Non-judgemental sessions — online or in person</li>
+              <li>Confidential, non-judgemental sessions — online or in person</li>
               <li>Clear strategies for the behaviour you're stuck on</li>
-              <li>One 20-minute follow-up telephone call after course completion</li>
+              <li>Homework that takes minutes, not evenings</li>
+              <li>Monitoring methods to assess your progress</li>
+              <li>Follow-up between sessions when you need it</li>
               <li>Support for both parents, or co-parents working apart</li>
-              <li>For those attending six or eight week courses, weekly homework to bring the discussed strategies to life</li>
+              <li>Pre and post evaluation tools provided</li>
             </ul>
             <a href="contact.html" class="btn btn-accent">Book a discovery call</a>
           </div>
@@ -237,7 +252,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="section section--alt">
+    <section id="testimonials" class="section section--alt">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">What parents say</span>
@@ -276,7 +291,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section">
+    <section id="faqs" class="section">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">FAQs</span>

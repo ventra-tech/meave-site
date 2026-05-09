@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="page-inner">
 
   <header class="site-header">
     <div class="container site-header__inner">
@@ -98,8 +98,23 @@
       </div>
     </section>
 
+    <!-- Sticky in-page section nav -->
+    <nav class="page-nav-sticky" aria-label="Section navigation">
+      <div class="container">
+        <ul class="page-nav-sticky__list">
+          <li><a class="page-nav-sticky__pill" href="#who">Who this is for</a></li>
+          <li><a class="page-nav-sticky__pill" href="#programmes">Programmes</a></li>
+          <li><a class="page-nav-sticky__pill" href="#fees">Fees</a></li>
+          <li><a class="page-nav-sticky__pill" href="#why">Why it matters</a></li>
+          <li><a class="page-nav-sticky__pill" href="#testimonials">Testimonials</a></li>
+          <li><a class="page-nav-sticky__pill" href="#how-we-work">How we'd work</a></li>
+          <li><a class="page-nav-sticky__pill" href="#cta">Get in touch</a></li>
+        </ul>
+      </div>
+    </nav>
+
     <!-- Who benefits -->
-    <section class="section section--alt">
+    <section id="who" class="section section--alt">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">Who this is for</span>
@@ -149,19 +164,25 @@
             <span class="programme-card__tag">Parent engagement</span>
             <h3>"The Calm Home" — parent seminar series</h3>
             <p>A series of 90-minute sessions for parents on setting boundaries, managing big feelings, and reducing conflict at home. Delivered in your hall or online.</p>
-            <p class="programme-card__sub-head">Primary schools</p>
-            <ul class="inline-check-list">
-              <li>Seminar 1: The power of positive parenting</li>
-              <li>Seminar 2: Raising confident, competent children</li>
-              <li>Seminar 3: Raising resilient children</li>
-              <li>Seminar 4: Helping children develop healthy screen-time habits</li>
-            </ul>
-            <p class="programme-card__sub-head">Secondary schools</p>
-            <ul class="inline-check-list">
-              <li>Seminar 1: Raising responsible teenagers</li>
-              <li>Seminar 2: Raising competent teenagers</li>
-              <li>Seminar 3: Getting teenagers connected</li>
-            </ul>
+            <div class="programme-tabs">
+              <input type="radio" id="prog-primary" name="prog-tabs" class="programme-tabs__input" checked />
+              <input type="radio" id="prog-secondary" name="prog-tabs" class="programme-tabs__input" />
+              <div class="programme-tabs__head" role="tablist" aria-label="Seminar topics by school phase">
+                <label for="prog-primary" class="programme-tabs__btn" role="tab">Primary schools</label>
+                <label for="prog-secondary" class="programme-tabs__btn" role="tab">Secondary schools</label>
+              </div>
+              <ul class="programme-tabs__panel programme-tabs__panel--primary inline-check-list" role="tabpanel" aria-labelledby="prog-primary">
+                <li>Seminar 1: The power of positive parenting</li>
+                <li>Seminar 2: Raising confident, competent children</li>
+                <li>Seminar 3: Raising resilient children</li>
+                <li>Seminar 4: Helping children develop healthy screen-time habits</li>
+              </ul>
+              <ul class="programme-tabs__panel programme-tabs__panel--secondary inline-check-list" role="tabpanel" aria-labelledby="prog-secondary">
+                <li>Seminar 1: Raising responsible teenagers</li>
+                <li>Seminar 2: Raising competent teenagers</li>
+                <li>Seminar 3: Getting teenagers connected</li>
+              </ul>
+            </div>
             <p class="programme-card__meta">Best for: primary and secondary settings wanting to strengthen home-school behaviour consistency.</p>
           </article>
 
@@ -262,7 +283,7 @@
     </section>
 
     <!-- Alignment strip / outcomes -->
-    <section class="section section--alt">
+    <section id="why" class="section section--alt">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">Why it matters</span>
@@ -300,7 +321,7 @@
     </section>
 
     <!-- Testimonial highlight -->
-    <section class="section">
+    <section id="testimonials" class="section">
       <div class="container">
         <article class="pull-quote">
           <svg class="pull-quote__mark" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 7h3v3H7v3H4V7a3 3 0 0 1 3-3V7zm10 0h3v3h-3v3h-3V7a3 3 0 0 1 3-3V7z"/></svg>
@@ -353,7 +374,7 @@
     </section>
 
     <!-- How we work together -->
-    <section class="section section--alt">
+    <section id="how-we-work" class="section section--alt">
       <div class="container">
         <div class="section__head">
           <span class="eyebrow">How we'd work together</span>
@@ -381,7 +402,7 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="section section--dark cta-band">
+    <section id="cta" class="section section--dark cta-band">
       <div class="container">
         <h2>Let's build something your parents will actually turn up to.</h2>
         <p>Share a few details about your setting and priorities. I'll come back within two working days with honest thoughts and — if it's a fit — a tailored proposal.</p>

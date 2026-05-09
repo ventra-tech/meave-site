@@ -2721,3 +2721,236 @@ body {
   left: 0;
   color: var(--accent);
 }
+
+/* =============================================================================
+   AMENDMENTS ROUND 2 — sticky in-page nav, programme tabs, layout tightening,
+   larger logos, contact closing brand block
+   ============================================================================= */
+
+/* ── Sticky in-page section nav ─────────────────────────────────────────── */
+.page-nav-sticky {
+  position: sticky;
+  top: var(--header-h, 72px);
+  z-index: 40;
+  background: rgba(250, 246, 240, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(45, 74, 62, 0.08);
+  padding: 10px 0;
+  margin: 0;
+}
+
+.page-nav-sticky .container {
+  /* allow horizontal scroll on mobile without breaking page width */
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+.page-nav-sticky .container::-webkit-scrollbar { display: none; }
+
+.page-nav-sticky__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.page-nav-sticky__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--primary, #2D4A3E);
+  background: transparent;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-nav-sticky__pill:hover {
+  background: rgba(45, 74, 62, 0.06);
+  border-color: rgba(45, 74, 62, 0.15);
+}
+
+.page-nav-sticky__pill.is-active {
+  background: var(--primary, #2D4A3E);
+  color: #FAF6F0;
+  border-color: var(--primary, #2D4A3E);
+}
+
+/* Anchor scroll-margin so smooth-scrolled sections aren't hidden under both bars */
+.page-inner [id] {
+  scroll-margin-top: calc(var(--header-h, 72px) + 64px);
+}
+
+/* ── Programme tabs (Primary / Secondary toggle) ─────────────────────────── */
+.programme-tabs {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0 12px;
+}
+
+.programme-tabs__input {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.programme-tabs__head {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.programme-tabs__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1.5px solid rgba(45, 74, 62, 0.15);
+  border-radius: var(--radius-sm, 6px);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary, #2D4A3E);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.programme-tabs__btn:hover {
+  border-color: var(--accent, #C67B5C);
+}
+
+.programme-tabs__input:focus-visible + .programme-tabs__head .programme-tabs__btn,
+.programme-tabs__btn:focus-visible {
+  outline: 2px solid var(--accent, #C67B5C);
+  outline-offset: 2px;
+}
+
+.programme-tabs__panel {
+  display: none;
+  margin: 0;
+}
+
+#prog-primary:checked ~ .programme-tabs__head label[for="prog-primary"],
+#prog-secondary:checked ~ .programme-tabs__head label[for="prog-secondary"] {
+  background: var(--accent, #C67B5C);
+  color: #FFFFFF;
+  border-color: var(--accent, #C67B5C);
+}
+
+#prog-primary:checked ~ .programme-tabs__panel--primary,
+#prog-secondary:checked ~ .programme-tabs__panel--secondary {
+  display: block;
+  animation: progTabsFade 0.25s ease;
+}
+
+@keyframes progTabsFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Layout tightening on inner pages ────────────────────────────────────── */
+.page-inner .section {
+  padding: 72px 0; /* down from 96px ~ 25% tighter */
+}
+
+@media (min-width: 768px) {
+  .page-inner .page-hero:not(.page-hero--tight) {
+    padding-top: 64px;
+    padding-bottom: 56px;
+  }
+  .page-inner .page-hero__grid {
+    gap: 40px; /* tighter than default */
+  }
+}
+
+@media (max-width: 767px) {
+  .page-inner .section {
+    padding: 56px 0;
+  }
+}
+
+/* ── Larger logos on schools & organisations ─────────────────────────────── */
+.page-inner .logo-strip__item--logo img {
+  height: 140px;
+  max-width: 380px;
+}
+
+@media (max-width: 767px) {
+  .page-inner .logo-strip__item--logo img {
+    height: 110px;
+    max-width: 280px;
+  }
+}
+
+/* ── Contact closing-brand block ─────────────────────────────────────────── */
+.closing-brand {
+  text-align: center;
+}
+
+.closing-brand__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.closing-brand__lede {
+  font-family: var(--font-display, 'Fraunces', serif);
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.55rem);
+  line-height: 1.45;
+  color: rgba(250, 246, 240, 0.92);
+  font-style: italic;
+  margin: 0 0 28px;
+}
+
+.closing-brand__divider {
+  display: inline-block;
+  font-family: var(--font-display, 'Fraunces', serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent, #C67B5C);
+  padding: 0 18px;
+  position: relative;
+  margin: 0 0 28px;
+}
+
+.closing-brand__divider::before,
+.closing-brand__divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 56px;
+  height: 1px;
+  background: rgba(250, 246, 240, 0.3);
+}
+.closing-brand__divider::before { right: 100%; }
+.closing-brand__divider::after  { left: 100%; }
+
+.closing-brand__statement {
+  font-family: var(--font-display, 'Fraunces', serif);
+  font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.4rem);
+  line-height: 1.5;
+  color: #FAF6F0;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Reduced motion — kill the panel fade */
+@media (prefers-reduced-motion: reduce) {
+  .programme-tabs__panel { animation: none !important; }
+  html { scroll-behavior: auto !important; }
+}
