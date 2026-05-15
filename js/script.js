@@ -79,6 +79,17 @@
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // --------------------------------------------------------------------------
+  // Video play cue — hide once the intro video starts
+  // --------------------------------------------------------------------------
+  document.querySelectorAll('.video-embed video').forEach(function (video) {
+    var cue = video.parentElement && video.parentElement.querySelector('.video-play-cue');
+    if (!cue) return;
+    video.addEventListener('play', function () {
+      cue.style.display = 'none';
+    });
+  });
+
 })();
 
 

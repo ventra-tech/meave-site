@@ -16,7 +16,9 @@
 
   <header class="site-header">
     <div class="container site-header__inner">
-      <a href="index.html" class="site-logo" aria-label="Meave — home">Meave</a>
+      <a href="index.html" class="site-logo" aria-label="Meave — home">
+        <img src="logos/logo44.png" alt="MDX Parenting" />
+      </a>
 
       <nav class="site-nav" aria-label="Primary">
         <ul class="site-nav__list">
@@ -69,47 +71,8 @@
       </div>
     </section>
 
-    <!-- Contact routes -->
-    <section class="section">
-      <div class="container">
-        <div class="contact-grid">
-
-          <article class="contact-route">
-            <span class="contact-route__tag">For Parents</span>
-            <h3>Book a discovery call</h3>
-            <p>A free 20-minute call to talk through what's going on and whether coaching is the right fit. No pressure, no sales pitch.</p>
-            <a href="#contact-form" class="text-link">
-              Start your enquiry
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
-
-          <article class="contact-route">
-            <span class="contact-route__tag">For Schools</span>
-            <h3>Enquire about training</h3>
-            <p>Share a few details about your setting and priority. I'll come back with honest thoughts and — if it's a fit — a tailored proposal.</p>
-            <a href="#contact-form" class="text-link">
-              Start a school enquiry
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
-
-          <article class="contact-route">
-            <span class="contact-route__tag">For Organisations</span>
-            <h3>Download the prospectus</h3>
-            <p>Full fee structure, engagement models, recent case studies and ROI framework — sent directly to your inbox.</p>
-            <a href="#contact-form" class="text-link">
-              Request the prospectus
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
     <!-- Form + details -->
-    <section class="section section--alt" id="contact-form">
+    <section class="section section--alt contact-form-section" id="contact-form">
       <div class="container">
         <div class="contact-layout">
 
@@ -133,10 +96,9 @@
               <label class="contact-form__field">
                 <span class="contact-form__label">I'm getting in touch as a…</span>
                 <select name="audience">
-                  <option>Parent looking for 1-to-1 coaching</option>
-                  <option>School, MAT or conference organiser</option>
-                  <option>Employer, HR or People lead</option>
-                  <option>Nursery, charity or local authority</option>
+                  <option>Parent</option>
+                  <option>School</option>
+                  <option>Organisation</option>
                   <option>Something else</option>
                 </select>
               </label>
@@ -193,9 +155,47 @@
               <h3>Credentials</h3>
               <span class="credential-badge credential-badge--light">Certified Triple P practitioner</span>
               <span class="credential-badge credential-badge--light">Enhanced DBS &middot; Fully insured</span>
-              <span class="credential-badge credential-badge--light">[placeholder: Professional membership]</span>
             </div>
           </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact routes -->
+    <section class="section contact-routes-section">
+      <div class="container">
+        <div class="contact-grid">
+
+          <article class="contact-route">
+            <span class="contact-route__tag">For Parents</span>
+            <h3>Book a discovery call</h3>
+            <p>A free 20-minute call to talk through what's going on and whether coaching is the right fit. No pressure, no sales pitch.</p>
+            <a href="#contact-form" class="text-link">
+              Start your enquiry
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="contact-route">
+            <span class="contact-route__tag">For Schools</span>
+            <h3>Enquire about training</h3>
+            <p>Share a few details about your setting and priority. I'll come back with honest thoughts and — if it's a fit — a tailored proposal.</p>
+            <a href="#contact-form" class="text-link">
+              Start a school enquiry
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
+
+          <article class="contact-route">
+            <span class="contact-route__tag">For Organisations</span>
+            <h3>Enquire directly</h3>
+            <p>Tell me what support you are exploring and I will come back with the right next step for your organisation.</p>
+            <a href="#contact-form" class="text-link">
+              Start an organisation enquiry
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </article>
 
         </div>
       </div>
@@ -222,11 +222,11 @@
           <a href="index.html" class="site-footer__brand">Meave</a>
           <p class="site-footer__about">Practical parenting coaching, talks and consultancy — UK-wide. Led by Meave Darroux, certified Triple P practitioner.</p>
           <div class="site-footer__socials">
-            <a class="social-link" href="#" aria-label="LinkedIn [placeholder link]">
+            <a class="social-link" href="https://www.linkedin.com/in/meavedarroux/" aria-label="LinkedIn" target="_blank" rel="noopener">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 24h5V8H0v16zM7.98 8H12v2.18h.06c.56-1.06 1.93-2.18 3.97-2.18 4.25 0 5 2.8 5 6.44V24h-5v-7.1c0-1.7-.03-3.88-2.36-3.88-2.36 0-2.72 1.85-2.72 3.76V24h-5V8z"/></svg>
             </a>
-            <a class="social-link" href="#" aria-label="Instagram [placeholder link]">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <a class="social-link" href="https://www.facebook.com/meave.darroux?locale=en_GB" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.48 17.52 2 11.94 2S2 6.48 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.77l-.44 2.91h-2.33V22c4.78-.76 8.43-4.92 8.43-9.94z"/></svg>
             </a>
           </div>
         </div>
