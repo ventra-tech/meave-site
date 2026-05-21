@@ -685,6 +685,19 @@ p {
   transform: translateY(-1px);
 }
 
+.homepage-credibility {
+  padding-top: 42px;
+  padding-bottom: 54px;
+}
+
+.homepage-credibility .logo-strip {
+  margin-bottom: 38px;
+}
+
+.homepage-credibility__stats {
+  margin-top: 0;
+}
+
 /* ── Logo belt / conveyor ticker ─────────────────────────────────── */
 /* JS wraps .logo-strip__row in .logo-belt and duplicates the logos  */
 .logo-belt {
@@ -1183,6 +1196,43 @@ textarea:focus-visible {
   margin-bottom: 18px;
 }
 
+.btn-large {
+  min-height: 56px;
+  padding: 16px 28px;
+  font-size: 1.02rem;
+}
+
+.page-nav-sticky__pill--cta {
+  background: var(--cream);
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.org-contact-prompt {
+  max-width: 52ch;
+  margin: -8px 0 24px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--accent);
+  background: rgba(198, 123, 92, 0.12);
+}
+
+.org-contact-prompt__eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+}
+
+.org-contact-prompt p {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
 .page-hero__fineprint {
   font-size: 0.94rem;
   color: var(--text);
@@ -1647,6 +1697,18 @@ textarea:focus-visible {
 .school-featured-quote .pull-quote cite,
 .school-featured-quote .pull-quote cite strong {
   color: #FFFFFF;
+}
+
+.school-featured-quote .pull-quote cite {
+  color: var(--primary-dark);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.school-featured-quote .pull-quote cite strong {
+  color: var(--primary-dark);
+  font-size: 1.16rem;
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -3072,22 +3134,30 @@ body {
 }
 
 .school-logo-strip .logo-strip__row {
-  gap: 18px 34px;
+  gap: 16px 40px;
+}
+
+.page-inner .school-logo-strip {
+  padding: 34px 0;
+}
+
+.school-logo-strip .logo-strip__label {
+  margin-bottom: 18px;
 }
 
 .school-logo-strip .logo-belt {
-  min-height: 132px;
-  padding: 10px 0;
+  min-height: 110px;
+  padding: 0;
 }
 
 .school-logo-strip .logo-belt__track {
-  gap: 60px;
+  gap: 40px;
 }
 
 .school-logo-strip .logo-strip__item--logo {
-  width: 280px;
-  min-width: 280px;
-  height: 112px;
+  width: 240px;
+  min-width: 240px;
+  height: 100px;
   overflow: hidden;
 }
 
@@ -3095,8 +3165,8 @@ body {
 .page-inner .school-logo-strip .logo-strip__item--logo img {
   width: auto;
   height: auto;
-  max-width: 280px;
-  max-height: 100px;
+  max-width: 240px;
+  max-height: 92px;
 }
 
 .school-logo-strip .logo-strip__item:not(.logo-strip__item--logo) {
@@ -3114,6 +3184,44 @@ body {
 .page-inner .logo-strip__item--logo img[src*="lb-hillingdon"] {
   height: 72px;
   max-width: 220px;
+}
+
+.logo-strip__item--logo img[src*="hm-prison"],
+.page-inner .logo-strip__item--logo img[src*="hm-prison"],
+.logo-strip__item--logo img[src*="nelft"],
+.page-inner .logo-strip__item--logo img[src*="nelft"],
+.logo-strip__item--logo img[src*="king-solomon"],
+.page-inner .logo-strip__item--logo img[src*="king-solomon"] {
+  height: 112px;
+  max-width: 260px;
+}
+
+.logo-strip__item--logo img[src*="hm-prison"],
+.page-inner .logo-strip__item--logo img[src*="hm-prison"],
+.logo-strip__item--logo img[src*="king-solomon"],
+.page-inner .logo-strip__item--logo img[src*="king-solomon"] {
+  height: 126px;
+  max-width: 290px;
+}
+
+.school-logo-strip .logo-strip__item--logo img[src*="king-solomon"],
+.page-inner .school-logo-strip .logo-strip__item--logo img[src*="king-solomon"] {
+  height: auto;
+  max-height: 100px;
+  max-width: 235px;
+}
+
+.logo-strip__item--logo img[src*="BCP-Council"],
+.page-inner .logo-strip__item--logo img[src*="BCP-Council"] {
+  height: 108px;
+  max-width: 160px;
+}
+
+.school-logo-strip .logo-strip__item--logo img[src*="BCP-Council"],
+.page-inner .school-logo-strip .logo-strip__item--logo img[src*="BCP-Council"] {
+  height: auto;
+  max-height: 92px;
+  max-width: 135px;
 }
 
 @media (max-width: 767px) {
@@ -3145,6 +3253,30 @@ body {
   .page-inner .logo-strip__item--logo img[src*="lb-hillingdon"] {
     height: 64px;
     max-width: 190px;
+  }
+
+  .logo-strip__item--logo img[src*="hm-prison"],
+  .page-inner .logo-strip__item--logo img[src*="hm-prison"],
+  .logo-strip__item--logo img[src*="nelft"],
+  .page-inner .logo-strip__item--logo img[src*="nelft"],
+  .logo-strip__item--logo img[src*="king-solomon"],
+  .page-inner .logo-strip__item--logo img[src*="king-solomon"] {
+    height: 88px;
+    max-width: 210px;
+  }
+
+  .logo-strip__item--logo img[src*="hm-prison"],
+  .page-inner .logo-strip__item--logo img[src*="hm-prison"],
+  .logo-strip__item--logo img[src*="king-solomon"],
+  .page-inner .logo-strip__item--logo img[src*="king-solomon"] {
+    height: 98px;
+    max-width: 230px;
+  }
+
+  .logo-strip__item--logo img[src*="BCP-Council"],
+  .page-inner .logo-strip__item--logo img[src*="BCP-Council"] {
+    height: 86px;
+    max-width: 130px;
   }
 }
 
