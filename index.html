@@ -86,10 +86,16 @@
          HERO — lighter editorial introduction
          ============================================================ -->
     <section class="hero-cinematic" aria-label="Introduction">
-      <!-- Background image -->
+      <!-- Background media -->
       <img class="hero-cinematic__bg" src="images/hero-home.jpg"
            alt="" aria-hidden="true" loading="eager" />
-      <!-- Dark overlay -->
+      <video class="hero-cinematic__bg hero-cinematic__video"
+             autoplay muted loop playsinline preload="metadata"
+             poster="images/hero-home.jpg"
+             aria-hidden="true">
+        <source src="images/meaveclips.mp4" type="video/mp4" />
+      </video>
+      <!-- Colour overlay -->
       <div class="hero-cinematic__overlay" aria-hidden="true"></div>
 
       <!-- Content -->

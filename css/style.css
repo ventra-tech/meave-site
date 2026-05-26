@@ -778,6 +778,10 @@ p {
   object-fit: cover;
 }
 
+.image-focus-left {
+  object-position: 36% center;
+}
+
 /* ==========================================================================
    Testimonials
    ========================================================================== */
@@ -2213,8 +2217,8 @@ textarea:focus-visible {
 
 .hero-cinematic__bg {
   position: absolute;
-  inset: 0 0 0 auto;
-  width: 48%;
+  inset: 0;
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -2222,12 +2226,17 @@ textarea:focus-visible {
   z-index: 0;
 }
 
+.hero-cinematic__video {
+  display: block;
+  filter: saturate(0.88) contrast(0.96);
+}
+
 .hero-cinematic__overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--bg) 0%, var(--bg) 52%, rgba(250, 246, 240, 0.88) 60%, rgba(250, 246, 240, 0.18) 76%, rgba(250, 246, 240, 0) 100%),
-    linear-gradient(180deg, rgba(250, 246, 240, 0.16) 0%, rgba(250, 246, 240, 0) 40%);
+    linear-gradient(90deg, rgba(250, 246, 240, 0.48) 0%, rgba(250, 246, 240, 0.32) 42%, rgba(250, 246, 240, 0.18) 70%, rgba(250, 246, 240, 0.08) 100%),
+    linear-gradient(0deg, rgba(45, 74, 62, 0.16), rgba(45, 74, 62, 0.16));
   opacity: 1;
   z-index: 1;
 }
@@ -2235,9 +2244,21 @@ textarea:focus-visible {
 .hero-cinematic__content {
   position: relative;
   z-index: 2;
+  isolation: isolate;
   padding-top: 80px;
   padding-bottom: 80px;
   max-width: 660px;
+}
+
+.hero-cinematic__content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 28px -44px 32px -44px;
+  background:
+    radial-gradient(circle at 42% 46%, rgba(250, 246, 240, 0.78) 0%, rgba(250, 246, 240, 0.55) 42%, rgba(250, 246, 240, 0.24) 70%, rgba(250, 246, 240, 0) 100%);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .hero-cinematic__eyebrow {
@@ -2253,6 +2274,7 @@ textarea:focus-visible {
   letter-spacing: -0.02em;
   margin-bottom: 24px;
   max-width: 12.5ch;
+  text-shadow: 0 1px 20px rgba(250, 246, 240, 0.78);
 }
 
 .hero-cinematic__lede {
@@ -2261,6 +2283,7 @@ textarea:focus-visible {
   max-width: 55ch;
   margin-bottom: 36px;
   line-height: 1.65;
+  text-shadow: 0 1px 18px rgba(250, 246, 240, 0.92);
 }
 
 .hero-cinematic__ctas {
@@ -2280,37 +2303,42 @@ textarea:focus-visible {
   font-size: 0.95rem;
   font-weight: 500;
   line-height: 1;
-  color: var(--primary);
-  background: transparent;
-  border: 1.5px solid rgba(45, 74, 62, 0.45);
+  color: #FFFFFF;
+  background: var(--primary);
+  border: 2px solid var(--primary);
   border-radius: var(--radius-sm);
   transition: background 0.15s ease, border-color 0.15s ease;
   white-space: nowrap;
 }
 
 .hero-cinematic__ghost:hover {
-  background: rgba(45, 74, 62, 0.07);
-  border-color: rgba(45, 74, 62, 0.75);
-  color: var(--primary);
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #FFFFFF;
 }
 
 .hero-cinematic__trust {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 28px;
+  gap: 10px;
 }
 
 .hero-cinematic__trust span {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
+  padding: 11px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
   font-size: 0.86rem;
-  color: var(--text);
+  font-weight: 500;
+  color: #FFFFFF;
   letter-spacing: 0.01em;
 }
 
 .hero-cinematic__trust svg {
-  color: var(--accent);
+  color: #FFFFFF;
   flex-shrink: 0;
 }
 
@@ -2323,14 +2351,14 @@ textarea:focus-visible {
   .hero-cinematic__bg {
     inset: 0;
     width: 100%;
-    object-position: 62% center;
+    object-position: center;
     opacity: 1;
   }
 
   .hero-cinematic__overlay {
     background:
-      linear-gradient(180deg, rgba(250, 246, 240, 0.92) 0%, rgba(250, 246, 240, 0.78) 54%, rgba(250, 246, 240, 0.56) 100%),
-      radial-gradient(circle at 42% 44%, rgba(250, 246, 240, 0.82) 0%, rgba(250, 246, 240, 0.42) 64%, rgba(250, 246, 240, 0.16) 100%);
+      linear-gradient(180deg, rgba(250, 246, 240, 0.82) 0%, rgba(250, 246, 240, 0.68) 58%, rgba(250, 246, 240, 0.5) 100%),
+      linear-gradient(0deg, rgba(45, 74, 62, 0.16), rgba(45, 74, 62, 0.16));
     opacity: 1;
   }
 
@@ -2374,11 +2402,13 @@ textarea:focus-visible {
   }
 
   .hero-cinematic__trust {
-    gap: 8px 16px;
+    gap: 8px;
   }
 
   .hero-cinematic__trust span {
     font-size: 0.78rem;
+    min-height: 40px;
+    padding: 10px 12px;
   }
 }
 
