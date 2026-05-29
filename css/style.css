@@ -772,6 +772,11 @@ p {
   max-width: 440px;
 }
 
+.about-split__image--landscape {
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+}
+
 .about-split__image img {
   width: 100%;
   height: 100%;
@@ -780,6 +785,14 @@ p {
 
 .image-focus-left {
   object-position: 36% center;
+}
+
+.image-focus-lower {
+  object-position: center 55%;
+}
+
+.image-focus-top {
+  object-position: center 20%;
 }
 
 /* ==========================================================================
@@ -1262,6 +1275,14 @@ textarea:focus-visible {
     max-width: 560px;
     margin: 0 auto;
   }
+}
+
+.page-hero__image--landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.page-hero__image--tall {
+  aspect-ratio: 2 / 3;
 }
 
 .page-hero--tight {
@@ -1953,7 +1974,7 @@ textarea:focus-visible {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
 }
 
