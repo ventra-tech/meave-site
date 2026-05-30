@@ -1279,6 +1279,12 @@ textarea:focus-visible {
 
 .page-hero__image--landscape {
   aspect-ratio: 16 / 9;
+  background: var(--bg);
+}
+
+.page-hero__image--landscape img {
+  object-fit: contain;
+  object-position: center center;
 }
 
 .page-hero__image--tall {
