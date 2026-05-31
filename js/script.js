@@ -390,3 +390,19 @@
   });
 
 })();
+
+/* Contact form — reveal extra detail field when "Something else" is selected */
+(function () {
+  'use strict';
+
+  var select = document.getElementById('audience-select');
+  var otherField = document.getElementById('audience-other-field');
+  if (!select || !otherField) return;
+
+  function sync() {
+    otherField.hidden = select.value !== 'Something else';
+  }
+
+  select.addEventListener('change', sync);
+  sync();
+})();
