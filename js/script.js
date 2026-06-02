@@ -391,7 +391,7 @@
 
 })();
 
-/* Contact form — reveal extra detail field when "Something else" is selected */
+/* Contact form — reveal extra detail field when "Other (please state)" is selected */
 (function () {
   'use strict';
 
@@ -400,7 +400,7 @@
   if (!select || !otherField) return;
 
   function sync() {
-    otherField.hidden = select.value !== 'Something else';
+    otherField.hidden = select.value !== 'Other (please state)';
   }
 
   select.addEventListener('change', sync);
