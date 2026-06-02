@@ -2301,8 +2301,29 @@ textarea:focus-visible {
 }
 
 .hero-cinematic__eyebrow {
-  color: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
   margin-bottom: 16px;
+}
+
+/* Hero CTAs: bigger, bolder, higher-contrast (accessibility) */
+.hero-cinematic__ctas .btn,
+.hero-cinematic__ghost {
+  padding: 15px 30px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.hero-cinematic__ctas .btn-accent {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #FFFFFF;
+}
+
+.hero-cinematic__ctas .btn-accent:hover {
+  background: #8E5640;
+  border-color: #8E5640;
+  color: #FFFFFF;
 }
 
 .hero-cinematic__h1 {
