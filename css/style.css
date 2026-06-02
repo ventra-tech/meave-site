@@ -2301,8 +2301,11 @@ textarea:focus-visible {
 }
 
 .hero-cinematic__eyebrow {
-  color: var(--primary);
+  color: #FFFFFF;
+  background: var(--primary);
   font-weight: 600;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
   margin-bottom: 16px;
 }
 
@@ -2390,7 +2393,7 @@ textarea:focus-visible {
   min-height: 44px;
   padding: 11px 18px;
   border-radius: var(--radius-sm);
-  background: var(--accent);
+  background: var(--accent-dark);
   font-size: 0.86rem;
   font-weight: 500;
   color: #FFFFFF;
