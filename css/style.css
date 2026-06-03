@@ -338,6 +338,74 @@ p {
   border-bottom-color: var(--accent);
 }
 
+/* About Meave dropdown — desktop */
+.site-nav__item--has-menu {
+  position: relative;
+}
+
+.site-nav__caret {
+  margin-left: 5px;
+  vertical-align: -1px;
+  transition: transform 0.2s ease;
+}
+
+.site-nav__item--has-menu:hover .site-nav__caret,
+.site-nav__item--has-menu:focus-within .site-nav__caret {
+  transform: rotate(180deg);
+}
+
+.site-nav__submenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 220px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 16px 40px rgba(31, 51, 41, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 200;
+}
+
+/* invisible bridge so the 10px gap doesn't close the menu */
+.site-nav__submenu::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.site-nav__item--has-menu:hover .site-nav__submenu,
+.site-nav__item--has-menu:focus-within .site-nav__submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.site-nav__submenu a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 7px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.site-nav__submenu a:hover,
+.site-nav__submenu a:focus-visible {
+  background: var(--bg-alt);
+}
+
 .site-header__cta {
   display: none;
 }
@@ -426,6 +494,23 @@ p {
 
 .mobile-nav__cta {
   width: 100%;
+}
+
+/* About Meave dropdown — mobile sub-links (indented, always visible) */
+.mobile-nav__submenu {
+  list-style: none;
+  margin: 0 0 0 14px;
+  padding: 0;
+}
+
+.mobile-nav__sublink {
+  display: block;
+  padding: 11px 4px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
 }
 
 @media (min-width: 1024px) {

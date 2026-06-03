@@ -25,7 +25,15 @@
       <nav class="site-nav" aria-label="Primary">
         <ul class="site-nav__list">
           <li><a class="site-nav__link" href="index.html">Home</a></li>
-          <li><a class="site-nav__link" href="about.html">About Meave</a></li>
+          <li class="site-nav__item--has-menu">
+            <a class="site-nav__link" href="about.html">About Meave<svg class="site-nav__caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="site-nav__submenu">
+              <li><a href="about.html#story">Hear from me</a></li>
+              <li><a href="about.html#how-i-work">How I work</a></li>
+              <li><a href="about.html#qualifications">Credentials</a></li>
+              <li><a href="about.html#ready">Ready to work together</a></li>
+            </ul>
+          </li>
           <li><a class="site-nav__link" href="for-parents.html">For Parents</a></li>
           <li><a class="site-nav__link" href="for-schools.html" aria-current="page">For Schools</a></li>
           <li><a class="site-nav__link" href="for-organisations.html">For Organisations</a></li>
@@ -53,7 +61,15 @@
   <div class="mobile-nav" id="mobile-nav">
     <ul class="mobile-nav__list">
       <li><a class="mobile-nav__link" href="index.html">Home</a></li>
-      <li><a class="mobile-nav__link" href="about.html">About Meave</a></li>
+      <li class="mobile-nav__item--has-menu">
+        <a class="mobile-nav__link" href="about.html">About Meave</a>
+        <ul class="mobile-nav__submenu">
+          <li><a class="mobile-nav__sublink" href="about.html#story">Hear from me</a></li>
+          <li><a class="mobile-nav__sublink" href="about.html#how-i-work">How I work</a></li>
+          <li><a class="mobile-nav__sublink" href="about.html#qualifications">Credentials</a></li>
+          <li><a class="mobile-nav__sublink" href="about.html#ready">Ready to work together</a></li>
+        </ul>
+      </li>
       <li><a class="mobile-nav__link" href="for-parents.html">For Parents</a></li>
       <li><a class="mobile-nav__link" href="for-schools.html" aria-current="page">For Schools &amp; Events</a></li>
       <li><a class="mobile-nav__link" href="for-organisations.html">For Organisations</a></li>
