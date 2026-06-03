@@ -325,33 +325,42 @@ p {
 }
 
 .site-nav__link {
+  position: relative;
   font-size: 0.95rem;
   color: var(--text);
   font-weight: 400;
   padding: 6px 0;
-  border-bottom: 2px solid transparent;
+}
+
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-nav__link:hover,
+.site-nav__item--has-menu:focus-within > .site-nav__link,
 .site-nav__link[aria-current="page"] {
   color: var(--primary);
-  border-bottom-color: var(--accent);
+}
+
+.site-nav__link:hover::after,
+.site-nav__item--has-menu:hover > .site-nav__link::after,
+.site-nav__item--has-menu:focus-within > .site-nav__link::after,
+.site-nav__link[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 /* About Meave dropdown — desktop */
 .site-nav__item--has-menu {
   position: relative;
-}
-
-.site-nav__caret {
-  margin-left: 5px;
-  vertical-align: -1px;
-  transition: transform 0.2s ease;
-}
-
-.site-nav__item--has-menu:hover .site-nav__caret,
-.site-nav__item--has-menu:focus-within .site-nav__caret {
-  transform: rotate(180deg);
 }
 
 .site-nav__submenu {
@@ -399,11 +408,13 @@ p {
   font-weight: 500;
   white-space: nowrap;
   text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .site-nav__submenu a:hover,
 .site-nav__submenu a:focus-visible {
   background: var(--bg-alt);
+  transform: translateX(3px);
 }
 
 .site-header__cta {
@@ -2934,7 +2945,7 @@ body {
 
 /* ── 4. Nav link — smooth underline transition ───────────────────── */
 .site-nav__link {
-  transition: color 0.22s ease, border-bottom-color 0.22s ease;
+  transition: color 0.22s ease;
 }
 
 /* ── 5. Buttons — more presence on hover ────────────────────────── */
