@@ -3603,11 +3603,13 @@ body {
   font: inherit;
   color: inherit;
   position: relative;
+  min-height: 260px;
 }
 
 @media (min-width: 768px) {
   .dual-question__trigger {
     padding: 40px 36px;
+    min-height: 290px;
   }
 }
 
