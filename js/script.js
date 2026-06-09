@@ -391,6 +391,44 @@
 
 })();
 
+/* Dual-question interactive — Parenting today / Triple P */
+(function () {
+  'use strict';
+
+  var grid = document.querySelector('[data-dual-question]');
+  if (!grid) return;
+
+  var panels = grid.querySelectorAll('.dual-question__panel');
+
+  panels.forEach(function (panel) {
+    var trigger = panel.querySelector('.dual-question__trigger');
+    var body = panel.querySelector('.dual-question__body');
+    if (!trigger || !body) return;
+
+    trigger.addEventListener('click', function () {
+      var isOpen = panel.classList.contains('is-open');
+
+      // Close all panels first
+      panels.forEach(function (p) {
+        p.classList.remove('is-open');
+        var t = p.querySelector('.dual-question__trigger');
+        var b = p.querySelector('.dual-question__body');
+        if (t) t.setAttribute('aria-expanded', 'false');
+        if (b) b.setAttribute('hidden', '');
+      });
+
+      if (!isOpen) {
+        panel.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        body.removeAttribute('hidden');
+        grid.classList.add('has-active');
+      } else {
+        grid.classList.remove('has-active');
+      }
+    });
+  });
+})();
+
 /* Contact form — reveal extra detail field when "Other (please state)" is selected */
 (function () {
   'use strict';

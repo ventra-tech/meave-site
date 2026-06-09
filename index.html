@@ -248,16 +248,48 @@
       </div>
     </section>
 
-    <!-- Parenting today teaser -->
-    <section class="section">
+    <!-- Two-question interactive: Parenting today / Triple P -->
+    <section class="section dual-question" aria-label="Explore parenting today and Triple P">
       <div class="container">
-        <div class="section__head">
-          <span class="eyebrow">Parenting today</span>
-          <h2>The world has changed. Parenting got harder</h2>
-          <p class="lede">From the after-effects of the pandemic to the pressures of social media, key school transitions and a growing number of children with neurodiverse needs, today's families are navigating more than ever. My approach is practical, evidence-based and non-judgemental, helping you build confidence and create calmer, more connected family relationships.</p>
+        <div class="section__head dual-question__head">
+          <span class="eyebrow">Two questions worth asking</span>
+          <h2>Pick the one you want to start with</h2>
         </div>
-        <div style="text-align:center;">
-          <a href="for-parents.html#parenting-today" class="btn btn-accent">Explore support for parents</a>
+
+        <div class="dual-question__grid" data-dual-question>
+
+          <article class="dual-question__panel dual-question__panel--parents" data-panel="parents">
+            <button class="dual-question__trigger" type="button" aria-expanded="false" aria-controls="dq-body-parents">
+              <span class="dual-question__eyebrow">Parenting today</span>
+              <h3 class="dual-question__title">What does parenting look&nbsp;like&nbsp;today?</h3>
+              <p class="dual-question__teaser">Pandemic effects, social media, transitions, neurodiversity. Today's families are navigating more than ever.</p>
+              <span class="dual-question__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="dual-question__body" id="dq-body-parents" hidden>
+              <p>Parenting in today's world comes with challenges many families never imagined they would face. From the lasting impact of the pandemic to the pressures of social media, key school transitions and a growing number of children with neurodiverse needs, the job has shifted — and parents are doing it without much of a map.</p>
+              <p>My approach is practical, evidence-based and non-judgemental, helping you build confidence and create calmer, more connected family relationships.</p>
+              <a href="for-parents.html#parenting-today" class="btn btn-accent">Explore support for parents</a>
+            </div>
+          </article>
+
+          <article class="dual-question__panel dual-question__panel--triplep" data-panel="triplep">
+            <button class="dual-question__trigger" type="button" aria-expanded="false" aria-controls="dq-body-triplep">
+              <span class="dual-question__eyebrow">The framework</span>
+              <h3 class="dual-question__title">What is&nbsp;Triple&nbsp;P?</h3>
+              <p class="dual-question__teaser">The evidence-based programme behind every session, tailored to each family.</p>
+              <span class="dual-question__icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="dual-question__body" id="dq-body-triplep" hidden>
+              <p>Triple P (Positive Parenting Program) is an internationally recognised, evidence-based parenting programme that helps parents build positive, confident relationships with their children. Rather than offering a one-size-fits-all approach, Triple P provides practical tools and strategies that can be tailored to each family's needs.</p>
+              <p>I have used the Triple P principles personally and with thousands of families, and found it to be effective and family friendly.</p>
+              <a href="about.html#what-is-triple-p" class="btn btn-accent">Read more on About Meave</a>
+            </div>
+          </article>
+
         </div>
       </div>
     </section>

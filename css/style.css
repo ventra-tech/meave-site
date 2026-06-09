@@ -3527,3 +3527,229 @@ body {
   .programme-tabs__panel { animation: none !important; }
   html { scroll-behavior: auto !important; }
 }
+
+/* ==========================================================================
+   Dual-question interactive — "What does parenting look like / What is Triple P?"
+   ========================================================================== */
+
+.dual-question__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .dual-question__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+}
+
+.dual-question__panel {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.32s ease,
+              opacity 0.32s ease,
+              filter 0.32s ease;
+  box-shadow: 0 2px 6px rgba(31, 51, 41, 0.04);
+}
+
+.dual-question__panel--parents {
+  background: linear-gradient(155deg, #FFFFFF 0%, #FBEEE5 100%);
+}
+
+.dual-question__panel--triplep {
+  background: linear-gradient(155deg, #FFFFFF 0%, #E3ECE8 100%);
+}
+
+/* Hover lift (when not actively expanded) */
+.dual-question__panel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(31, 51, 41, 0.12);
+}
+
+/* When ONE panel is open, the OTHER softly dims */
+.dual-question__grid.has-active .dual-question__panel:not(.is-open) {
+  opacity: 0.55;
+  filter: saturate(0.7);
+  transform: none;
+  box-shadow: 0 2px 6px rgba(31, 51, 41, 0.04);
+}
+.dual-question__grid.has-active .dual-question__panel:not(.is-open):hover {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-4px);
+}
+
+.dual-question__panel.is-open {
+  box-shadow: 0 26px 50px rgba(31, 51, 41, 0.14);
+}
+
+.dual-question__trigger {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 32px 28px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .dual-question__trigger {
+    padding: 40px 36px;
+  }
+}
+
+.dual-question__panel .dual-question__eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.dual-question__panel--parents .dual-question__eyebrow {
+  color: var(--accent-dark);
+}
+
+.dual-question__panel--triplep .dual-question__eyebrow {
+  color: var(--primary);
+}
+
+.dual-question__title {
+  font-family: var(--font-display);
+  color: var(--primary);
+  font-size: clamp(1.7rem, 1.4rem + 1.2vw, 2.3rem);
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+  padding-right: 56px;
+}
+
+.dual-question__teaser {
+  font-family: var(--font-body);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 36ch;
+}
+
+.dual-question__icon {
+  position: absolute;
+  top: 32px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              color 0.25s ease;
+}
+
+@media (min-width: 768px) {
+  .dual-question__icon { top: 40px; right: 36px; }
+}
+
+/* Hover state on the trigger spins the plus a touch */
+.dual-question__panel:hover .dual-question__icon {
+  transform: rotate(90deg) scale(1.05);
+}
+
+.dual-question__panel--parents:hover .dual-question__icon {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #FFFFFF;
+}
+
+.dual-question__panel--triplep:hover .dual-question__icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+/* Open state: plus → x */
+.dual-question__panel.is-open .dual-question__icon {
+  transform: rotate(135deg);
+}
+
+.dual-question__panel--parents.is-open .dual-question__icon {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #FFFFFF;
+}
+
+.dual-question__panel--triplep.is-open .dual-question__icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+/* Expandable body */
+.dual-question__body {
+  padding: 0 28px 32px;
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .dual-question__body { padding: 0 36px 40px; }
+}
+
+/* Hidden state via [hidden] is overridden by JS that toggles it */
+.dual-question__body[hidden] { display: none; }
+
+.dual-question__body p {
+  font-family: var(--font-body);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0 0 1.1em;
+  max-width: 60ch;
+}
+
+.dual-question__body .btn {
+  margin-top: 6px;
+}
+
+/* Reveal animation when opened */
+.dual-question__panel.is-open .dual-question__body {
+  animation: dq-fade-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dq-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dual-question__panel,
+  .dual-question__icon,
+  .dual-question__panel.is-open .dual-question__body {
+    transition: none !important;
+    animation: none !important;
+  }
+}
