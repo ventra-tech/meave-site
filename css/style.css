@@ -3071,6 +3071,7 @@ body {
   font-style: italic;
   color: var(--primary);
   font-size: 1.05rem;
+  text-align: center;
 }
 
 /* Second lede in hero (organisations page) */
