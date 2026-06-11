@@ -1484,6 +1484,10 @@ textarea:focus-visible {
   margin-bottom: 1.1em;
 }
 
+.prose-split .prose p {
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem);
+}
+
 .prose p:last-child {
   margin-bottom: 0;
 }
