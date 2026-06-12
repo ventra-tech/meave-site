@@ -2660,7 +2660,7 @@ textarea:focus-visible {
 
 .featured-quote-band__attrib {
   color: #FFFFFF;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  font-size: clamp(1.5rem, 1.35rem + 0.6vw, 1.8rem);
   font-weight: 600;
   letter-spacing: 0.01em;
   margin: 16px 0 0;
