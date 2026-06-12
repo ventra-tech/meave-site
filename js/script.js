@@ -337,12 +337,32 @@
     });
   });
 
+  // ── Keep the active pill scrolled into view inside the orange bar ────────
+  var pillScrollContainer = stickyNav.querySelector('.container');
+  var scrollPillIntoView = function (pill) {
+    if (!pill || !pillScrollContainer) return;
+    if (pillScrollContainer.scrollWidth <= pillScrollContainer.clientWidth) return;
+    var pillRect = pill.getBoundingClientRect();
+    var contRect = pillScrollContainer.getBoundingClientRect();
+    var offsetWithinContainer = pillRect.left - contRect.left + pillScrollContainer.scrollLeft;
+    var target = offsetWithinContainer - (pillScrollContainer.clientWidth - pill.clientWidth) / 2;
+    var maxScroll = pillScrollContainer.scrollWidth - pillScrollContainer.clientWidth;
+    pillScrollContainer.scrollTo({
+      left: Math.max(0, Math.min(maxScroll, target)),
+      behavior: reducedMotion ? 'auto' : 'smooth'
+    });
+  };
+
   // ── Scroll-spy via IntersectionObserver ───────────────────────────────────
   if ('IntersectionObserver' in window && sections.length) {
     var setActive = function (id) {
+      var activePill = null;
       pills.forEach(function (p) {
-        p.classList.toggle('is-active', p.getAttribute('href') === '#' + id);
+        var match = p.getAttribute('href') === '#' + id;
+        p.classList.toggle('is-active', match);
+        if (match) activePill = p;
       });
+      scrollPillIntoView(activePill);
     };
 
     var spy = new IntersectionObserver(function (entries) {
@@ -366,7 +386,10 @@
   var initialHash = window.location.hash;
   if (initialHash) {
     pills.forEach(function (p) {
-      if (p.getAttribute('href') === initialHash) p.classList.add('is-active');
+      if (p.getAttribute('href') === initialHash) {
+        p.classList.add('is-active');
+        scrollPillIntoView(p);
+      }
     });
   }
 

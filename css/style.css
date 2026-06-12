@@ -3309,6 +3309,12 @@ body {
   margin: 0;
 }
 
+/* When the mobile nav is open, hide the sticky sub-page bar so it doesn't
+   bleed over the menu overlay. */
+[data-nav-open] .page-nav-sticky {
+  display: none;
+}
+
 .page-nav-sticky .container {
   /* allow horizontal scroll on mobile without breaking page width */
   overflow-x: auto;
