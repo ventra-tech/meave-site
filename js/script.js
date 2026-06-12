@@ -481,7 +481,7 @@
   var current = 0;
   var autoPlayEnabled = !reducedMotion;
   var timer = null;
-  var DELAY = 6000;
+  var DELAY = 5000;
 
   function scrollToSlide(idx, smooth) {
     var slide = slides[idx];
