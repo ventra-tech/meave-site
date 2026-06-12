@@ -1978,6 +1978,9 @@ textarea:focus-visible {
   flex-direction: column;
   gap: 6px;
 }
+.contact-form__field[hidden] {
+  display: none;
+}
 
 .contact-form__label {
   font-size: 0.85rem;
