@@ -598,3 +598,47 @@
 
   setActive(0);
 })();
+
+/* Mobile nav — collapsible submenus (injects chevron buttons at runtime) */
+(function () {
+  'use strict';
+
+  var nav = document.querySelector('.mobile-nav');
+  if (!nav) return;
+
+  var items = nav.querySelectorAll('.mobile-nav__item--has-menu');
+  if (!items.length) return;
+
+  // Mark the nav as enhanced — CSS uses this to switch submenus from
+  // always-visible (no-JS fallback) to collapsible.
+  nav.setAttribute('data-collapsible', '');
+
+  items.forEach(function (item, idx) {
+    var link = item.querySelector(':scope > .mobile-nav__link');
+    var submenu = item.querySelector(':scope > .mobile-nav__submenu');
+    if (!link || !submenu) return;
+
+    var submenuId = submenu.id || ('mobile-nav-sub-' + idx);
+    submenu.id = submenuId;
+
+    var row = document.createElement('div');
+    row.className = 'mobile-nav__row';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mobile-nav__expand';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', submenuId);
+    btn.setAttribute('aria-label', 'Show ' + link.textContent.trim() + ' sub-pages');
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+    link.parentNode.insertBefore(row, link);
+    row.appendChild(link);
+    row.appendChild(btn);
+
+    btn.addEventListener('click', function () {
+      var isOpen = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+})();

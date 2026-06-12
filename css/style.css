@@ -507,7 +507,7 @@ p {
   width: 100%;
 }
 
-/* About Meave dropdown — mobile sub-links (indented, always visible) */
+/* About Meave dropdown — mobile sub-links (indented) */
 .mobile-nav__submenu {
   list-style: none;
   margin: 0 0 0 14px;
@@ -522,6 +522,63 @@ p {
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
   text-decoration: none;
+}
+
+/* Collapsible behaviour — JS adds [data-collapsible] when enhancement is active.
+   Without JS, submenus stay visible (graceful fallback). */
+.mobile-nav__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-nav__row .mobile-nav__link {
+  flex: 1;
+  border-bottom: none;
+}
+
+.mobile-nav__expand {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.mobile-nav__expand:hover,
+.mobile-nav__expand:focus-visible {
+  background: var(--bg-alt);
+  outline: none;
+}
+
+.mobile-nav__expand svg {
+  transition: transform 0.25s ease;
+}
+
+.mobile-nav__item--has-menu.is-open .mobile-nav__expand svg {
+  transform: rotate(180deg);
+}
+
+.mobile-nav[data-collapsible] .mobile-nav__submenu {
+  max-height: 0;
+  overflow: hidden;
+  margin: 0 0 0 14px;
+  transition: max-height 0.28s ease, margin-top 0.28s ease, margin-bottom 0.28s ease;
+}
+
+.mobile-nav[data-collapsible] .mobile-nav__item--has-menu.is-open .mobile-nav__submenu {
+  max-height: 600px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 @media (min-width: 1024px) {
