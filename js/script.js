@@ -429,16 +429,29 @@
   });
 })();
 
-/* Contact form — reveal extra detail field when "Other (please state)" is selected */
+/* Contact form — reveal name field for School or Organisation */
 (function () {
   'use strict';
 
   var select = document.getElementById('audience-select');
   var otherField = document.getElementById('audience-other-field');
+  var otherLabel = document.getElementById('audience-other-label');
+  var otherInput = document.getElementById('audience-other-input');
   if (!select || !otherField) return;
 
   function sync() {
-    otherField.hidden = select.value !== 'Other (please state)';
+    var val = select.value;
+    if (val === 'School') {
+      otherField.hidden = false;
+      otherLabel.textContent = 'Name of school';
+      otherInput.placeholder = 'Name of your school';
+    } else if (val === 'Organisation') {
+      otherField.hidden = false;
+      otherLabel.textContent = 'Name of organisation';
+      otherInput.placeholder = 'Name of your organisation';
+    } else {
+      otherField.hidden = true;
+    }
   }
 
   select.addEventListener('change', sync);
