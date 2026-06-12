@@ -3393,6 +3393,12 @@ body {
   max-width: 260px;
 }
 
+.logo-strip__item--logo img[src*="ucl"],
+.page-inner .logo-strip__item--logo img[src*="ucl"] {
+  height: 48px;
+  max-width: 160px;
+}
+
 .logo-strip__item--logo img[src*="hm-prison"],
 .page-inner .logo-strip__item--logo img[src*="hm-prison"],
 .logo-strip__item--logo img[src*="king-solomon"],
