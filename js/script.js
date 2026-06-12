@@ -12,6 +12,17 @@
         document.body.removeAttribute('data-nav-open');
         navToggle.setAttribute('aria-expanded', 'false');
       } else {
+        // Defensive: clear any stuck inline opacity/transform from the
+        // page-transition fade-out so the menu never opens invisible.
+        document.body.style.transition = '';
+        document.body.style.opacity = '';
+        var mobileNavEl = document.getElementById('mobile-nav');
+        if (mobileNavEl) {
+          mobileNavEl.style.opacity = '';
+          mobileNavEl.style.transform = '';
+          mobileNavEl.style.visibility = '';
+          mobileNavEl.style.display = '';
+        }
         document.body.setAttribute('data-nav-open', '');
         navToggle.setAttribute('aria-expanded', 'true');
       }
@@ -632,36 +643,59 @@
   var items = nav.querySelectorAll('.mobile-nav__item--has-menu');
   if (!items.length) return;
 
-  // Mark the nav as enhanced — CSS uses this to switch submenus from
-  // always-visible (no-JS fallback) to collapsible.
-  nav.setAttribute('data-collapsible', '');
+  // Helper: get a direct child of `parent` matching `className` without
+  // using `:scope`, which can throw on older iOS Safari builds.
+  function firstChildWithClass(parent, className) {
+    var kids = parent.children;
+    for (var i = 0; i < kids.length; i++) {
+      if (kids[i].classList && kids[i].classList.contains(className)) {
+        return kids[i];
+      }
+    }
+    return null;
+  }
 
-  items.forEach(function (item, idx) {
-    var link = item.querySelector(':scope > .mobile-nav__link');
-    var submenu = item.querySelector(':scope > .mobile-nav__submenu');
-    if (!link || !submenu) return;
+  var enhanced = 0;
 
-    var submenuId = submenu.id || ('mobile-nav-sub-' + idx);
-    submenu.id = submenuId;
+  try {
+    items.forEach(function (item, idx) {
+      var link = firstChildWithClass(item, 'mobile-nav__link');
+      var submenu = firstChildWithClass(item, 'mobile-nav__submenu');
+      if (!link || !submenu) return;
 
-    var row = document.createElement('div');
-    row.className = 'mobile-nav__row';
+      var submenuId = submenu.id || ('mobile-nav-sub-' + idx);
+      submenu.id = submenuId;
 
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'mobile-nav__expand';
-    btn.setAttribute('aria-expanded', 'false');
-    btn.setAttribute('aria-controls', submenuId);
-    btn.setAttribute('aria-label', 'Show ' + link.textContent.trim() + ' sub-pages');
-    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+      var row = document.createElement('div');
+      row.className = 'mobile-nav__row';
 
-    link.parentNode.insertBefore(row, link);
-    row.appendChild(link);
-    row.appendChild(btn);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mobile-nav__expand';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', submenuId);
+      btn.setAttribute('aria-label', 'Show ' + link.textContent.trim() + ' sub-pages');
+      btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
-    btn.addEventListener('click', function () {
-      var isOpen = item.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      link.parentNode.insertBefore(row, link);
+      row.appendChild(link);
+      row.appendChild(btn);
+
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      enhanced++;
     });
-  });
+  } catch (err) {
+    enhanced = 0;
+  }
+
+  // Only switch the nav into collapsible mode if we successfully enhanced
+  // every item. If anything failed, fall back to the always-visible state
+  // rather than leaving the menu half-broken.
+  if (enhanced === items.length) {
+    nav.setAttribute('data-collapsible', '');
+  }
 })();
