@@ -107,6 +107,15 @@
   // 1. PAGE TRANSITION — fade out on internal link click
   //    (fade-in handled by @keyframes pageIn in CSS)
   // --------------------------------------------------------------------------
+  // Clear any stuck inline opacity from the fade-out — runs on initial load AND
+  // on bfcache restore (back/forward). Without this, returning to the page can
+  // leave <body style="opacity:0"> and the entire page (including the mobile
+  // nav) renders blank.
+  window.addEventListener('pageshow', function () {
+    document.body.style.transition = '';
+    document.body.style.opacity = '';
+  });
+
   if (!reducedMotion) {
     document.querySelectorAll('a[href]').forEach(function (link) {
       var href = link.getAttribute('href');
