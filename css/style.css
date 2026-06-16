@@ -1362,6 +1362,10 @@ p {
   pointer-events: auto;
 }
 
+[data-nav-open] .sticky-cta {
+  display: none;
+}
+
 .sticky-cta .btn {
   width: 100%;
   max-width: 420px;

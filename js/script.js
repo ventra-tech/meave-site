@@ -59,29 +59,34 @@
   });
 
   // --------------------------------------------------------------------------
-  // Sticky CTA — show after hero leaves viewport
-  // Handles both .hero-cinematic (home) and .page-hero (inner pages)
+  // Sticky CTA — float the "Book a free call" button after hero scrolls out.
+  // Uses a plain scroll listener (more reliable than IntersectionObserver on
+  // iOS Safari, especially after page transitions/bfcache).
   // --------------------------------------------------------------------------
   var stickyCta = document.querySelector('.sticky-cta');
-  var heroEl    = document.querySelector('.hero-cinematic') ||
-                  document.querySelector('.page-hero');
+  if (stickyCta) {
+    var heroEl = document.querySelector('.hero-cinematic') ||
+                 document.querySelector('.page-hero');
 
-  if (stickyCta && heroEl && 'IntersectionObserver' in window) {
-    var stickyObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            stickyCta.classList.remove('visible');
-          } else {
-            stickyCta.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0, rootMargin: '-40px 0px 0px 0px' }
-    );
-    stickyObserver.observe(heroEl);
-  } else if (stickyCta) {
-    stickyCta.classList.add('visible');
+    var updateStickyCta = function () {
+      // If the menu is open we leave it hidden via CSS (see [data-nav-open]).
+      var shouldShow = heroEl
+        ? heroEl.getBoundingClientRect().bottom < 40
+        : window.scrollY > 200;
+      stickyCta.classList.toggle('visible', shouldShow);
+    };
+
+    window.addEventListener('scroll', updateStickyCta, { passive: true });
+    window.addEventListener('resize', updateStickyCta);
+    window.addEventListener('pageshow', function () {
+      // Wipe any stuck inline styles that bfcache may have restored, then
+      // re-evaluate visibility against the current scroll position.
+      stickyCta.style.opacity = '';
+      stickyCta.style.transform = '';
+      stickyCta.style.display = '';
+      updateStickyCta();
+    });
+    updateStickyCta();
   }
 
   // --------------------------------------------------------------------------
