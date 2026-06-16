@@ -1953,6 +1953,94 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
+   Packages carousel — mobile-only horizontal scroll-snap with controls
+   ========================================================================== */
+
+.packages-carousel {
+  position: relative;
+}
+
+.packages-carousel__controls {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .packages-carousel__track.package-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 4px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .packages-carousel__track.package-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .packages-carousel__track > .package-card {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+
+  .packages-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  .packages-carousel__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .packages-carousel__btn:hover,
+  .packages-carousel__btn:focus-visible {
+    background: var(--primary);
+    color: #FFFFFF;
+    outline: none;
+  }
+  .packages-carousel__btn:active {
+    transform: scale(0.94);
+  }
+
+  .packages-carousel__dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .packages-carousel__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(45, 74, 62, 0.28);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
+  }
+  .packages-carousel__dot.is-active {
+    background: var(--accent-dark);
+    width: 22px;
+    border-radius: 4px;
+  }
+}
+
+/* ==========================================================================
    About split — two-column with content + image
    ========================================================================== */
 
