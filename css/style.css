@@ -481,6 +481,20 @@ p {
   pointer-events: auto;
 }
 
+/* Bulletproof: when the nav is open, force its primary items visible
+   regardless of any stuck inline opacity, transform, or visibility state
+   left behind by page transitions, bfcache restores, or other scripts. */
+[data-nav-open] .mobile-nav,
+[data-nav-open] .mobile-nav__list,
+[data-nav-open] .mobile-nav__list > li,
+[data-nav-open] .mobile-nav__row,
+[data-nav-open] .mobile-nav__link,
+[data-nav-open] .mobile-nav__expand,
+[data-nav-open] .mobile-nav__cta {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 [data-nav-open] {
   overflow: hidden;
 }

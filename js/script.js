@@ -22,6 +22,16 @@
           mobileNavEl.style.transform = '';
           mobileNavEl.style.visibility = '';
           mobileNavEl.style.display = '';
+          // Also wipe inline styles on every descendant — covers the case
+          // where a transition / animation library has left a child element
+          // at opacity:0 or visibility:hidden that we'd otherwise inherit.
+          var descendants = mobileNavEl.querySelectorAll('*');
+          for (var i = 0; i < descendants.length; i++) {
+            var d = descendants[i];
+            d.style.opacity = '';
+            d.style.visibility = '';
+            d.style.transform = '';
+          }
         }
         document.body.setAttribute('data-nav-open', '');
         navToggle.setAttribute('aria-expanded', 'true');
