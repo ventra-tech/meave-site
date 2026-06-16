@@ -1380,10 +1380,26 @@ p {
   display: none;
 }
 
-.sticky-cta .btn {
+/* Force green regardless of the .btn-accent class in the markup — the
+   terracotta accent blended into the orange "What schools say" section as
+   the button floated over it. Green reads clearly on the light and
+   terracotta sections it passes; it is hidden by JS before the dark CTA
+   band so it never blends there. */
+.sticky-cta .btn,
+.sticky-cta .btn:hover,
+.sticky-cta .btn:focus-visible {
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 10px 28px rgba(198, 123, 92, 0.35);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FAF6F0;
+  box-shadow: 0 10px 28px rgba(45, 74, 62, 0.35);
+}
+
+.sticky-cta .btn:hover,
+.sticky-cta .btn:focus-visible {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
 @media (min-width: 1024px) {
@@ -2241,6 +2257,12 @@ textarea:focus-visible {
 
 .school-featured-quote {
   background: var(--accent);
+}
+
+/* Eyebrow defaults to the terracotta accent, which is invisible on this
+   terracotta section — lift it to cream so the label reads clearly. */
+.school-featured-quote .eyebrow {
+  color: #FAF6F0;
 }
 
 .school-featured-quote .pull-quote {

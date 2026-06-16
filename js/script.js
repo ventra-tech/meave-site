@@ -77,13 +77,22 @@
   if (stickyCta) {
     var heroEl = document.querySelector('.hero-cinematic') ||
                  document.querySelector('.page-hero');
+    // The floating CTA should stop once the page's own closing CTA band
+    // (the dark "ready to work together" section) comes into view, so it
+    // never covers the footer and never blends into the dark background.
+    // Fall back to the footer if no CTA band is present.
+    var stopEl = document.querySelector('.cta-band') ||
+                 document.querySelector('.site-footer');
 
     var updateStickyCta = function () {
       // If the menu is open we leave it hidden via CSS (see [data-nav-open]).
-      var shouldShow = heroEl
+      var pastHero = heroEl
         ? heroEl.getBoundingClientRect().bottom < 40
         : window.scrollY > 200;
-      stickyCta.classList.toggle('visible', shouldShow);
+      var reachedStop = stopEl
+        ? stopEl.getBoundingClientRect().top < window.innerHeight
+        : false;
+      stickyCta.classList.toggle('visible', pastHero && !reachedStop);
     };
 
     window.addEventListener('scroll', updateStickyCta, { passive: true });
