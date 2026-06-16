@@ -1322,3 +1322,96 @@
 
   setActive(0);
 })();
+
+// ── Generic carousels (data-carousel) — mobile/tablet only ───────────
+// One initialiser for every [data-carousel] on the page. The track must
+// carry the `mcarousel__track` class; arrows + dots are built here.
+(function () {
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
+  if (!mobileMQ.matches) return;
+  var carousels = document.querySelectorAll('[data-carousel]');
+  if (!carousels.length) return;
+
+  Array.prototype.forEach.call(carousels, function (carousel) {
+    var track = carousel.querySelector('.mcarousel__track');
+    if (!track) return;
+    var slides = Array.prototype.slice.call(track.children);
+    if (slides.length < 2) return;
+
+    var svgPrev = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+    var svgNext = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+    var controls = document.createElement('div');
+    controls.className = 'mcarousel__controls';
+
+    var prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'mcarousel__btn mcarousel__btn--prev';
+    prevBtn.setAttribute('aria-label', 'Previous');
+    prevBtn.innerHTML = svgPrev;
+
+    var nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'mcarousel__btn mcarousel__btn--next';
+    nextBtn.setAttribute('aria-label', 'Next');
+    nextBtn.innerHTML = svgNext;
+
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'mcarousel__dots';
+
+    var dots = slides.map(function (s, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'mcarousel__dot' + (i === 0 ? ' is-active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+
+    controls.appendChild(prevBtn);
+    controls.appendChild(dotsWrap);
+    controls.appendChild(nextBtn);
+    carousel.appendChild(controls);
+
+    var current = 0;
+    var autoTimer = null;
+
+    function setActive(idx) {
+      current = (idx + slides.length) % slides.length;
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === current); });
+    }
+    function goTo(idx, smooth) {
+      setActive(idx);
+      var slide = slides[current];
+      var offset = slide.offsetLeft - track.offsetLeft;
+      try { track.scrollTo({ left: offset, behavior: smooth ? 'smooth' : 'auto' }); } catch (e) { track.scrollLeft = offset; }
+    }
+    function startAutoPlay() { if (!mobileMQ.matches) return; autoTimer = setInterval(function () { goTo(current + 1, true); }, 5000); }
+    function stopAutoPlay() { clearInterval(autoTimer); }
+    function killAutoPlay() { stopAutoPlay(); autoTimer = null; track.removeEventListener('touchstart', killAutoPlay); track.removeEventListener('wheel', killAutoPlay); }
+
+    prevBtn.addEventListener('click', function () { killAutoPlay(); goTo(current - 1, true); });
+    nextBtn.addEventListener('click', function () { killAutoPlay(); goTo(current + 1, true); });
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { killAutoPlay(); goTo(i, true); }); });
+    track.addEventListener('touchstart', killAutoPlay, { passive: true });
+    track.addEventListener('wheel', killAutoPlay, { passive: true });
+
+    var scrollDebounce = null;
+    track.addEventListener('scroll', function () {
+      if (scrollDebounce) clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(function () {
+        var trackRect = track.getBoundingClientRect();
+        var center = trackRect.left + trackRect.width / 2;
+        var bestIdx = 0; var bestDist = Infinity;
+        slides.forEach(function (s, i) { var r = s.getBoundingClientRect(); var d = Math.abs(r.left + r.width / 2 - center); if (d < bestDist) { bestDist = d; bestIdx = i; } });
+        if (bestIdx !== current) setActive(bestIdx);
+      }, 80);
+    }, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) startAutoPlay(); else stopAutoPlay(); }); }, { threshold: 0.35 }).observe(carousel);
+    } else { startAutoPlay(); }
+
+    setActive(0);
+  });
+})();

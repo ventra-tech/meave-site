@@ -4489,3 +4489,70 @@ body {
     background: var(--primary); transform: scale(1.3);
   }
 }
+
+/* ── Generic carousel (mobile/tablet) ────────────────────────────────
+   Reusable slideshow for any grid. Add `data-carousel` to a wrapper and
+   the `mcarousel__track` class to the inner grid; JS injects the arrows
+   and dots. Active below 1024px; the desktop grid is untouched. */
+.mcarousel { position: relative; }
+.mcarousel__controls { display: none; }
+
+@media (max-width: 1023px) {
+  .mcarousel__track {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 16px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mcarousel__track::-webkit-scrollbar { display: none; }
+  .mcarousel__track > * {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+
+  .mcarousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .mcarousel__btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .mcarousel__btn:hover,
+  .mcarousel__btn:focus-visible {
+    background: var(--primary); color: #fff; outline: none;
+  }
+  .mcarousel__btn:active { transform: scale(0.94); }
+  .mcarousel__dots {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .mcarousel__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .mcarousel__dot.is-active {
+    background: var(--primary); transform: scale(1.3);
+  }
+}
