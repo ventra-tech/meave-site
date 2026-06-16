@@ -4216,3 +4216,129 @@ body {
     animation: none !important;
   }
 }
+
+/* ── Schools: Who carousel (mobile) ──────────────────────────────── */
+.schools-who-carousel { position: relative; }
+.schools-who-carousel__controls { display: none; }
+
+@media (max-width: 767px) {
+  .schools-who-carousel__track.card-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 4px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .schools-who-carousel__track.card-grid::-webkit-scrollbar { display: none; }
+  .schools-who-carousel__track > .card {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+  .schools-who-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .schools-who-carousel__btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .schools-who-carousel__btn:hover,
+  .schools-who-carousel__btn:focus-visible {
+    background: var(--primary); color: #fff; outline: none;
+  }
+  .schools-who-carousel__btn:active { transform: scale(0.94); }
+  .schools-who-carousel__dots {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .schools-who-carousel__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .schools-who-carousel__dot.is-active {
+    background: var(--primary); transform: scale(1.3);
+  }
+}
+
+/* ── Schools: Programmes carousel (mobile) ───────────────────────── */
+.schools-programmes-carousel { position: relative; }
+.schools-programmes-carousel__controls { display: none; }
+
+@media (max-width: 767px) {
+  .schools-programmes-carousel__track.programme-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 4px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .schools-programmes-carousel__track.programme-grid::-webkit-scrollbar { display: none; }
+  .schools-programmes-carousel__track > .programme-card {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+  .schools-programmes-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .schools-programmes-carousel__btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .schools-programmes-carousel__btn:hover,
+  .schools-programmes-carousel__btn:focus-visible {
+    background: var(--primary); color: #fff; outline: none;
+  }
+  .schools-programmes-carousel__btn:active { transform: scale(0.94); }
+  .schools-programmes-carousel__dots {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .schools-programmes-carousel__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .schools-programmes-carousel__dot.is-active {
+    background: var(--primary); transform: scale(1.3);
+  }
+}
