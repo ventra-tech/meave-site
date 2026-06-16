@@ -1776,6 +1776,95 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
+   Credentials carousel — mobile-only horizontal scroll-snap with controls
+   ========================================================================== */
+
+.credentials-carousel {
+  position: relative;
+}
+
+.credentials-carousel__controls {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .credentials-carousel__track {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 4px 20px 8px;
+    margin: 0 -20px;
+    max-width: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .credentials-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+  .credentials-carousel__track > li {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+
+  .credentials-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+
+  .credentials-carousel__btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .credentials-carousel__btn:hover,
+  .credentials-carousel__btn:focus-visible {
+    background: var(--primary);
+    color: #FFFFFF;
+    outline: none;
+  }
+  .credentials-carousel__btn:active {
+    transform: scale(0.94);
+  }
+
+  .credentials-carousel__dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .credentials-carousel__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(45, 74, 62, 0.28);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
+  }
+  .credentials-carousel__dot.is-active {
+    background: var(--accent-dark);
+    width: 20px;
+    border-radius: 4px;
+  }
+}
+
+/* ==========================================================================
    About split — two-column with content + image
    ========================================================================== */
 
