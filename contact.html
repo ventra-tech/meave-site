@@ -195,11 +195,10 @@
                 <span>I'm happy for Meave to reply to this enquiry by email. [placeholder: link to privacy notice]</span>
               </label>
 
-              <button type="submit" class="btn btn-accent contact-form__submit" disabled aria-disabled="true">Send enquiry</button>
+              <button type="submit" class="btn btn-accent contact-form__submit">Send enquiry</button>
 
               <p class="contact-form__note" id="form-disabled-note">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Form submission disabled in prototype, please email <a href="mailto:Enquiries@meavedarroux.com">Enquiries@meavedarroux.com</a> instead.
+                Prefer to email? Reach me directly at <a href="mailto:Enquiries@meavedarroux.com">Enquiries@meavedarroux.com</a> and I'll reply personally.
               </p>
             </form>
           </div>
@@ -250,7 +249,8 @@
     <!-- Contact routes -->
     <section class="section contact-routes-section">
       <div class="container">
-        <div class="contact-grid">
+        <div class="mcarousel" data-carousel>
+        <div class="contact-grid mcarousel__track">
 
           <article class="contact-route">
             <span class="contact-route__tag">For Parents</span>
@@ -282,6 +282,7 @@
             </a>
           </article>
 
+        </div>
         </div>
       </div>
     </section>
