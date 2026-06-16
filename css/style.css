@@ -2259,12 +2259,6 @@ textarea:focus-visible {
   background: var(--accent);
 }
 
-/* Eyebrow defaults to the terracotta accent, which is invisible on this
-   terracotta section — lift it to cream so the label reads clearly. */
-.school-featured-quote .eyebrow {
-  color: #FAF6F0;
-}
-
 .school-featured-quote .pull-quote {
   max-width: 900px;
 }
@@ -2281,14 +2275,14 @@ textarea:focus-visible {
 }
 
 .school-featured-quote .pull-quote cite {
-  color: var(--primary-dark);
-  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.16rem;
   font-weight: 500;
 }
 
 .school-featured-quote .pull-quote cite strong {
-  color: var(--primary-dark);
-  font-size: 1.16rem;
+  color: #FFFFFF;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
