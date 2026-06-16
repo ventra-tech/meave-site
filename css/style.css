@@ -2255,32 +2255,32 @@ textarea:focus-visible {
   margin-bottom: 2px;
 }
 
-.school-featured-quote {
+.featured-quote {
   background: var(--accent);
 }
 
-.school-featured-quote .pull-quote {
+.featured-quote .pull-quote {
   max-width: 900px;
 }
 
-.school-featured-quote .pull-quote__mark {
+.featured-quote .pull-quote__mark {
   color: #FFFFFF;
   opacity: 0.24;
 }
 
-.school-featured-quote .pull-quote blockquote,
-.school-featured-quote .pull-quote cite,
-.school-featured-quote .pull-quote cite strong {
+.featured-quote .pull-quote blockquote,
+.featured-quote .pull-quote cite,
+.featured-quote .pull-quote cite strong {
   color: #FFFFFF;
 }
 
-.school-featured-quote .pull-quote cite {
+.featured-quote .pull-quote cite {
   color: rgba(255, 255, 255, 0.88);
   font-size: 1.16rem;
   font-weight: 500;
 }
 
-.school-featured-quote .pull-quote cite strong {
+.featured-quote .pull-quote cite strong {
   color: #FFFFFF;
   font-size: 1.4rem;
   font-weight: 700;
