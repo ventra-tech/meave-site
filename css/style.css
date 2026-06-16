@@ -3331,9 +3331,14 @@ textarea:focus-visible {
    ========================================================================== */
 
 /* ── 1. Page-load fade-in (pure CSS — works without JS) ─────────── */
+/* Opacity-only fade — NEVER animate transform on <body>. A persisted
+   transform (via animation-fill-mode: both) turns <body> into the
+   containing block for position:fixed children, which pins the fixed
+   mobile nav to the document instead of the viewport. When the page is
+   scrolled, the open menu then renders off-screen and looks blank. */
 @keyframes pageIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 body {
