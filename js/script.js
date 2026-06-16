@@ -533,7 +533,7 @@
   var prevBtn = carousel.querySelector('.testimonials-carousel__btn--prev');
   var nextBtn = carousel.querySelector('.testimonials-carousel__btn--next');
 
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var current = 0;
@@ -732,7 +732,7 @@
   var prevBtn = carousel.querySelector('.credentials-carousel__btn--prev');
   var nextBtn = carousel.querySelector('.credentials-carousel__btn--next');
 
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var current = 0;
@@ -861,7 +861,7 @@
   var prevBtn = carousel.querySelector('.principles-carousel__btn--prev');
   var nextBtn = carousel.querySelector('.principles-carousel__btn--next');
 
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var current = 0;
@@ -990,7 +990,7 @@
   var prevBtn = carousel.querySelector('.packages-carousel__btn--prev');
   var nextBtn = carousel.querySelector('.packages-carousel__btn--next');
 
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var current = 0;
@@ -1104,7 +1104,7 @@
 
 // ── Schools: Who carousel ─────────────────────────────────────────
 (function () {
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   if (!mobileMQ.matches) return;
   var carousel = document.querySelector('[data-schools-who-carousel]');
   if (!carousel) return;
@@ -1157,7 +1157,7 @@
 
 // ── Schools: Programmes carousel ──────────────────────────────────
 (function () {
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   if (!mobileMQ.matches) return;
   var carousel = document.querySelector('[data-schools-programmes-carousel]');
   if (!carousel) return;
@@ -1210,7 +1210,7 @@
 
 // ── Audience carousel ─────────────────────────────────────────────
 (function () {
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   if (!mobileMQ.matches) return;
   var carousel = document.querySelector('[data-audience-carousel]');
   if (!carousel) return;
@@ -1263,7 +1263,7 @@
 
 // ── Pillars carousel ──────────────────────────────────────────────
 (function () {
-  var mobileMQ = window.matchMedia('(max-width: 767px)');
+  var mobileMQ = window.matchMedia('(max-width: 1023px)');
   if (!mobileMQ.matches) return;
   var carousel = document.querySelector('[data-pillars-carousel]');
   if (!carousel) return;

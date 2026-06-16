@@ -1015,7 +1015,7 @@ p {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .testimonials-carousel__track.card-grid {
     display: flex;
     flex-wrap: nowrap;
@@ -1787,7 +1787,7 @@ textarea:focus-visible {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .credentials-carousel__track {
     display: flex;
     flex-wrap: nowrap;
@@ -1876,7 +1876,7 @@ textarea:focus-visible {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .principles-carousel__track.card-grid {
     display: flex;
     flex-wrap: nowrap;
@@ -1964,7 +1964,7 @@ textarea:focus-visible {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .packages-carousel__track.package-grid {
     display: flex;
     flex-wrap: nowrap;
@@ -4221,7 +4221,7 @@ body {
 .schools-who-carousel { position: relative; }
 .schools-who-carousel__controls { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .schools-who-carousel__track.card-grid {
     display: flex;
     flex-wrap: nowrap;
@@ -4284,7 +4284,7 @@ body {
 .schools-programmes-carousel { position: relative; }
 .schools-programmes-carousel__controls { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .schools-programmes-carousel__track.programme-grid {
     display: flex;
     flex-wrap: nowrap;
@@ -4347,7 +4347,7 @@ body {
 .audience-carousel { position: relative; }
 .audience-carousel__controls { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .audience-carousel__track.audience-selector {
     display: flex;
     flex-wrap: nowrap;
@@ -4410,7 +4410,7 @@ body {
 .pillars-carousel { position: relative; }
 .pillars-carousel__controls { display: none; }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .pillars-carousel__track.card-grid {
     display: flex;
     flex-wrap: nowrap;
