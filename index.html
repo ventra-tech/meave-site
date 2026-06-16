@@ -302,38 +302,54 @@
          ============================================================ -->
     <section class="audience-selector-section audience-selector-section--dark" aria-label="Choose your path">
       <div class="container">
-        <div class="audience-selector">
+        <div class="audience-carousel" data-audience-carousel>
+          <div class="audience-selector audience-carousel__track">
 
-          <a href="for-parents.html" class="audience-card">
-            <span class="audience-card__tag">I am a</span>
-            <p class="audience-card__title">Parent</p>
-            <p class="audience-card__body">1-to-1 coaching to restore calm at home, with evidence-based strategies, not more willpower.</p>
-            <span class="audience-card__arrow">
-              Book a discovery call
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </a>
+            <a href="for-parents.html" class="audience-card">
+              <span class="audience-card__tag">I am a</span>
+              <p class="audience-card__title">Parent</p>
+              <p class="audience-card__body">1-to-1 coaching to restore calm at home, with evidence-based strategies, not more willpower.</p>
+              <span class="audience-card__arrow">
+                Book a discovery call
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </a>
 
-          <a href="for-schools.html" class="audience-card">
-            <span class="audience-card__tag">I am a</span>
-            <p class="audience-card__title">School Leader</p>
-            <p class="audience-card__body">Ofsted-aligned talks, parent workshops and staff CPD that strengthen parental engagement.</p>
-            <span class="audience-card__arrow">
-              Enquire about training
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </a>
+            <a href="for-schools.html" class="audience-card">
+              <span class="audience-card__tag">I am a</span>
+              <p class="audience-card__title">School Leader</p>
+              <p class="audience-card__body">Ofsted-aligned talks, parent workshops and staff CPD that strengthen parental engagement.</p>
+              <span class="audience-card__arrow">
+                Enquire about training
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </a>
 
-          <a href="for-organisations.html" class="audience-card">
-            <span class="audience-card__tag">I am an</span>
-            <p class="audience-card__title">Organisation</p>
-            <p class="audience-card__body">Credible parent support strategies for the parents in your workforce.</p>
-            <span class="audience-card__arrow">
-              Enquire directly
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </span>
-          </a>
+            <a href="for-organisations.html" class="audience-card">
+              <span class="audience-card__tag">I am an</span>
+              <p class="audience-card__title">Organisation</p>
+              <p class="audience-card__body">Credible parent support strategies for the parents in your workforce.</p>
+              <span class="audience-card__arrow">
+                Enquire directly
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </a>
 
+          </div>
+
+          <div class="audience-carousel__controls">
+            <button type="button" class="audience-carousel__btn audience-carousel__btn--prev" aria-label="Previous">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="audience-carousel__dots">
+              <button type="button" class="audience-carousel__dot is-active" aria-label="Slide 1"></button>
+              <button type="button" class="audience-carousel__dot" aria-label="Slide 2"></button>
+              <button type="button" class="audience-carousel__dot" aria-label="Slide 3"></button>
+            </div>
+            <button type="button" class="audience-carousel__btn audience-carousel__btn--next" aria-label="Next">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -369,35 +385,51 @@
           <p class="lede">Whether you're a parent navigating a tough patch, a school leader wishing to strengthen parent partnership, or an organisation shaping family-focused policy, there's a clear route in.</p>
         </div>
 
-        <div class="card-grid pillar-grid">
+        <div class="pillars-carousel" data-pillars-carousel>
+          <div class="card-grid pillar-grid pillars-carousel__track">
 
-          <article class="card pillar-card">
-            <div class="card__label">For parents</div>
-            <h3 class="card__title">1-to-1 parenting coaching</h3>
-            <p class="card__body">Evidence-based, non-judgemental sessions using Triple P to help you handle anything from a toddler's tantrums to a teenager's emotions with more calm and less guilt.</p>
-            <a href="for-parents.html" class="text-link card__link">Explore parent coaching
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
+            <article class="card pillar-card">
+              <div class="card__label">For parents</div>
+              <h3 class="card__title">1-to-1 parenting coaching</h3>
+              <p class="card__body">Evidence-based, non-judgemental sessions using Triple P to help you handle anything from a toddler's tantrums to a teenager's emotions with more calm and less guilt.</p>
+              <a href="for-parents.html" class="text-link card__link">Explore parent coaching
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
 
-          <article class="card pillar-card">
-            <div class="card__label">For schools &amp; events</div>
-            <h3 class="card__title">Talks, workshops &amp; keynotes</h3>
-            <p class="card__body">Warm, practical sessions for parent audiences and staff teams, from single-evening workshops to termly programmes. Topics cover behaviour, resilience, and the early years.</p>
-            <a href="for-schools.html" class="text-link card__link">See talks &amp; workshops
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
+            <article class="card pillar-card">
+              <div class="card__label">For schools &amp; events</div>
+              <h3 class="card__title">Talks, workshops &amp; keynotes</h3>
+              <p class="card__body">Warm, practical sessions for parent audiences and staff teams, from single-evening workshops to termly programmes. Topics cover behaviour, resilience, and the early years.</p>
+              <a href="for-schools.html" class="text-link card__link">See talks &amp; workshops
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
 
-          <article class="card pillar-card">
-            <div class="card__label">For organisations</div>
-            <h3 class="card__title">Consultancy &amp; programme design</h3>
-            <p class="card__body">Strategic support for nurseries, charities, local authorities and employers, designing, delivering and evaluating parenting and family-support programmes.</p>
-            <a href="for-organisations.html" class="text-link card__link">Explore consultancy
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-          </article>
+            <article class="card pillar-card">
+              <div class="card__label">For organisations</div>
+              <h3 class="card__title">Consultancy &amp; programme design</h3>
+              <p class="card__body">Strategic support for nurseries, charities, local authorities and employers, designing, delivering and evaluating parenting and family-support programmes.</p>
+              <a href="for-organisations.html" class="text-link card__link">Explore consultancy
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </a>
+            </article>
 
+          </div>
+
+          <div class="pillars-carousel__controls">
+            <button type="button" class="pillars-carousel__btn pillars-carousel__btn--prev" aria-label="Previous">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="pillars-carousel__dots">
+              <button type="button" class="pillars-carousel__dot is-active" aria-label="Slide 1"></button>
+              <button type="button" class="pillars-carousel__dot" aria-label="Slide 2"></button>
+              <button type="button" class="pillars-carousel__dot" aria-label="Slide 3"></button>
+            </div>
+            <button type="button" class="pillars-carousel__btn pillars-carousel__btn--next" aria-label="Next">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
