@@ -8,3 +8,6 @@
 
 # Thumbnails
 ._*
+
+# Local working folder of site photos for optimising (not deployed)
+used-images/
