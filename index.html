@@ -154,8 +154,11 @@
          ============================================================ -->
     <section class="hero-cinematic" aria-label="Introduction">
       <!-- Background media -->
-      <img class="hero-cinematic__bg" src="images/hero-home.jpg"
-           alt="" aria-hidden="true" loading="eager" />
+      <picture>
+        <source type="image/webp" srcset="images/hero-home.webp">
+        <img class="hero-cinematic__bg" src="images/hero-home.jpg"
+             alt="" aria-hidden="true" loading="eager" width="1600" height="2400" />
+      </picture>
       <video class="hero-cinematic__bg hero-cinematic__video"
              autoplay muted loop playsinline preload="metadata"
              poster="images/0522-poster.jpg"
@@ -364,7 +367,7 @@
           <h2>The work I do, and why I do it</h2>
 
           <div class="video-embed">
-            <video controls preload="metadata" poster="images/MD-016520260508.jpg" playsinline>
+            <video controls preload="metadata" poster="images/MD-016520260508.webp" playsinline>
               <source src="logos/introvid.mp4" type="video/mp4" />
               Your browser doesn't support embedded video. <a href="logos/introvid.mp4">Download the introduction video</a>.
             </video>
@@ -441,7 +444,10 @@
       <div class="container">
         <div class="about-split">
           <div class="about-split__image">
-            <img src="images/home-mid-asian-dad-son.jpg" alt="A father carrying his son on his shoulders in the park" loading="lazy" class="image-focus-lower" />
+            <picture>
+              <source type="image/webp" srcset="images/home-mid-asian-dad-son.webp">
+              <img src="images/home-mid-asian-dad-son.jpg" alt="A father carrying his son on his shoulders in the park" loading="lazy" class="image-focus-lower" width="1200" height="1800" />
+            </picture>
           </div>
           <div>
             <span class="eyebrow">About Meave</span>
