@@ -191,6 +191,7 @@ p {
   justify-content: center;
   gap: 8px;
   padding: 12px 22px;
+  min-height: 44px;
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 500;
