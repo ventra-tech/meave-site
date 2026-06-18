@@ -1167,9 +1167,10 @@
 // ── Schools: Programmes carousel ──────────────────────────────────
 (function () {
   var mobileMQ = window.matchMedia('(max-width: 1023px)');
-  if (!mobileMQ.matches) return;
   var carousel = document.querySelector('[data-schools-programmes-carousel]');
   if (!carousel) return;
+  var always = carousel.classList.contains('schools-programmes-carousel--desktop');
+  if (!mobileMQ.matches && !always) return;
   var track = carousel.querySelector('.schools-programmes-carousel__track');
   var slides = Array.prototype.slice.call(track.children);
   var dots = Array.prototype.slice.call(carousel.querySelectorAll('.schools-programmes-carousel__dot'));
@@ -1188,7 +1189,7 @@
     var offset = slide.offsetLeft - track.offsetLeft;
     try { track.scrollTo({ left: offset, behavior: smooth ? 'smooth' : 'auto' }); } catch (e) { track.scrollLeft = offset; }
   }
-  function startAutoPlay() { if (!mobileMQ.matches) return; autoTimer = setInterval(function () { goTo(current + 1, true); }, 5000); }
+  function startAutoPlay() { if (!mobileMQ.matches && !always) return; autoTimer = setInterval(function () { goTo(current + 1, true); }, 5000); }
   function stopAutoPlay() { clearInterval(autoTimer); }
   function killAutoPlay() { stopAutoPlay(); autoTimer = null; track.removeEventListener('touchstart', killAutoPlay); track.removeEventListener('wheel', killAutoPlay); }
 
@@ -1328,11 +1329,12 @@
 // carry the `mcarousel__track` class; arrows + dots are built here.
 (function () {
   var mobileMQ = window.matchMedia('(max-width: 1023px)');
-  if (!mobileMQ.matches) return;
   var carousels = document.querySelectorAll('[data-carousel]');
   if (!carousels.length) return;
 
   Array.prototype.forEach.call(carousels, function (carousel) {
+    var always = carousel.classList.contains('mcarousel--desktop');
+    if (!mobileMQ.matches && !always) return;
     var track = carousel.querySelector('.mcarousel__track');
     if (!track) return;
     var slides = Array.prototype.slice.call(track.children);
@@ -1386,7 +1388,7 @@
       var offset = slide.offsetLeft - track.offsetLeft;
       try { track.scrollTo({ left: offset, behavior: smooth ? 'smooth' : 'auto' }); } catch (e) { track.scrollLeft = offset; }
     }
-    function startAutoPlay() { if (!mobileMQ.matches) return; autoTimer = setInterval(function () { goTo(current + 1, true); }, 5000); }
+    function startAutoPlay() { if (!mobileMQ.matches && !always) return; autoTimer = setInterval(function () { goTo(current + 1, true); }, 5000); }
     function stopAutoPlay() { clearInterval(autoTimer); }
     function killAutoPlay() { stopAutoPlay(); autoTimer = null; track.removeEventListener('touchstart', killAutoPlay); track.removeEventListener('wheel', killAutoPlay); }
 

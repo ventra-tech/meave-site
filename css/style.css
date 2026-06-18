@@ -1761,6 +1761,15 @@ textarea:focus-visible {
   }
 }
 
+/* Centre an orphaned final card in the 2-col desktop grid */
+@media (min-width: 1024px) {
+  .credential-list > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc((900px - 24px) / 2);
+    margin-inline: auto;
+  }
+}
+
 .credential-list li {
   display: flex;
   align-items: flex-start;
@@ -4365,6 +4374,51 @@ body {
   }
 }
 
+/* ── Schools programmes: desktop slideshow (opt-in) ──────────────── */
+@media (min-width: 1024px) {
+  .schools-programmes-carousel--desktop { max-width: 760px; margin-inline: auto; }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__track.programme-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 4px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__track.programme-grid::-webkit-scrollbar { display: none; }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__track > .programme-card {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__controls {
+    display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 22px;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--primary);
+    background: transparent; color: var(--primary); display: inline-flex; align-items: center;
+    justify-content: center; cursor: pointer; padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__btn:hover,
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__btn:focus-visible {
+    background: var(--primary); color: #fff; outline: none;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__btn:active { transform: scale(0.94); }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__dots { display: inline-flex; align-items: center; gap: 8px; }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__dot {
+    width: 8px; height: 8px; border-radius: 50%; background: rgba(45, 74, 62, 0.28);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
+  }
+  .schools-programmes-carousel--desktop .schools-programmes-carousel__dot.is-active {
+    background: var(--accent-dark); width: 22px; border-radius: 4px;
+  }
+}
+
 /* ── Audience carousel (mobile) ──────────────────────────────────── */
 .audience-carousel { position: relative; }
 .audience-carousel__controls { display: none; }
@@ -4556,4 +4610,45 @@ body {
   .mcarousel__dot.is-active {
     background: var(--accent-dark); width: 22px; border-radius: 4px;
   }
+}
+
+/* ── Generic carousel: desktop slideshow (opt-in via .mcarousel--desktop) */
+@media (min-width: 1024px) {
+  .mcarousel--desktop { max-width: 720px; margin-inline: auto; }
+  .mcarousel--desktop .mcarousel__track {
+    display: flex;
+    flex-wrap: nowrap;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    padding: 16px 20px 8px;
+    margin: 0 -20px;
+    scrollbar-width: none;
+  }
+  .mcarousel--desktop .mcarousel__track::-webkit-scrollbar { display: none; }
+  .mcarousel--desktop .mcarousel__track > * {
+    flex: 0 0 calc(100% - 48px);
+    scroll-snap-align: center;
+  }
+  .mcarousel--desktop .mcarousel__controls {
+    display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 22px;
+  }
+  .mcarousel--desktop .mcarousel__btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--primary);
+    background: transparent; color: var(--primary); display: inline-flex; align-items: center;
+    justify-content: center; cursor: pointer; padding: 0;
+    transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  }
+  .mcarousel--desktop .mcarousel__btn:hover,
+  .mcarousel--desktop .mcarousel__btn:focus-visible { background: var(--primary); color: #fff; outline: none; }
+  .mcarousel--desktop .mcarousel__btn:active { transform: scale(0.94); }
+  .mcarousel--desktop .mcarousel__dots { display: inline-flex; align-items: center; gap: 8px; }
+  .mcarousel--desktop .mcarousel__dot {
+    width: 8px; height: 8px; border-radius: 50%; background: rgba(45, 74, 62, 0.28);
+    border: none; cursor: pointer; padding: 0;
+    transition: background 0.2s ease, transform 0.2s ease, width 0.2s ease;
+  }
+  .mcarousel--desktop .mcarousel__dot.is-active { background: var(--accent-dark); width: 22px; border-radius: 4px; }
 }
