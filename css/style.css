@@ -2866,8 +2866,8 @@ textarea:focus-visible {
 }
 
 .hero-cinematic__ctas .btn-accent {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #FFFFFF;
 }
 
@@ -2941,7 +2941,7 @@ textarea:focus-visible {
   min-height: 44px;
   padding: 11px 18px;
   border-radius: var(--radius-sm);
-  background: var(--accent-dark);
+  background: var(--accent);
   font-size: 0.86rem;
   font-weight: 500;
   color: #FFFFFF;
